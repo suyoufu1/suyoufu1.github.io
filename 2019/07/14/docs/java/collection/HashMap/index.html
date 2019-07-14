@@ -1,375 +1,80 @@
+
 <!DOCTYPE html>
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next muse use-motion" lang>
+<html>
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
+    <meta charset="UTF-8">
+    <title>苏有福的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content>
+    <meta name="description" content="
 
 
+HashMap 简介
+底层数据结构分析
+JDK1.8之前
+JDK1.8之后
 
 
+HashMap源码分析
+构造方法
+put方法
+get方法
+resize方法
 
 
+HashMap常用方法测试
 
 
 
 
+感谢 changfubai 对本文的改进做出的贡献！
 
-
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-
-<link rel="stylesheet" href="/css/main.css?v=7.2.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
-
-
-
-
-
-
-
-<script id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.2.0',
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    }
-  };
-</script>
-
-
-
-  <meta name="description" content="HashMap 简介 底层数据结构分析 JDK1.8之前 JDK1.8之后   HashMap源码分析 构造方法 put方法 get方法 resize方法   HashMap常用方法测试     感谢 changfubai 对本文的改进做出的贡献！  HashMap 简介HashMap 主要用来存放键值对，它基于哈希表的Map接口实现，是常用的Java集合之一。  JDK1.8 之前 Has">
-<meta property="og:type" content="article">
-<meta property="og:title" content="苏有福的博客">
-<meta property="og:url" content="http://yoursite.com/2019/07/14/docs/java/collection/HashMap/index.html">
-<meta property="og:site_name" content="苏有福的博客">
-<meta property="og:description" content="HashMap 简介 底层数据结构分析 JDK1.8之前 JDK1.8之后   HashMap源码分析 构造方法 put方法 get方法 resize方法   HashMap常用方法测试     感谢 changfubai 对本文的改进做出的贡献！  HashMap 简介HashMap 主要用来存放键值对，它基于哈希表的Map接口实现，是常用的Java集合之一。  JDK1.8 之前 Has">
-<meta property="og:locale" content="default">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/3/20/16240dbcc303d872?w=348&h=427&f=png&s=10991">
-<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-8-22/67233764.jpg">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/3/20/162410d912a2e0e1?w=336&h=90&f=jpeg&s=26744">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/9/2/16598bf758c747e6?w=999&h=679&f=png&s=54486">
-<meta property="og:updated_time" content="2019-07-14T14:47:16.536Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="苏有福的博客">
-<meta name="twitter:description" content="HashMap 简介 底层数据结构分析 JDK1.8之前 JDK1.8之后   HashMap源码分析 构造方法 put方法 get方法 resize方法   HashMap常用方法测试     感谢 changfubai 对本文的改进做出的贡献！  HashMap 简介HashMap 主要用来存放键值对，它基于哈希表的Map接口实现，是常用的Java集合之一。  JDK1.8 之前 Has">
-<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/3/20/16240dbcc303d872?w=348&h=427&f=png&s=10991">
-
-
-
-
-
-  
-  
-  <link rel="canonical" href="http://yoursite.com/2019/07/14/docs/java/collection/HashMap/">
-
-
-
-<script id="page.configurations">
-  CONFIG.page = {
-    sidebar: "",
-  };
-</script>
-
-  <title> | 苏有福的博客</title>
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .motion-element,
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
-
-  .use-motion .logo,
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
+HashMap 简介HashMap 主要用来存放键值对，它基于哈希表的Map接口实现，是常用的Java集合之一。 
+JDK1.8 之前 HashMap 由 数组+链表 组成的，数组是 HashMap 的主体，链表则是主要为了解决哈希冲突而存在的（“拉链法”解决冲突）.JDK1.8 以后在解决哈希冲突时有了较大的变化，当链表长度大于阈值（默认为 8）时，将链表转化为红黑...">
+    
+        <link rel="icon" href="/favicon.ico">
+    
+    
+        
+            <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+        
+            <link rel="stylesheet" href="/css/stage.css">
+        
+            <link rel="stylesheet" href="/css/avatar-bg.css">
+        
+    
 </head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="default">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">苏有福的博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+</html>
+<body>
+<header id="header">
+    <div class="menu">
+        <i class="fa fa-bars"></i>
     </div>
-    
-    
-  </div>
-
-  <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-
-
-<nav class="site-nav">
-  
-    <ul id="menu" class="menu">
-      
-        
-        
-        
-          
-          <li class="menu-item menu-item-home">
-
-    
-    
-      
-    
-
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
-
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-archives">
-
-    
-    
-      
-    
-
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
-
-  </li>
-
-      
-      
-    </ul>
-  
-
-  
-    
-
-  
-
-  
-</nav>
-
-
-
-</div>
-    </header>
-
-    
-
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/java/collection/HashMap/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
-            </span>
-          
-
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
+    <div class="header-main">
+        <h1><a href="/">苏有福的博客</a></h1>
+    </div>
+    <div id="nav">
+        <div class="nav-img" id="nav-img"></div>
+        <div class="sentences">
+            云里写诗，泥里生活，岁月里洒脱。
         </div>
-      </header>
-    
+    </div>
+</header>
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
+<div id="content-outer">
+    <div id="content-inner">
+        <div class="clearfix">
+    <article id="post">
+        <h1></h1>
+        <div class="create">
+            <span>Created</span>
+            
+                <time datetime="2019-07-14T14:47:16.536Z">
+                    2019-07-14
+                </time>
+            
+            
+        </div>
         <!-- MarkdownTOC -->
 
 <ul>
@@ -459,342 +164,57 @@
 <h2 id="HashMap常用方法测试"><a href="#HashMap常用方法测试" class="headerlink" title="HashMap常用方法测试"></a>HashMap常用方法测试</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Collection;</span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Set;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashMapDemo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        HashMap&lt;String, String&gt; map = <span class="keyword">new</span> HashMap&lt;String, String&gt;();</span><br><span class="line">        <span class="comment">// 键不能重复，值可以重复</span></span><br><span class="line">        map.put(<span class="string">"san"</span>, <span class="string">"张三"</span>);</span><br><span class="line">        map.put(<span class="string">"si"</span>, <span class="string">"李四"</span>);</span><br><span class="line">        map.put(<span class="string">"wu"</span>, <span class="string">"王五"</span>);</span><br><span class="line">        map.put(<span class="string">"wang"</span>, <span class="string">"老王"</span>);</span><br><span class="line">        map.put(<span class="string">"wang"</span>, <span class="string">"老王2"</span>);<span class="comment">// 老王被覆盖</span></span><br><span class="line">        map.put(<span class="string">"lao"</span>, <span class="string">"老王"</span>);</span><br><span class="line">        System.out.println(<span class="string">"-------直接输出hashmap:-------"</span>);</span><br><span class="line">        System.out.println(map);</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 遍历HashMap</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="comment">// 1.获取Map中的所有键</span></span><br><span class="line">        System.out.println(<span class="string">"-------foreach获取Map中所有的键:------"</span>);</span><br><span class="line">        Set&lt;String&gt; keys = map.keySet();</span><br><span class="line">        <span class="keyword">for</span> (String key : keys) &#123;</span><br><span class="line">            System.out.print(key+<span class="string">"  "</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println();<span class="comment">//换行</span></span><br><span class="line">        <span class="comment">// 2.获取Map中所有值</span></span><br><span class="line">        System.out.println(<span class="string">"-------foreach获取Map中所有的值:------"</span>);</span><br><span class="line">        Collection&lt;String&gt; values = map.values();</span><br><span class="line">        <span class="keyword">for</span> (String value : values) &#123;</span><br><span class="line">            System.out.print(value+<span class="string">"  "</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println();<span class="comment">//换行</span></span><br><span class="line">        <span class="comment">// 3.得到key的值的同时得到key所对应的值</span></span><br><span class="line">        System.out.println(<span class="string">"-------得到key的值的同时得到key所对应的值:-------"</span>);</span><br><span class="line">        Set&lt;String&gt; keys2 = map.keySet();</span><br><span class="line">        <span class="keyword">for</span> (String key : keys2) &#123;</span><br><span class="line">            System.out.print(key + <span class="string">"："</span> + map.get(key)+<span class="string">"   "</span>);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 另外一种不常用的遍历方式</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="comment">// 当我调用put(key,value)方法的时候，首先会把key和value封装到</span></span><br><span class="line">        <span class="comment">// Entry这个静态内部类对象中，把Entry对象再添加到数组中，所以我们想获取</span></span><br><span class="line">        <span class="comment">// map中的所有键值对，我们只要获取数组中的所有Entry对象，接下来</span></span><br><span class="line">        <span class="comment">// 调用Entry对象中的getKey()和getValue()方法就能获取键值对了</span></span><br><span class="line">        Set&lt;java.util.Map.Entry&lt;String, String&gt;&gt; entrys = map.entrySet();</span><br><span class="line">        <span class="keyword">for</span> (java.util.Map.Entry&lt;String, String&gt; entry : entrys) &#123;</span><br><span class="line">            System.out.println(entry.getKey() + <span class="string">"--"</span> + entry.getValue());</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * HashMap其他常用方法</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        System.out.println(<span class="string">"after map.size()："</span>+map.size());</span><br><span class="line">        System.out.println(<span class="string">"after map.isEmpty()："</span>+map.isEmpty());</span><br><span class="line">        System.out.println(map.remove(<span class="string">"san"</span>));</span><br><span class="line">        System.out.println(<span class="string">"after map.remove()："</span>+map);</span><br><span class="line">        System.out.println(<span class="string">"after map.get(si)："</span>+map.get(<span class="string">"si"</span>));</span><br><span class="line">        System.out.println(<span class="string">"after map.containsKey(si)："</span>+map.containsKey(<span class="string">"si"</span>));</span><br><span class="line">        System.out.println(<span class="string">"after containsValue(李四)："</span>+map.containsValue(<span class="string">"李四"</span>));</span><br><span class="line">        System.out.println(map.replace(<span class="string">"si"</span>, <span class="string">"李四2"</span>));</span><br><span class="line">        System.out.println(<span class="string">"after map.replace(si, 李四2):"</span>+map);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
-      
-    </div>
-
-    
-
-    
-      
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
+        <div>
             
-              <a href="/2019/07/14/docs/java/collection/LinkedList/" rel="next" title>
-                <i class="fa fa-chevron-left"></i> 
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/14/docs/java/jvm/JVM垃圾回收/" rel="prev" title>
-                 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
         </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-  </div>
-
-
-          </div>
-          
-
-  
-
-
-
-        </div>
+        <div class="bottom-line"></div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <nav id="article-nav">
+        
+            <a href="/2019/07/14/docs/java/collection/ArrayList-Grow/" id="article-nav-newer" class="article-nav-link-wrap">
+        <span class="article-nav-title">
             
-              <p class="site-author-name" itemprop="name">syf</p>
-              <div class="site-description motion-element" itemprop="description"></div>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
+                no title
+            
+        </span>
+                <strong class="article-nav-caption">&gt;</strong>
+            </a>
+        
+        
+            <a href="/2019/07/14/docs/java/collection/LinkedList/" id="article-nav-older" class="article-nav-link-wrap">
+                <strong class="article-nav-caption">&lt;</strong>
+                <span class="article-nav-title">
+                    
+                    no title
                 
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">105</span>
-                    <span class="site-state-item-name">posts</span>
-                  </a>
-                </div>
-              
-
-              
-
-              
-            </nav>
-          
-
-          
-
-          
-
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </div>
-
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap-简介"><span class="nav-number">1.</span> <span class="nav-text">HashMap 简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#底层数据结构分析"><span class="nav-number">2.</span> <span class="nav-text">底层数据结构分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JDK1-8之前"><span class="nav-number">2.1.</span> <span class="nav-text">JDK1.8之前</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JDK1-8之后"><span class="nav-number">2.2.</span> <span class="nav-text">JDK1.8之后</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap源码分析"><span class="nav-number">3.</span> <span class="nav-text">HashMap源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构造方法"><span class="nav-number">3.1.</span> <span class="nav-text">构造方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#put方法"><span class="nav-number">3.2.</span> <span class="nav-text">put方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get方法"><span class="nav-number">3.3.</span> <span class="nav-text">get方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#resize方法"><span class="nav-number">3.4.</span> <span class="nav-text">resize方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashMap常用方法测试"><span class="nav-number">4.</span> <span class="nav-text">HashMap常用方法测试</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
+            </a>
+        
+    </nav>
 
 
         
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">syf</span>
-
-  
-
-  
+    </article>
+    <div id="toc">
+        
+            <h2>Table of Contents</h2>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#HashMap-简介"><span class="toc-number">1.</span> <span class="toc-text">HashMap 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#底层数据结构分析"><span class="toc-number">2.</span> <span class="toc-text">底层数据结构分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JDK1-8之前"><span class="toc-number">2.1.</span> <span class="toc-text">JDK1.8之前</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JDK1-8之后"><span class="toc-number">2.2.</span> <span class="toc-text">JDK1.8之后</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HashMap源码分析"><span class="toc-number">3.</span> <span class="toc-text">HashMap源码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#构造方法"><span class="toc-number">3.1.</span> <span class="toc-text">构造方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#put方法"><span class="toc-number">3.2.</span> <span class="toc-text">put方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get方法"><span class="toc-number">3.3.</span> <span class="toc-text">get方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#resize方法"><span class="toc-number">3.4.</span> <span class="toc-text">resize方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HashMap常用方法测试"><span class="toc-number">4.</span> <span class="toc-text">HashMap常用方法测试</span></a></li></ol>
+        
+    </div>
 </div>
 
-
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
-
-
-
-
-        
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-    
-  </div>
-
-  
-
-<script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script src="/lib/jquery/index.js?v=3.4.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-
-
-  <script src="/js/utils.js?v=7.2.0"></script>
-
-  <script src="/js/motion.js?v=7.2.0"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/schemes/muse.js?v=7.2.0"></script>
-
-
-
-  
-  <script src="/js/scrollspy.js?v=7.2.0"></script>
-<script src="/js/post-details.js?v=7.2.0"></script>
-
-
-
-  <script src="/js/next-boot.js?v=7.2.0"></script>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-
-  
-
-
-  
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-
-  
+    </div>
+</div>
+<footer id="footer">
+    <div id="copyright">&copy; syf  2019</div>
+    <div id="theme">
+        Powered by <a href="http://hexo.io">Hexo</a>. Theme by <a href="https://github.com/markyong/hexo-theme-stage">Stage</a>
+    </div>
+</footer>
+<script src="/lib/js/waterrippleeffect.min.js"></script>
+<script src="/js/header-bg.main.js"></script>
+
+    <script src="/lib/js/smooth-scroll.min.js"></script>
+    <script src="/js/toc.main.js"></script>
 
 </body>
 </html>

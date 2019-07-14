@@ -1,961 +1,158 @@
+
 <!DOCTYPE html>
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next muse use-motion" lang="">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
-<meta name="theme-color" content="#222"/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0"/>
-
-<link rel="stylesheet" href="/css/main.css?v=7.2.0"/>
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
-
-
-
-
-
-
-
-<script id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.2.0',
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    }
-  };
-</script>
-
-
-
-  <meta property="og:type" content="website">
-<meta property="og:title" content="苏有福的博客">
-<meta property="og:url" content="http://yoursite.com/page/8/index.html">
-<meta property="og:site_name" content="苏有福的博客">
-<meta property="og:locale" content="default">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="苏有福的博客">
-
-
-
-
-
-  
-  
-  <link rel="canonical" href="http://yoursite.com/page/8/"/>
-
-
-
-<script id="page.configurations">
-  CONFIG.page = {
-    sidebar: "",
-  };
-</script>
-
-  <title>苏有福的博客</title>
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .motion-element,
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
-
-  .use-motion .logo,
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="default">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left 
-  page-home">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">苏有福的博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-    
-    
-  </div>
-
-  <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-
-
-<nav class="site-nav">
-  
-    <ul id="menu" class="menu">
-      
-        
-        
-        
-          
-          <li class="menu-item menu-item-home">
-
-    
-    
-      
-    
-
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>Home</a>
-
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-archives">
-
-    
-    
-      
-    
-
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>Archives</a>
-
-  </li>
-
-      
-      
-    </ul>
-  
-
-  
-    
-
-  
-
-  
-</nav>
-
-
-
-</div>
-    </header>
-
-    
-
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-          <div id="content" class="content">
-            
-  <section id="posts" class="posts-expand">
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/github-trending/JavaGithubTrending/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/avatar.gif"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/14/docs/github-trending/JavaGithubTrending/" class="post-title-link" itemprop="url">Untitled</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
-            </span>
-          
-
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br/>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li><a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/github-trending/2018-12.md" target="_blank" rel="noopener">2018 年 12 月</a></li>
-<li><a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/github-trending/2019-1.md" target="_blank" rel="noopener">2019 年 1 月</a></li>
-<li><a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/github-trending/2019-2.md" target="_blank" rel="noopener">2019 年 2 月</a></li>
-<li><a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/github-trending/2019-3.md" target="_blank" rel="noopener">2019 年 3 月</a></li>
-<li><a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/github-trending/2019-4.md" target="_blank" rel="noopener">2019 年 4 月</a></li>
-<li><a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/github-trending/2019-5.md" target="_blank" rel="noopener">2019 年 5 月</a></li>
-<li><a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/github-trending/2019-6.md" target="_blank" rel="noopener">2019 年 6 月</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/index/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/avatar.gif"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/14/docs/index/" class="post-title-link" itemprop="url">Untitled</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
-            </span>
-          
-
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br/>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <!DOCTYPE html>
-<html lang="en">
+<html>
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-  <title>JavaGuide</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="description" content="Description">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
-  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/prism.css">
+    <meta charset="UTF-8">
+    <title>苏有福的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content>
+    <meta name="description" content>
+    
+        <link rel="icon" href="/favicon.ico">
+    
+    
+        
+            <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+        
+            <link rel="stylesheet" href="/css/stage.css">
+        
+            <link rel="stylesheet" href="/css/avatar-bg.css">
+        
+    
 </head>
-<body>
-  <div id="app"></div>
-  <script>
-    window.$docsify = {
-      name: 'JavaGuide',
-      repo: 'https://github.com/Snailclimb/JavaGuide',
-	  maxLevel: 3,//最大支持渲染的标题层级
-	  homepage: 'HomePage.md',
-	  coverpage: true,//封面,_coverpage.md
-	  auto2top: true,//切换页面后是否自动跳转到页面顶部
-	  //ga: 'UA-138586553-1',
-	  //logo: 'https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-3logo-透明.png' ,
-     search: {
-	    //maxAge: 86400000, // 过期时间，单位毫秒，默认一天
-        paths: 'auto',
-		placeholder: '搜索',
-		noData: '找不到结果',
-	    // 搜索标题的最大程级, 1 - 6
-        depth: 3,
-        },
-	  
-    }
-  </script>
-  <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
-  <!--Java代码高亮-->
-  <script src="//unpkg.com/prismjs/components/prism-java.js"></script>
-  <!--全文搜索,直接用官方提供的无法生效-->
-  <script src="https://cdn.bootcss.com/docsify/4.5.9/plugins/search.min.js"></script>
-  <!--谷歌统计
-  <script src="//unpkg.com/docsify" data-ga="UA-138586553-1"></script>
-  <script src="//unpkg.com/docsify/lib/plugins/ga.js"></script>
-  -->
-</body>
 </html>
-
-          
-        
-      
+<body>
+<header id="header">
+    <div class="menu">
+        <i class="fa fa-bars"></i>
     </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/github-trending/2019-6/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/avatar.gif"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/14/docs/github-trending/2019-6/" class="post-title-link" itemprop="url">Untitled</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
-            </span>
-          
-
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br/>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="1-CS-Notes"><a href="#1-CS-Notes" class="headerlink" title="1.CS-Notes"></a>1.CS-Notes</h3><ul>
-<li><strong>Github 地址</strong>：<a href="https://github.com/CyC2018/CS-Notes" target="_blank" rel="noopener">https://github.com/CyC2018/CS-Notes</a></li>
-<li><strong>Star</strong>:  69.8k</li>
-<li><strong>介绍</strong>: 技术面试必备基础知识、Leetcode 题解、后端面试、Java 面试、春招、秋招、操作系统、计算机网络、系统设计。</li>
-</ul>
-<h3 id="2-toBeTopJavaer"><a href="#2-toBeTopJavaer" class="headerlink" title="2.toBeTopJavaer"></a>2.toBeTopJavaer</h3><ul>
-<li><strong>Github 地址：</strong><a href="https://github.com/hollischuang/toBeTopJavaer" target="_blank" rel="noopener">https://github.com/hollischuang/toBeTopJavaer</a></li>
-<li><strong>Star</strong>:  4.7k</li>
-<li><strong>介绍</strong>: To Be Top Javaer - Java工程师成神之路。</li>
-</ul>
-<h3 id="3-p3c"><a href="#3-p3c" class="headerlink" title="3.p3c"></a>3.p3c</h3><ul>
-<li><strong>Github 地址：</strong> <a href="https://github.com/alibaba/p3c" target="_blank" rel="noopener">https://github.com/alibaba/p3c</a></li>
-<li><strong>Star</strong>:  16.6k</li>
-<li><strong>介绍</strong>: Alibaba Java Coding Guidelines pmd implements and IDE plugin。Eclipse 和 IDEA 上都有该插件，推荐使用！</li>
-</ul>
-<h3 id="4-SpringCloudLearning"><a href="#4-SpringCloudLearning" class="headerlink" title="4.SpringCloudLearning"></a>4.SpringCloudLearning</h3><ul>
-<li><strong>Github 地址：</strong> <a href="https://github.com/forezp/SpringCloudLearning" target="_blank" rel="noopener">https://github.com/forezp/SpringCloudLearning</a></li>
-<li><strong>Star</strong>:  8.7k</li>
-<li><strong>介绍</strong>: 史上最简单的Spring Cloud教程源码。</li>
-</ul>
-<h3 id="5-dubbo"><a href="#5-dubbo" class="headerlink" title="5.dubbo"></a>5.dubbo</h3><ul>
-<li><strong>Github地址</strong>：<a href="https://github.com/apache/dubbo" target="_blank" rel="noopener">https://github.com/apache/dubbo</a></li>
-<li><strong>star</strong>: 27.6 k</li>
-<li><strong>介绍</strong>: Apache Dubbo是一个基于Java的高性能开源RPC框架。</li>
-</ul>
-<h3 id="6-jeecg-boot"><a href="#6-jeecg-boot" class="headerlink" title="6.jeecg-boot"></a>6.jeecg-boot</h3><ul>
-<li><strong>Github地址</strong>： <a href="https://github.com/zhangdaiscott/jeecg-boot" target="_blank" rel="noopener">https://github.com/zhangdaiscott/jeecg-boot</a></li>
-<li><strong>star</strong>: 3.3 k</li>
-<li><strong>介绍</strong>: 一款基于代码生成器的JAVA快速开发平台！全新架构前后端分离：SpringBoot 2.x，Ant Design&amp;Vue，Mybatis，Shiro，JWT。强大的代码生成器让前后端代码一键生成，无需写任何代码，绝对是全栈开发福音！！ JeecgBoot的宗旨是提高UI能力的同时,降低前后分离的开发成本，JeecgBoot还独创在线开发模式，No代码概念，一系列在线智能开发：在线配置表单、在线配置报表、在线设计流程等等。</li>
-</ul>
-<h3 id="7-advanced-java"><a href="#7-advanced-java" class="headerlink" title="7.advanced-java"></a>7.advanced-java</h3><ul>
-<li><strong>Github 地址</strong>：<a href="https://github.com/doocs/advanced-java" target="_blank" rel="noopener">https://github.com/doocs/advanced-java</a></li>
-<li><strong>Star</strong>: 24.2k</li>
-<li><strong>介绍</strong>: 互联网 Java 工程师进阶知识完全扫盲：涵盖高并发、分布式、高可用、微服务等领域知识，后端同学必看，前端同学也可学习。</li>
-</ul>
-<h3 id="8-FEBS-Shiro"><a href="#8-FEBS-Shiro" class="headerlink" title="8.FEBS-Shiro"></a>8.FEBS-Shiro</h3><ul>
-<li><strong>Github 地址</strong>：<a href="https://github.com/wuyouzhuguli/FEBS-Shiro" target="_blank" rel="noopener">https://github.com/wuyouzhuguli/FEBS-Shiro</a></li>
-<li><strong>Star</strong>: 2.6k</li>
-<li><strong>介绍</strong>: Spring Boot 2.1.3，Shiro1.4.0 &amp; Layui 2.5.4 权限管理系统。预览地址：<a href="http://49.234.20.223:8080/login。" target="_blank" rel="noopener">http://49.234.20.223:8080/login。</a></li>
-</ul>
-<h3 id="9-SpringAll"><a href="#9-SpringAll" class="headerlink" title="9.SpringAll"></a>9.SpringAll</h3><ul>
-<li><strong>Github 地址</strong>: <a href="https://github.com/wuyouzhuguli/SpringAll" target="_blank" rel="noopener">https://github.com/wuyouzhuguli/SpringAll</a></li>
-<li><strong>Star</strong>: 5.4k</li>
-<li><strong>介绍</strong>: 循序渐进，学习Spring Boot、Spring Boot &amp; Shiro、Spring Cloud、Spring Security &amp; Spring Security OAuth2，博客Spring系列源码。</li>
-</ul>
-<h3 id="10-JavaGuide"><a href="#10-JavaGuide" class="headerlink" title="10.JavaGuide"></a>10.JavaGuide</h3><ul>
-<li><strong>Github 地址</strong>：<a href="https://github.com/Snailclimb/JavaGuide" target="_blank" rel="noopener">https://github.com/Snailclimb/JavaGuide</a></li>
-<li><strong>Star</strong>:  47.2k </li>
-<li><strong>介绍</strong>: 【Java 学习+面试指南】 一份涵盖大部分 Java 程序员所需要掌握的核心知识。</li>
-</ul>
-<h3 id="11-vhr"><a href="#11-vhr" class="headerlink" title="11.vhr"></a>11.vhr</h3><ul>
-<li><strong>Github 地址</strong>：<a href="https://github.com/lenve/vhr" target="_blank" rel="noopener">https://github.com/lenve/vhr</a></li>
-<li><strong>Star</strong>:  4.9k </li>
-<li><strong>介绍</strong>: 微人事是一个前后端分离的人力资源管理系统，项目采用SpringBoot+Vue开发。</li>
-</ul>
-<h3 id="12-tutorials"><a href="#12-tutorials" class="headerlink" title="12. tutorials"></a>12. tutorials</h3><ul>
-<li><strong>Github 地址</strong>：<a href="https://github.com/eugenp/tutorials" target="_blank" rel="noopener">https://github.com/eugenp/tutorials</a></li>
-<li><strong>star</strong>: 15.4 k</li>
-<li><strong>介绍</strong>:  该项目是一系列小而专注的教程 - 每个教程都涵盖 Java 生态系统中单一且定义明确的开发领域。 当然，它们的重点是 Spring Framework  -  Spring，Spring Boot 和 Spring Securiyt。 除了 Spring 之外，还有以下技术：核心 Java，Jackson，HttpClient，Guava。</li>
-</ul>
-<h3 id="13-EasyScheduler"><a href="#13-EasyScheduler" class="headerlink" title="13.EasyScheduler"></a>13.EasyScheduler</h3><ul>
-<li><strong>Github 地址</strong>：<a href="https://github.com/analysys/EasyScheduler" target="_blank" rel="noopener">https://github.com/analysys/EasyScheduler</a></li>
-<li><strong>star</strong>: 1.1 k</li>
-<li><strong>介绍</strong>:  Easy Scheduler是一个分布式工作流任务调度系统，主要解决“复杂任务依赖但无法直接监控任务健康状态”的问题。Easy Scheduler以DAG方式组装任务，可以实时监控任务的运行状态。同时，它支持重试，重新运行等操作… 。<a href="https://analysys.github.io/easyscheduler_docs_cn/" target="_blank" rel="noopener">https://analysys.github.io/easyscheduler_docs_cn/</a></li>
-</ul>
-<h3 id="14-thingsboard"><a href="#14-thingsboard" class="headerlink" title="14.thingsboard"></a>14.thingsboard</h3><ul>
-<li><strong>Github 地址</strong>：<a href="https://github.com/thingsboard/thingsboard" target="_blank" rel="noopener">https://github.com/thingsboard/thingsboard</a></li>
-<li><strong>star</strong>: 3.7 k</li>
-<li><strong>介绍</strong>:  开源物联网平台 - 设备管理，数据收集，处理和可视化。 <a href="https://thingsboard.io/" target="_blank" rel="noopener">https://thingsboard.io</a></li>
-</ul>
-<h3 id="15-mall-learning"><a href="#15-mall-learning" class="headerlink" title="15.mall-learning"></a>15.mall-learning</h3><ul>
-<li><strong>Github 地址</strong>: <a href="https://github.com/macrozheng/mall-learning" target="_blank" rel="noopener">https://github.com/macrozheng/mall-learning</a></li>
-<li><strong>star</strong>: 0.6 k</li>
-<li><strong>介绍</strong>:  mall学习教程，架构、业务、技术要点全方位解析。mall项目（16k+star）是一套电商系统，使用现阶段主流技术实现。 涵盖了SpringBoot2.1.3、MyBatis3.4.6、Elasticsearch6.2.2、RabbitMQ3.7.15、Redis3.2、Mongodb3.2、Mysql5.7等技术，采用Docker容器化部署。 <a href="https://github.com/macrozheng/mall" target="_blank" rel="noopener">https://github.com/macrozheng/mall</a></li>
-</ul>
-<h3 id="16-flink"><a href="#16-flink" class="headerlink" title="16. flink"></a>16. flink</h3><ul>
-<li><strong>Github地址</strong>：<a href="https://github.com/apache/flink" target="_blank" rel="noopener">https://github.com/apache/flink</a></li>
-<li><strong>star</strong>: 9.3 k</li>
-<li><strong>介绍</strong>: Apache Flink是一个开源流处理框架，具有强大的流和批处理功能。</li>
-</ul>
-<h3 id="17-spring-cloud-kubernetes"><a href="#17-spring-cloud-kubernetes" class="headerlink" title="17.spring-cloud-kubernetes"></a>17.spring-cloud-kubernetes</h3><ul>
-<li><strong>Github地址</strong>：<a href="https://github.com/spring-cloud/spring-cloud-kubernetes" target="_blank" rel="noopener">https://github.com/spring-cloud/spring-cloud-kubernetes</a></li>
-<li><strong>star</strong>: 1.4 k</li>
-<li><strong>介绍</strong>: Kubernetes 集成 Spring Cloud Discovery Client, Configuration, etc…</li>
-</ul>
-<h3 id="18-springboot-learning-example"><a href="#18-springboot-learning-example" class="headerlink" title="18.springboot-learning-example"></a>18.springboot-learning-example</h3><ul>
-<li><strong>Github地址</strong>：<a href="https://github.com/JeffLi1993/springboot-learning-example" target="_blank" rel="noopener">https://github.com/JeffLi1993/springboot-learning-example</a></li>
-<li><strong>star</strong>: 10.0 k</li>
-<li><strong>介绍</strong>: spring boot 实践学习案例，是 spring boot 初学者及核心技术巩固的最佳实践。</li>
-</ul>
-<h3 id="19-canal"><a href="#19-canal" class="headerlink" title="19.canal"></a>19.canal</h3><ul>
-<li><strong>Github地址</strong>：<a href="https://github.com/alibaba/canal" target="_blank" rel="noopener">https://github.com/alibaba/canal</a></li>
-<li><strong>star</strong>: 9.3 k</li>
-<li><strong>介绍</strong>: 阿里巴巴 MySQL binlog 增量订阅&amp;消费组件。</li>
-</ul>
-<h3 id="20-react-native-device-info"><a href="#20-react-native-device-info" class="headerlink" title="20.react-native-device-info"></a>20.react-native-device-info</h3><ul>
-<li><strong>Github地址</strong>：<a href="https://github.com/react-native-community/react-native-device-info" target="_blank" rel="noopener">https://github.com/react-native-community/react-native-device-info</a></li>
-<li><strong>star</strong>: 4.0 k</li>
-<li><strong>介绍</strong>: React Native iOS和Android的设备信息。</li>
-</ul>
-
-          
-        
-      
+    <div class="header-main">
+        <h1><a href="/">苏有福的博客</a></h1>
     </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/github-trending/2019-5/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/avatar.gif"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/14/docs/github-trending/2019-5/" class="post-title-link" itemprop="url">Untitled</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
-            </span>
-          
-
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br/>
-          
-
-          
-
-          
-
+    <div id="nav">
+        <div class="nav-img" id="nav-img"></div>
+        <div class="sentences">
+            时光荏苒，旦夕之间，略有遗憾，似白驹过隙，蹉跎自悟。
         </div>
-      </header>
-    
+    </div>
+</header>
 
+<div id="content-outer">
+    <div id="content-inner">
+        <div class="clearfix">
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
+    <div id="recent-posts">
         
-          
-            <p>以下涉及到的数据统计与 2019 年 6 月 1 日 18 点，数据来源：<a href="https://github.com/trending/java?since=monthly" target="_blank" rel="noopener">https://github.com/trending/java?since=monthly</a> 。下面推荐的内容从 Java 学习文档到最热门的框架再到热门的工具应有尽有，建议收藏+在看！</p>
+            <div class="post-item">
+                <h1>
+                    <a href="/2019/07/14/docs/github-trending/2018-12/">
+                        
+                    </a>
+                </h1>
+                <div class="create">
+                    <span>Created</span>
+                    
+                        <time datetime="2019-07-14T14:47:16.500Z">
+                            2019-07-14
+                        </time>
+                    
+                    
+                </div>
+                
+                    <p>本文数据统计于 1.1 号凌晨，由 SnailClimb 整理。</p>
+<h3 id="1-JavaGuide"><a href="#1-JavaGuide" class="headerlink" title="1. JavaGuide"></a>1. JavaGuide</h3><ul>
+<li><strong>Github地址</strong>： <a href="https://github.com/Snailclimb/JavaGuide" target="_blank" rel="noopener">https://github.com/Snailclimb/JavaGuide</a></li>
+<li><strong>star</strong>: 18.2k</li>
+<li><strong>介绍</strong>: 【Java学习+面试指南】 一份涵盖大部分Java程序员所需要掌握的核心知识。</li>
+</ul>
+<h3 id="2-mall"><a href="#2-mall" class="headerlink" title="2. mall"></a>2. mall</h3><ul>
+<li><strong>Github地址</strong>： <a href="https://github.com/macrozheng/mall" target="_blank" rel="noopener">https://github.com/macrozheng/mall</a></li>
+<li><strong>star</strong>: 3.3k</li>
+<li><strong>介绍</strong>: mall项目是一套电商系统，包括前台商城系统及后台管理系统，基于SpringBoot+MyBatis实现。 前台商城系统包含首页门户、商品推荐、商品搜索、商品展示、购物车、订单流程、会员中心、客户服务、帮助中心等模块。 后台管理系统包含商品管理、订单管理、会员管理、促销管理、运营管理、内容管理、统计报表、财务管理、权限管理、设置等模块。</li>
+</ul>
+<h3 id="3-advanced-java"><a href="#3-advanced-java" class="headerlink" title="3. advanced-java"></a>3. advanced-java</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/doocs/advanced-java" target="_blank" rel="noopener">https://github.com/doocs/advanced-java</a></li>
+<li><strong>star</strong>: 3.3k</li>
+<li><strong>介绍</strong>: 互联网 Java 工程师进阶知识完全扫盲</li>
+</ul>
+<h3 id="4-matrix"><a href="#4-matrix" class="headerlink" title="4. matrix"></a>4. matrix</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/Tencent/matrix" target="_blank" rel="noopener">https://github.com/Tencent/matrix</a></li>
+<li><strong>star</strong>: 2.5k</li>
+<li><strong>介绍</strong>: Matrix 是一款微信研发并日常使用的 APM（Application Performance Manage），当前主要运行在 Android 平台上。 Matrix 的目标是建立统一的应用性能接入框架，通过各种性能监控方案，对性能监控项的异常数据进行采集和分析，输出相应的问题分析、定位与优化建议，从而帮助开发者开发出更高质量的应用。</li>
+</ul>
+<h3 id="5-miaosha"><a href="#5-miaosha" class="headerlink" title="5. miaosha"></a>5. miaosha</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/qiurunze123/miaosha" target="_blank" rel="noopener">https://github.com/qiurunze123/miaosha</a></li>
+<li><strong>star</strong>: 2.4k</li>
+<li><strong>介绍</strong>: 高并发大流量如何进行秒杀架构，我对这部分知识做了一个系统的整理，写了一套系统。</li>
+</ul>
+<h3 id="6-arthas"><a href="#6-arthas" class="headerlink" title="6. arthas"></a>6. arthas</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/alibaba/arthas" target="_blank" rel="noopener">https://github.com/alibaba/arthas</a></li>
+<li><strong>star</strong>: 8.2k</li>
+<li><strong>介绍</strong>: Arthas 是Alibaba开源的Java诊断工具，深受开发者喜爱。</li>
+</ul>
+<h3 id="7-spring-boot"><a href="#7-spring-boot" class="headerlink" title="7 spring-boot"></a>7 spring-boot</h3><ul>
+<li><p><strong>Github地址</strong>： <a href="https://github.com/spring-projects/spring-boot" target="_blank" rel="noopener">https://github.com/spring-projects/spring-boot</a></p>
+</li>
+<li><p><strong>star:</strong> 32.6k</p>
+</li>
+<li><p><strong>介绍</strong>： 虽然Spring的组件代码是轻量级的，但它的配置却是重量级的（需要大量XML配置）,不过Spring Boot 让这一切成为了过去。 另外Spring Cloud也是基于Spring Boot构建的，我个人非常有必要学习一下。</p>
+<p> <strong>关于Spring Boot官方的介绍：</strong></p>
+<blockquote>
+<p>Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can “just run”…Most Spring Boot applications need very little Spring configuration.(Spring Boot可以轻松创建独立的生产级基于Spring的应用程序,只要通过 “just run”（可能是run ‘Application’或java -jar 或 tomcat 或 maven插件run 或 shell脚本）便可以运行项目。大部分Spring Boot项目只需要少量的配置即可)</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="8-tutorials"><a href="#8-tutorials" class="headerlink" title="8. tutorials"></a>8. tutorials</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/eugenp/tutorials" target="_blank" rel="noopener">https://github.com/eugenp/tutorials</a></li>
+<li><strong>star</strong>: 10k</li>
+<li><strong>介绍</strong>: 该项目是一系列小而专注的教程 - 每个教程都涵盖Java生态系统中单一且定义明确的开发领域。 当然，它们的重点是Spring Framework  -  Spring，Spring Boot和Spring Securiyt。 除了Spring之外，还有以下技术：核心Java，Jackson，HttpClient，Guava。</li>
+</ul>
+<h3 id="9-qmq"><a href="#9-qmq" class="headerlink" title="9. qmq"></a>9. qmq</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/qunarcorp/qmq" target="_blank" rel="noopener">https://github.com/qunarcorp/qmq</a></li>
+<li><strong>star</strong>: 1.1k</li>
+<li><strong>介绍</strong>: QMQ是去哪儿网内部广泛使用的消息中间件，自2012年诞生以来在去哪儿网所有业务场景中广泛的应用，包括跟交易息息相关的订单场景； 也包括报价搜索等高吞吐量场景。</li>
+</ul>
+<h3 id="10-symphony"><a href="#10-symphony" class="headerlink" title="10. symphony"></a>10. symphony</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/b3log/symphony" target="_blank" rel="noopener">https://github.com/b3log/symphony</a></li>
+<li><strong>star</strong>: 9k</li>
+<li><strong>介绍</strong>:  一款用 Java 实现的现代化社区（论坛/BBS/社交网络/博客）平台。</li>
+</ul>
+<h3 id="11-incubator-dubbo"><a href="#11-incubator-dubbo" class="headerlink" title="11. incubator-dubbo"></a>11. incubator-dubbo</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/apache/incubator-dubbo" target="_blank" rel="noopener">https://github.com/apache/incubator-dubbo</a></li>
+<li><strong>star</strong>: 23.6k</li>
+<li><strong>介绍</strong>:  阿里开源的一个基于Java的高性能开源RPC框架。</li>
+</ul>
+<h3 id="12-apollo"><a href="#12-apollo" class="headerlink" title="12. apollo"></a>12. apollo</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/ctripcorp/apollo" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo</a></li>
+<li><strong>star</strong>: 10k</li>
+<li><strong>介绍</strong>:  Apollo（阿波罗）是携程框架部门研发的分布式配置中心，能够集中化管理应用不同环境、不同集群的配置，配置修改后能够实时推送到应用端，并且具备规范的权限、流程治理等特性，适用于微服务配置管理场景。</li>
+</ul>
+
+                
+                <div class="readmore">
+                    <a href="/2019/07/14/docs/github-trending/2018-12/">
+                        Read More
+                    </a>
+                </div>
+            </div>
+        
+            <div class="post-item">
+                <h1>
+                    <a href="/2019/07/14/docs/github-trending/2019-5/">
+                        
+                    </a>
+                </h1>
+                <div class="create">
+                    <span>Created</span>
+                    
+                        <time datetime="2019-07-14T14:47:16.500Z">
+                            2019-07-14
+                        </time>
+                    
+                    
+                </div>
+                
+                    <p>以下涉及到的数据统计与 2019 年 6 月 1 日 18 点，数据来源：<a href="https://github.com/trending/java?since=monthly" target="_blank" rel="noopener">https://github.com/trending/java?since=monthly</a> 。下面推荐的内容从 Java 学习文档到最热门的框架再到热门的工具应有尽有，建议收藏+在看！</p>
 <h3 id="1-LeetCodeAnimation"><a href="#1-LeetCodeAnimation" class="headerlink" title="1.LeetCodeAnimation"></a>1.LeetCodeAnimation</h3><ul>
 <li><strong>Github 地址</strong>： <a href="https://github.com/MisterBooo/LeetCodeAnimation" target="_blank" rel="noopener">https://github.com/MisterBooo/LeetCodeAnimation</a></li>
 <li><strong>Star</strong>:  29.0k (11,492 stars this month)</li>
@@ -1061,151 +258,135 @@
 <li><strong>介绍</strong>: Hutool是一个Java工具包，也只是一个工具包，它帮助我们简化每一行代码，减少每一个方法，让Java语言也可以“甜甜的”。Hutool最初是我项目中“util”包的一个整理，后来慢慢积累并加入更多非业务相关功能，并广泛学习其它开源项目精髓，经过自己整理修改，最终形成丰富的开源工具集。官网:<a href="https://www.hutool.cn/" target="_blank" rel="noopener">https://www.hutool.cn/</a> 。</li>
 </ul>
 
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/java/BIO-NIO-AIO/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/avatar.gif"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2019/07/14/docs/java/BIO-NIO-AIO/" class="post-title-link" itemprop="url">Untitled</a>
-              
-            
-          </h1>
+                <div class="readmore">
+                    <a href="/2019/07/14/docs/github-trending/2019-5/">
+                        Read More
+                    </a>
+                </div>
+            </div>
         
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
+            <div class="post-item">
+                <h1>
+                    <a href="/2019/07/14/docs/index/">
+                        
+                    </a>
+                </h1>
+                <div class="create">
+                    <span>Created</span>
+                    
+                        <time datetime="2019-07-14T14:47:16.500Z">
+                            2019-07-14
+                        </time>
+                    
+                    
+                </div>
                 
-              
+                    <!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  <title>JavaGuide</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
+  <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/prism.css">
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      name: 'JavaGuide',
+      repo: 'https://github.com/Snailclimb/JavaGuide',
+	  maxLevel: 3,//最大支持渲染的标题层级
+	  homepage: 'HomePage.md',
+	  coverpage: true,//封面,_coverpage.md
+	  auto2top: true,//切换页面后是否自动跳转到页面顶部
+	  //ga: 'UA-138586553-1',
+	  //logo: 'https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-3logo-透明.png' ,
+     search: {
+	    //maxAge: 86400000, // 过期时间，单位毫秒，默认一天
+        paths: 'auto',
+		placeholder: '搜索',
+		noData: '找不到结果',
+	    // 搜索标题的最大程级, 1 - 6
+        depth: 3,
+        },
+	  
+    }
+  </script>
+  <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+  <!--Java代码高亮-->
+  <script src="//unpkg.com/prismjs/components/prism-java.js"></script>
+  <!--全文搜索,直接用官方提供的无法生效-->
+  <script src="https://cdn.bootcss.com/docsify/4.5.9/plugins/search.min.js"></script>
+  <!--谷歌统计
+  <script src="//unpkg.com/docsify" data-ga="UA-138586553-1"></script>
+  <script src="//unpkg.com/docsify/lib/plugins/ga.js"></script>
+  -->
+</body>
+</html>
 
-              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
-            </span>
-          
-
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br/>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
+                
+                <div class="readmore">
+                    <a href="/2019/07/14/docs/index/">
+                        Read More
+                    </a>
+                </div>
+            </div>
         
-          
-            <p>熟练掌握 BIO,NIO,AIO 的基本概念以及一些常见问题是你准备面试的过程中不可或缺的一部分，另外这些知识点也是你学习 Netty 的基础。</p>
+            <div class="post-item">
+                <h1>
+                    <a href="/2019/07/14/docs/github-trending/JavaGithubTrending/">
+                        
+                    </a>
+                </h1>
+                <div class="create">
+                    <span>Created</span>
+                    
+                        <time datetime="2019-07-14T14:47:16.500Z">
+                            2019-07-14
+                        </time>
+                    
+                    
+                </div>
+                
+                    <ul>
+<li><a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/github-trending/2018-12.md" target="_blank" rel="noopener">2018 年 12 月</a></li>
+<li><a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/github-trending/2019-1.md" target="_blank" rel="noopener">2019 年 1 月</a></li>
+<li><a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/github-trending/2019-2.md" target="_blank" rel="noopener">2019 年 2 月</a></li>
+<li><a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/github-trending/2019-3.md" target="_blank" rel="noopener">2019 年 3 月</a></li>
+<li><a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/github-trending/2019-4.md" target="_blank" rel="noopener">2019 年 4 月</a></li>
+<li><a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/github-trending/2019-5.md" target="_blank" rel="noopener">2019 年 5 月</a></li>
+<li><a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/github-trending/2019-6.md" target="_blank" rel="noopener">2019 年 6 月</a></li>
+</ul>
+
+                
+                <div class="readmore">
+                    <a href="/2019/07/14/docs/github-trending/JavaGithubTrending/">
+                        Read More
+                    </a>
+                </div>
+            </div>
+        
+            <div class="post-item">
+                <h1>
+                    <a href="/2019/07/14/docs/java/BIO-NIO-AIO/">
+                        
+                    </a>
+                </h1>
+                <div class="create">
+                    <span>Created</span>
+                    
+                        <time datetime="2019-07-14T14:47:16.500Z">
+                            2019-07-14
+                        </time>
+                    
+                    
+                </div>
+                
+                    <p>熟练掌握 BIO,NIO,AIO 的基本概念以及一些常见问题是你准备面试的过程中不可或缺的一部分，另外这些知识点也是你学习 Netty 的基础。</p>
 <!-- MarkdownTOC -->
 
 <ul>
@@ -1322,536 +503,156 @@
 <li><a href="https://zhuanlan.zhihu.com/p/23488863" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/23488863</a> (美团技术团队)</li>
 </ul>
 
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/github-trending/2019-3/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/avatar.gif"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2019/07/14/docs/github-trending/2019-3/" class="post-title-link" itemprop="url">Untitled</a>
-              
-            
-          </h1>
+                <div class="readmore">
+                    <a href="/2019/07/14/docs/java/BIO-NIO-AIO/">
+                        Read More
+                    </a>
+                </div>
+            </div>
         
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
+            <div class="post-item">
+                <h1>
+                    <a href="/2019/07/14/docs/github-trending/2019-6/">
+                        
+                    </a>
+                </h1>
+                <div class="create">
+                    <span>Created</span>
+                    
+                        <time datetime="2019-07-14T14:47:16.500Z">
+                            2019-07-14
+                        </time>
+                    
+                    
+                </div>
                 
-              
-
-              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
-            </span>
-          
-
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br/>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="1-JavaGuide"><a href="#1-JavaGuide" class="headerlink" title="1. JavaGuide"></a>1. JavaGuide</h3><ul>
-<li><strong>Github 地址</strong>： <a href="https://github.com/Snailclimb/JavaGuide" target="_blank" rel="noopener">https://github.com/Snailclimb/JavaGuide</a></li>
-<li><strong>Star</strong>:  32.9k (6,196 stars this month)</li>
+                    <h3 id="1-CS-Notes"><a href="#1-CS-Notes" class="headerlink" title="1.CS-Notes"></a>1.CS-Notes</h3><ul>
+<li><strong>Github 地址</strong>：<a href="https://github.com/CyC2018/CS-Notes" target="_blank" rel="noopener">https://github.com/CyC2018/CS-Notes</a></li>
+<li><strong>Star</strong>:  69.8k</li>
+<li><strong>介绍</strong>: 技术面试必备基础知识、Leetcode 题解、后端面试、Java 面试、春招、秋招、操作系统、计算机网络、系统设计。</li>
+</ul>
+<h3 id="2-toBeTopJavaer"><a href="#2-toBeTopJavaer" class="headerlink" title="2.toBeTopJavaer"></a>2.toBeTopJavaer</h3><ul>
+<li><strong>Github 地址：</strong><a href="https://github.com/hollischuang/toBeTopJavaer" target="_blank" rel="noopener">https://github.com/hollischuang/toBeTopJavaer</a></li>
+<li><strong>Star</strong>:  4.7k</li>
+<li><strong>介绍</strong>: To Be Top Javaer - Java工程师成神之路。</li>
+</ul>
+<h3 id="3-p3c"><a href="#3-p3c" class="headerlink" title="3.p3c"></a>3.p3c</h3><ul>
+<li><strong>Github 地址：</strong> <a href="https://github.com/alibaba/p3c" target="_blank" rel="noopener">https://github.com/alibaba/p3c</a></li>
+<li><strong>Star</strong>:  16.6k</li>
+<li><strong>介绍</strong>: Alibaba Java Coding Guidelines pmd implements and IDE plugin。Eclipse 和 IDEA 上都有该插件，推荐使用！</li>
+</ul>
+<h3 id="4-SpringCloudLearning"><a href="#4-SpringCloudLearning" class="headerlink" title="4.SpringCloudLearning"></a>4.SpringCloudLearning</h3><ul>
+<li><strong>Github 地址：</strong> <a href="https://github.com/forezp/SpringCloudLearning" target="_blank" rel="noopener">https://github.com/forezp/SpringCloudLearning</a></li>
+<li><strong>Star</strong>:  8.7k</li>
+<li><strong>介绍</strong>: 史上最简单的Spring Cloud教程源码。</li>
+</ul>
+<h3 id="5-dubbo"><a href="#5-dubbo" class="headerlink" title="5.dubbo"></a>5.dubbo</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/apache/dubbo" target="_blank" rel="noopener">https://github.com/apache/dubbo</a></li>
+<li><strong>star</strong>: 27.6 k</li>
+<li><strong>介绍</strong>: Apache Dubbo是一个基于Java的高性能开源RPC框架。</li>
+</ul>
+<h3 id="6-jeecg-boot"><a href="#6-jeecg-boot" class="headerlink" title="6.jeecg-boot"></a>6.jeecg-boot</h3><ul>
+<li><strong>Github地址</strong>： <a href="https://github.com/zhangdaiscott/jeecg-boot" target="_blank" rel="noopener">https://github.com/zhangdaiscott/jeecg-boot</a></li>
+<li><strong>star</strong>: 3.3 k</li>
+<li><strong>介绍</strong>: 一款基于代码生成器的JAVA快速开发平台！全新架构前后端分离：SpringBoot 2.x，Ant Design&amp;Vue，Mybatis，Shiro，JWT。强大的代码生成器让前后端代码一键生成，无需写任何代码，绝对是全栈开发福音！！ JeecgBoot的宗旨是提高UI能力的同时,降低前后分离的开发成本，JeecgBoot还独创在线开发模式，No代码概念，一系列在线智能开发：在线配置表单、在线配置报表、在线设计流程等等。</li>
+</ul>
+<h3 id="7-advanced-java"><a href="#7-advanced-java" class="headerlink" title="7.advanced-java"></a>7.advanced-java</h3><ul>
+<li><strong>Github 地址</strong>：<a href="https://github.com/doocs/advanced-java" target="_blank" rel="noopener">https://github.com/doocs/advanced-java</a></li>
+<li><strong>Star</strong>: 24.2k</li>
+<li><strong>介绍</strong>: 互联网 Java 工程师进阶知识完全扫盲：涵盖高并发、分布式、高可用、微服务等领域知识，后端同学必看，前端同学也可学习。</li>
+</ul>
+<h3 id="8-FEBS-Shiro"><a href="#8-FEBS-Shiro" class="headerlink" title="8.FEBS-Shiro"></a>8.FEBS-Shiro</h3><ul>
+<li><strong>Github 地址</strong>：<a href="https://github.com/wuyouzhuguli/FEBS-Shiro" target="_blank" rel="noopener">https://github.com/wuyouzhuguli/FEBS-Shiro</a></li>
+<li><strong>Star</strong>: 2.6k</li>
+<li><strong>介绍</strong>: Spring Boot 2.1.3，Shiro1.4.0 &amp; Layui 2.5.4 权限管理系统。预览地址：<a href="http://49.234.20.223:8080/login。" target="_blank" rel="noopener">http://49.234.20.223:8080/login。</a></li>
+</ul>
+<h3 id="9-SpringAll"><a href="#9-SpringAll" class="headerlink" title="9.SpringAll"></a>9.SpringAll</h3><ul>
+<li><strong>Github 地址</strong>: <a href="https://github.com/wuyouzhuguli/SpringAll" target="_blank" rel="noopener">https://github.com/wuyouzhuguli/SpringAll</a></li>
+<li><strong>Star</strong>: 5.4k</li>
+<li><strong>介绍</strong>: 循序渐进，学习Spring Boot、Spring Boot &amp; Shiro、Spring Cloud、Spring Security &amp; Spring Security OAuth2，博客Spring系列源码。</li>
+</ul>
+<h3 id="10-JavaGuide"><a href="#10-JavaGuide" class="headerlink" title="10.JavaGuide"></a>10.JavaGuide</h3><ul>
+<li><strong>Github 地址</strong>：<a href="https://github.com/Snailclimb/JavaGuide" target="_blank" rel="noopener">https://github.com/Snailclimb/JavaGuide</a></li>
+<li><strong>Star</strong>:  47.2k </li>
 <li><strong>介绍</strong>: 【Java 学习+面试指南】 一份涵盖大部分 Java 程序员所需要掌握的核心知识。</li>
 </ul>
-<h3 id="2-advanced-java"><a href="#2-advanced-java" class="headerlink" title="2.advanced-java"></a>2.advanced-java</h3><ul>
-<li><strong>Github 地址</strong>：<a href="https://github.com/doocs/advanced-java" target="_blank" rel="noopener">https://github.com/doocs/advanced-java</a></li>
-<li><strong>Star</strong>: 15.1k (4,012 stars this month)</li>
-<li><strong>介绍</strong>: 互联网 Java 工程师进阶知识完全扫盲。</li>
+<h3 id="11-vhr"><a href="#11-vhr" class="headerlink" title="11.vhr"></a>11.vhr</h3><ul>
+<li><strong>Github 地址</strong>：<a href="https://github.com/lenve/vhr" target="_blank" rel="noopener">https://github.com/lenve/vhr</a></li>
+<li><strong>Star</strong>:  4.9k </li>
+<li><strong>介绍</strong>: 微人事是一个前后端分离的人力资源管理系统，项目采用SpringBoot+Vue开发。</li>
 </ul>
-<h3 id="3-spring-boot-examples"><a href="#3-spring-boot-examples" class="headerlink" title="3.spring-boot-examples"></a>3.spring-boot-examples</h3><ul>
-<li><strong>Github 地址</strong>：<a href="https://github.com/ityouknow/spring-boot-examples" target="_blank" rel="noopener">https://github.com/ityouknow/spring-boot-examples</a></li>
-<li><strong>Star</strong>: 12.8k (3,462 stars this month)</li>
-<li><strong>介绍</strong>:  Spring Boot 教程、技术栈示例代码，快速简单上手教程。</li>
-</ul>
-<h3 id="4-mall"><a href="#4-mall" class="headerlink" title="4. mall"></a>4. mall</h3><ul>
-<li><strong>Github 地址</strong>： <a href="https://github.com/macrozheng/mall" target="_blank" rel="noopener">https://github.com/macrozheng/mall</a></li>
-<li><strong>star</strong>: 9.7 k (2,418 stars this month)</li>
-<li><strong>介绍</strong>: mall 项目是一套电商系统，包括前台商城系统及后台管理系统，基于 SpringBoot+MyBatis 实现。 前台商城系统包含首页门户、商品推荐、商品搜索、商品展示、购物车、订单流程、会员中心、客户服务、帮助中心等模块。 后台管理系统包含商品管理、订单管理、会员管理、促销管理、运营管理、内容管理、统计报表、财务管理、权限管理、设置等模块。</li>
-</ul>
-<h3 id="5-seata"><a href="#5-seata" class="headerlink" title="5. seata"></a>5. seata</h3><ul>
-<li><strong>Github 地址</strong> : <a href="https://github.com/seata/seata" target="_blank" rel="noopener">https://github.com/seata/seata</a></li>
-<li><strong>star</strong>: 7.2 k (1359 stars this month)</li>
-<li><strong>介绍</strong>:  Seata 是一种易于使用，高性能，基于 Java 的开源分布式事务解决方案。</li>
-</ul>
-<h3 id="6-quarkus"><a href="#6-quarkus" class="headerlink" title="6. quarkus"></a>6. quarkus</h3><ul>
-<li><strong>Github 地址</strong>：<a href="https://github.com/quarkusio/quarkus" target="_blank" rel="noopener">https://github.com/quarkusio/quarkus</a></li>
-<li><strong>star</strong>: 12 k (1,224 stars this month)</li>
-<li><strong>介绍</strong>: Quarkus 是为 GraalVM 和 HotSpot 量身定制的 Kubernetes Native Java 框架，由最佳的 Java 库和标准精心打造而成。Quarkus 的目标是使 Java 成为 Kubernetes 和无服务器环境中的领先平台，同时为开发人员提供统一的反应式和命令式编程模型，以优化地满足更广泛的分布式应用程序架构。</li>
-</ul>
-<h3 id="7-arthas"><a href="#7-arthas" class="headerlink" title="7. arthas"></a>7. arthas</h3><ul>
-<li><strong>Github 地址</strong>：<a href="https://github.com/alibaba/arthas" target="_blank" rel="noopener">https://github.com/alibaba/arthas</a></li>
-<li><strong>star</strong>: 11.6 k (1,199 stars this month)</li>
-<li><strong>介绍</strong>: Arthas 是 Alibaba 开源的 Java 诊断工具。</li>
-</ul>
-<h3 id="8-DoraemonKit"><a href="#8-DoraemonKit" class="headerlink" title="8.DoraemonKit"></a>8.DoraemonKit</h3><ul>
-<li><strong>Github 地址</strong>： <a href="https://github.com/didi/DoraemonKit" target="_blank" rel="noopener">https://github.com/didi/DoraemonKit</a></li>
-<li><strong>Star</strong>: 6.2k (1,177 stars this month)</li>
-<li><strong>介绍</strong>: 简称 “DoKit” 。一款功能齐全的客户端（ iOS 、Android ）研发助手，你值得拥有。</li>
-</ul>
-<h3 id="9-elasticsearch"><a href="#9-elasticsearch" class="headerlink" title="9.elasticsearch"></a>9.elasticsearch</h3><ul>
-<li><strong>Github 地址</strong>  <a href="https://github.com/elastic/elasticsearch" target="_blank" rel="noopener">https://github.com/elastic/elasticsearch</a></li>
-<li><strong>Star</strong>: 39.7k (1,069 stars this month)</li>
-<li><strong>介绍</strong>: 开源，分布式，RESTful 搜索引擎。</li>
-</ul>
-<h3 id="10-tutorials"><a href="#10-tutorials" class="headerlink" title="10. tutorials"></a>10. tutorials</h3><ul>
+<h3 id="12-tutorials"><a href="#12-tutorials" class="headerlink" title="12. tutorials"></a>12. tutorials</h3><ul>
 <li><strong>Github 地址</strong>：<a href="https://github.com/eugenp/tutorials" target="_blank" rel="noopener">https://github.com/eugenp/tutorials</a></li>
-<li><strong>star</strong>: 13 k (998 stars this month)</li>
+<li><strong>star</strong>: 15.4 k</li>
 <li><strong>介绍</strong>:  该项目是一系列小而专注的教程 - 每个教程都涵盖 Java 生态系统中单一且定义明确的开发领域。 当然，它们的重点是 Spring Framework  -  Spring，Spring Boot 和 Spring Securiyt。 除了 Spring 之外，还有以下技术：核心 Java，Jackson，HttpClient，Guava。</li>
 </ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/essential-content-for-interview/简历模板/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/avatar.gif"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/14/docs/essential-content-for-interview/简历模板/" class="post-title-link" itemprop="url">Untitled</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
-            </span>
-          
-
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br/>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul>
-<li>手机：</li>
-<li>Email：</li>
-<li>微信：</li>
+<h3 id="13-EasyScheduler"><a href="#13-EasyScheduler" class="headerlink" title="13.EasyScheduler"></a>13.EasyScheduler</h3><ul>
+<li><strong>Github 地址</strong>：<a href="https://github.com/analysys/EasyScheduler" target="_blank" rel="noopener">https://github.com/analysys/EasyScheduler</a></li>
+<li><strong>star</strong>: 1.1 k</li>
+<li><strong>介绍</strong>:  Easy Scheduler是一个分布式工作流任务调度系统，主要解决“复杂任务依赖但无法直接监控任务健康状态”的问题。Easy Scheduler以DAG方式组装任务，可以实时监控任务的运行状态。同时，它支持重试，重新运行等操作… 。<a href="https://analysys.github.io/easyscheduler_docs_cn/" target="_blank" rel="noopener">https://analysys.github.io/easyscheduler_docs_cn/</a></li>
 </ul>
-<h1 id="个人信息"><a href="#个人信息" class="headerlink" title="个人信息"></a>个人信息</h1><ul>
-<li>姓名/性别/出生日期 </li>
-<li>本科/xxx计算机系xxx专业/英语六级</li>
-<li>技术博客：<a href="http://snailclimb.top/" target="_blank" rel="noopener">http://snailclimb.top/</a> </li>
-<li>荣誉奖励：获得了什么奖（获奖时间）</li>
-<li>Github：<a href="https://github.com/Snailclimb" target="_blank" rel="noopener">https://github.com/Snailclimb </a></li>
-<li>Github Resume: <a href="http://resume.github.io/?Snailclimb" target="_blank" rel="noopener">http://resume.github.io/?Snailclimb</a></li>
-<li>期望职位：Java 研发程序员/大数据工程师(Java后台开发为首选)</li>
-<li>期望城市：xxx城市</li>
+<h3 id="14-thingsboard"><a href="#14-thingsboard" class="headerlink" title="14.thingsboard"></a>14.thingsboard</h3><ul>
+<li><strong>Github 地址</strong>：<a href="https://github.com/thingsboard/thingsboard" target="_blank" rel="noopener">https://github.com/thingsboard/thingsboard</a></li>
+<li><strong>star</strong>: 3.7 k</li>
+<li><strong>介绍</strong>:  开源物联网平台 - 设备管理，数据收集，处理和可视化。 <a href="https://thingsboard.io/" target="_blank" rel="noopener">https://thingsboard.io</a></li>
 </ul>
-<h1 id="项目经历"><a href="#项目经历" class="headerlink" title="项目经历"></a>项目经历</h1><h2 id="xxx项目"><a href="#xxx项目" class="headerlink" title="xxx项目"></a>xxx项目</h2><h3 id="项目描述"><a href="#项目描述" class="headerlink" title="项目描述"></a>项目描述</h3><p>介绍该项目是做什么的、使用到了什么技术以及你对项目整体设计的一个感受</p>
-<h3 id="责任描述"><a href="#责任描述" class="headerlink" title="责任描述"></a>责任描述</h3><p>主要可以从下面三点来写：</p>
-<ol>
-<li>在这个项目中你负责了什么、做了什么、担任了什么角色</li>
-<li>从这个项目中你学会了那些东西，使用到了那些技术，学会了那些新技术的使用</li>
-<li>另外项目描述中，最好可以体现自己的综合素质，比如你是如何协调项目组成员协同开发的或者在遇到某一个棘手的问题的时候你是如何解决的。</li>
-</ol>
-<h1 id="开源项目和技术文章"><a href="#开源项目和技术文章" class="headerlink" title="开源项目和技术文章"></a>开源项目和技术文章</h1><h2 id="开源项目"><a href="#开源项目" class="headerlink" title="开源项目"></a>开源项目</h2><ul>
-<li><a href="https://github.com/Snailclimb/Java-Guide" target="_blank" rel="noopener">Java-Guide</a> ：一份涵盖大部分Java程序员所需要掌握的核心知识。Star:3.9K; Fork:0.9k。</li>
+<h3 id="15-mall-learning"><a href="#15-mall-learning" class="headerlink" title="15.mall-learning"></a>15.mall-learning</h3><ul>
+<li><strong>Github 地址</strong>: <a href="https://github.com/macrozheng/mall-learning" target="_blank" rel="noopener">https://github.com/macrozheng/mall-learning</a></li>
+<li><strong>star</strong>: 0.6 k</li>
+<li><strong>介绍</strong>:  mall学习教程，架构、业务、技术要点全方位解析。mall项目（16k+star）是一套电商系统，使用现阶段主流技术实现。 涵盖了SpringBoot2.1.3、MyBatis3.4.6、Elasticsearch6.2.2、RabbitMQ3.7.15、Redis3.2、Mongodb3.2、Mysql5.7等技术，采用Docker容器化部署。 <a href="https://github.com/macrozheng/mall" target="_blank" rel="noopener">https://github.com/macrozheng/mall</a></li>
 </ul>
-<h2 id="技术文章推荐"><a href="#技术文章推荐" class="headerlink" title="技术文章推荐"></a>技术文章推荐</h2><ul>
-<li><a href="https://juejin.im/post/5b7d69e4e51d4538ca5730cb" target="_blank" rel="noopener">可能是把Java内存区域讲的最清楚的一篇文章</a></li>
-<li><a href="https://juejin.im/post/5b85ea54e51d4538dd08f601" target="_blank" rel="noopener">搞定JVM垃圾回收就是这么简单</a></li>
-<li><a href="https://juejin.im/post/5b3b19856fb9a04fa42f8c71" target="_blank" rel="noopener">前端&amp;后端程序员必备的Linux基础知识</a></li>
-<li><a href="https://juejin.im/post/5b260ec26fb9a00e8e4b031a" target="_blank" rel="noopener">可能是把Docker的概念讲的最清楚的一篇文章</a></li>
+<h3 id="16-flink"><a href="#16-flink" class="headerlink" title="16. flink"></a>16. flink</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/apache/flink" target="_blank" rel="noopener">https://github.com/apache/flink</a></li>
+<li><strong>star</strong>: 9.3 k</li>
+<li><strong>介绍</strong>: Apache Flink是一个开源流处理框架，具有强大的流和批处理功能。</li>
 </ul>
-<h1 id="校园经历（可选）"><a href="#校园经历（可选）" class="headerlink" title="校园经历（可选）"></a>校园经历（可选）</h1><h2 id="2016-2017"><a href="#2016-2017" class="headerlink" title="2016-2017"></a>2016-2017</h2><p>担任学校社团-致深社副会长，主要负责团队每周活动的组建以及每周例会的主持。</p>
-<h2 id="2017-2018"><a href="#2017-2018" class="headerlink" title="2017-2018"></a>2017-2018</h2><p> 担任学校传媒组织：“长江大学在线信息传媒”的副站长以及安卓组成员。主要负责每周例会主持、活动策划以及学校校园通APP的研发工作。</p>
-<h1 id="技能清单"><a href="#技能清单" class="headerlink" title="技能清单"></a>技能清单</h1><p>以下均为我熟练使用的技能</p>
-<ul>
-<li>Web开发：PHP/Hack/Node</li>
-<li>Web框架：ThinkPHP/Yaf/Yii/Lavarel/LazyPHP</li>
-<li>前端框架：Bootstrap/AngularJS/EmberJS/HTML5/Cocos2dJS/ionic</li>
-<li>前端工具：Bower/Gulp/SaSS/LeSS/PhoneGap</li>
-<li>数据库相关：MySQL/PgSQL/PDO/SQLite</li>
-<li>版本管理、文档和自动化部署工具：Svn/Git/PHPDoc/Phing/Composer</li>
-<li>单元测试：PHPUnit/SimpleTest/Qunit</li>
-<li>云和开放平台：SAE/BAE/AWS/微博开放平台/微信应用开发</li>
+<h3 id="17-spring-cloud-kubernetes"><a href="#17-spring-cloud-kubernetes" class="headerlink" title="17.spring-cloud-kubernetes"></a>17.spring-cloud-kubernetes</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/spring-cloud/spring-cloud-kubernetes" target="_blank" rel="noopener">https://github.com/spring-cloud/spring-cloud-kubernetes</a></li>
+<li><strong>star</strong>: 1.4 k</li>
+<li><strong>介绍</strong>: Kubernetes 集成 Spring Cloud Discovery Client, Configuration, etc…</li>
 </ul>
-<h1 id="自我评价（可选）"><a href="#自我评价（可选）" class="headerlink" title="自我评价（可选）"></a>自我评价（可选）</h1><p>自我发挥。切记不要过度自夸！！！</p>
-<h3 id="感谢您花时间阅读我的简历，期待能有机会和您共事。"><a href="#感谢您花时间阅读我的简历，期待能有机会和您共事。" class="headerlink" title="感谢您花时间阅读我的简历，期待能有机会和您共事。"></a>感谢您花时间阅读我的简历，期待能有机会和您共事。</h3>
-          
-        
-      
-    </div>
+<h3 id="18-springboot-learning-example"><a href="#18-springboot-learning-example" class="headerlink" title="18.springboot-learning-example"></a>18.springboot-learning-example</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/JeffLi1993/springboot-learning-example" target="_blank" rel="noopener">https://github.com/JeffLi1993/springboot-learning-example</a></li>
+<li><strong>star</strong>: 10.0 k</li>
+<li><strong>介绍</strong>: spring boot 实践学习案例，是 spring boot 初学者及核心技术巩固的最佳实践。</li>
+</ul>
+<h3 id="19-canal"><a href="#19-canal" class="headerlink" title="19.canal"></a>19.canal</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/alibaba/canal" target="_blank" rel="noopener">https://github.com/alibaba/canal</a></li>
+<li><strong>star</strong>: 9.3 k</li>
+<li><strong>介绍</strong>: 阿里巴巴 MySQL binlog 增量订阅&amp;消费组件。</li>
+</ul>
+<h3 id="20-react-native-device-info"><a href="#20-react-native-device-info" class="headerlink" title="20.react-native-device-info"></a>20.react-native-device-info</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/react-native-community/react-native-device-info" target="_blank" rel="noopener">https://github.com/react-native-community/react-native-device-info</a></li>
+<li><strong>star</strong>: 4.0 k</li>
+<li><strong>介绍</strong>: React Native iOS和Android的设备信息。</li>
+</ul>
 
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/essential-content-for-interview/手把手教你用Markdown写一份高质量的简历/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/avatar.gif"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2019/07/14/docs/essential-content-for-interview/手把手教你用Markdown写一份高质量的简历/" class="post-title-link" itemprop="url">Untitled</a>
-              
-            
-          </h1>
+                <div class="readmore">
+                    <a href="/2019/07/14/docs/github-trending/2019-6/">
+                        Read More
+                    </a>
+                </div>
+            </div>
         
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
+            <div class="post-item">
+                <h1>
+                    <a href="/2019/07/14/docs/essential-content-for-interview/手把手教你用Markdown写一份高质量的简历/">
+                        
+                    </a>
+                </h1>
+                <div class="create">
+                    <span>Created</span>
+                    
+                        <time datetime="2019-07-14T14:47:16.496Z">
+                            2019-07-14
+                        </time>
+                    
+                    
+                </div>
                 
-              
-
-              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
-            </span>
-          
-
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br/>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Markdown-简历模板样式一览"><a href="#Markdown-简历模板样式一览" class="headerlink" title="Markdown 简历模板样式一览"></a>Markdown 简历模板样式一览</h2><p><img src="https://user-gold-cdn.xitu.io/2018/9/3/1659f91e4843bd67?w=800&h=1737&f=png&s=97357" alt><br><strong>可以看到我把联系方式放在第一位，因为公司一般会与你联系，所以把联系方式放在第一位也是为了方便联系考虑。</strong></p>
+                    <h2 id="Markdown-简历模板样式一览"><a href="#Markdown-简历模板样式一览" class="headerlink" title="Markdown 简历模板样式一览"></a>Markdown 简历模板样式一览</h2><p><img src="https://user-gold-cdn.xitu.io/2018/9/3/1659f91e4843bd67?w=800&h=1737&f=png&s=97357" alt><br><strong>可以看到我把联系方式放在第一位，因为公司一般会与你联系，所以把联系方式放在第一位也是为了方便联系考虑。</strong></p>
 <h2 id="为什么要用-Markdown-写简历？"><a href="#为什么要用-Markdown-写简历？" class="headerlink" title="为什么要用 Markdown 写简历？"></a>为什么要用 Markdown 写简历？</h2><p>Markdown 语法简单，易于上手。使用正确的 Markdown 语言写出来的简历不论是在排版还是格式上都比较干净，易于阅读。另外，使用 Markdown 写简历也会给面试官一种你比较专业的感觉。</p>
 <p>除了这些，我觉得使用 Markdown 写简历可以很方便将其与PDF、HTML、PNG格式之间转换。后面我会介绍到转换方法，只需要一条命令你就可以实现 Markdown 到 PDF、HTML 与 PNG之间的无缝切换。</p>
 <blockquote>
@@ -1912,151 +713,101 @@
 <h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>随便打开一份 Markdown 文件 点击F1，然后输入export即可！</p>
 <p><img src="https://user-gold-cdn.xitu.io/2018/9/3/1659fa0292906150?w=1289&h=468&f=png&s=72178" alt></p>
 
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/essential-content-for-interview/PreparingForInterview/美团面试常见问题总结/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/avatar.gif"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2019/07/14/docs/essential-content-for-interview/PreparingForInterview/美团面试常见问题总结/" class="post-title-link" itemprop="url">Untitled</a>
-              
-            
-          </h1>
+                <div class="readmore">
+                    <a href="/2019/07/14/docs/essential-content-for-interview/手把手教你用Markdown写一份高质量的简历/">
+                        Read More
+                    </a>
+                </div>
+            </div>
         
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
+            <div class="post-item">
+                <h1>
+                    <a href="/2019/07/14/docs/essential-content-for-interview/简历模板/">
+                        
+                    </a>
+                </h1>
+                <div class="create">
+                    <span>Created</span>
+                    
+                        <time datetime="2019-07-14T14:47:16.496Z">
+                            2019-07-14
+                        </time>
+                    
+                    
+                </div>
                 
-              
-
-              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
-            </span>
-          
-
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br/>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
+                    <h1 id="联系方式"><a href="#联系方式" class="headerlink" title="联系方式"></a>联系方式</h1><ul>
+<li>手机：</li>
+<li>Email：</li>
+<li>微信：</li>
+</ul>
+<h1 id="个人信息"><a href="#个人信息" class="headerlink" title="个人信息"></a>个人信息</h1><ul>
+<li>姓名/性别/出生日期 </li>
+<li>本科/xxx计算机系xxx专业/英语六级</li>
+<li>技术博客：<a href="http://snailclimb.top/" target="_blank" rel="noopener">http://snailclimb.top/</a> </li>
+<li>荣誉奖励：获得了什么奖（获奖时间）</li>
+<li>Github：<a href="https://github.com/Snailclimb" target="_blank" rel="noopener">https://github.com/Snailclimb </a></li>
+<li>Github Resume: <a href="http://resume.github.io/?Snailclimb" target="_blank" rel="noopener">http://resume.github.io/?Snailclimb</a></li>
+<li>期望职位：Java 研发程序员/大数据工程师(Java后台开发为首选)</li>
+<li>期望城市：xxx城市</li>
+</ul>
+<h1 id="项目经历"><a href="#项目经历" class="headerlink" title="项目经历"></a>项目经历</h1><h2 id="xxx项目"><a href="#xxx项目" class="headerlink" title="xxx项目"></a>xxx项目</h2><h3 id="项目描述"><a href="#项目描述" class="headerlink" title="项目描述"></a>项目描述</h3><p>介绍该项目是做什么的、使用到了什么技术以及你对项目整体设计的一个感受</p>
+<h3 id="责任描述"><a href="#责任描述" class="headerlink" title="责任描述"></a>责任描述</h3><p>主要可以从下面三点来写：</p>
+<ol>
+<li>在这个项目中你负责了什么、做了什么、担任了什么角色</li>
+<li>从这个项目中你学会了那些东西，使用到了那些技术，学会了那些新技术的使用</li>
+<li>另外项目描述中，最好可以体现自己的综合素质，比如你是如何协调项目组成员协同开发的或者在遇到某一个棘手的问题的时候你是如何解决的。</li>
+</ol>
+<h1 id="开源项目和技术文章"><a href="#开源项目和技术文章" class="headerlink" title="开源项目和技术文章"></a>开源项目和技术文章</h1><h2 id="开源项目"><a href="#开源项目" class="headerlink" title="开源项目"></a>开源项目</h2><ul>
+<li><a href="https://github.com/Snailclimb/Java-Guide" target="_blank" rel="noopener">Java-Guide</a> ：一份涵盖大部分Java程序员所需要掌握的核心知识。Star:3.9K; Fork:0.9k。</li>
+</ul>
+<h2 id="技术文章推荐"><a href="#技术文章推荐" class="headerlink" title="技术文章推荐"></a>技术文章推荐</h2><ul>
+<li><a href="https://juejin.im/post/5b7d69e4e51d4538ca5730cb" target="_blank" rel="noopener">可能是把Java内存区域讲的最清楚的一篇文章</a></li>
+<li><a href="https://juejin.im/post/5b85ea54e51d4538dd08f601" target="_blank" rel="noopener">搞定JVM垃圾回收就是这么简单</a></li>
+<li><a href="https://juejin.im/post/5b3b19856fb9a04fa42f8c71" target="_blank" rel="noopener">前端&amp;后端程序员必备的Linux基础知识</a></li>
+<li><a href="https://juejin.im/post/5b260ec26fb9a00e8e4b031a" target="_blank" rel="noopener">可能是把Docker的概念讲的最清楚的一篇文章</a></li>
+</ul>
+<h1 id="校园经历（可选）"><a href="#校园经历（可选）" class="headerlink" title="校园经历（可选）"></a>校园经历（可选）</h1><h2 id="2016-2017"><a href="#2016-2017" class="headerlink" title="2016-2017"></a>2016-2017</h2><p>担任学校社团-致深社副会长，主要负责团队每周活动的组建以及每周例会的主持。</p>
+<h2 id="2017-2018"><a href="#2017-2018" class="headerlink" title="2017-2018"></a>2017-2018</h2><p> 担任学校传媒组织：“长江大学在线信息传媒”的副站长以及安卓组成员。主要负责每周例会主持、活动策划以及学校校园通APP的研发工作。</p>
+<h1 id="技能清单"><a href="#技能清单" class="headerlink" title="技能清单"></a>技能清单</h1><p>以下均为我熟练使用的技能</p>
+<ul>
+<li>Web开发：PHP/Hack/Node</li>
+<li>Web框架：ThinkPHP/Yaf/Yii/Lavarel/LazyPHP</li>
+<li>前端框架：Bootstrap/AngularJS/EmberJS/HTML5/Cocos2dJS/ionic</li>
+<li>前端工具：Bower/Gulp/SaSS/LeSS/PhoneGap</li>
+<li>数据库相关：MySQL/PgSQL/PDO/SQLite</li>
+<li>版本管理、文档和自动化部署工具：Svn/Git/PHPDoc/Phing/Composer</li>
+<li>单元测试：PHPUnit/SimpleTest/Qunit</li>
+<li>云和开放平台：SAE/BAE/AWS/微博开放平台/微信应用开发</li>
+</ul>
+<h1 id="自我评价（可选）"><a href="#自我评价（可选）" class="headerlink" title="自我评价（可选）"></a>自我评价（可选）</h1><p>自我发挥。切记不要过度自夸！！！</p>
+<h3 id="感谢您花时间阅读我的简历，期待能有机会和您共事。"><a href="#感谢您花时间阅读我的简历，期待能有机会和您共事。" class="headerlink" title="感谢您花时间阅读我的简历，期待能有机会和您共事。"></a>感谢您花时间阅读我的简历，期待能有机会和您共事。</h3>
+                
+                <div class="readmore">
+                    <a href="/2019/07/14/docs/essential-content-for-interview/简历模板/">
+                        Read More
+                    </a>
+                </div>
+            </div>
         
-          
-            <!-- MarkdownTOC -->
+            <div class="post-item">
+                <h1>
+                    <a href="/2019/07/14/docs/essential-content-for-interview/PreparingForInterview/美团面试常见问题总结/">
+                        
+                    </a>
+                </h1>
+                <div class="create">
+                    <span>Created</span>
+                    
+                        <time datetime="2019-07-14T14:47:16.496Z">
+                            2019-07-14
+                        </time>
+                    
+                    
+                </div>
+                
+                    <!-- MarkdownTOC -->
 
 <ul>
 <li><a href="#一-基础篇">一 基础篇</a><ul>
@@ -2658,151 +1409,31 @@
 <li>error.log 错误日志：定位问题</li>
 </ul>
 
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/essential-content-for-interview/面试必备之乐观锁与悲观锁/"/>
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf"/>
-      <meta itemprop="description" content=""/>
-      <meta itemprop="image" content="/images/avatar.gif"/>
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客"/>
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2019/07/14/docs/essential-content-for-interview/面试必备之乐观锁与悲观锁/" class="post-title-link" itemprop="url">Untitled</a>
-              
-            
-          </h1>
+                <div class="readmore">
+                    <a href="/2019/07/14/docs/essential-content-for-interview/PreparingForInterview/美团面试常见问题总结/">
+                        Read More
+                    </a>
+                </div>
+            </div>
         
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
+            <div class="post-item">
+                <h1>
+                    <a href="/2019/07/14/docs/essential-content-for-interview/面试必备之乐观锁与悲观锁/">
+                        
+                    </a>
+                </h1>
+                <div class="create">
+                    <span>Created</span>
+                    
+                        <time datetime="2019-07-14T14:47:16.496Z">
+                            2019-07-14
+                        </time>
+                    
+                    
+                </div>
                 
-              
-
-              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
-            </span>
-          
-
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br/>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>点击关注<a href="#公众号">公众号</a>及时获取笔主最新更新文章，并可免费领取本文档配套的《Java面试突击》以及Java工程师必备学习资源。</p>
+                    <p>点击关注<a href="#公众号">公众号</a>及时获取笔主最新更新文章，并可免费领取本文档配套的《Java面试突击》以及Java工程师必备学习资源。</p>
 <!-- TOC -->
 
 <ul>
@@ -2873,293 +1504,109 @@
 <p><strong>Java工程师必备学习资源:</strong> 一些Java工程师常用学习资源公众号后台回复关键字 <strong>“1”</strong> 即可免费无套路获取。 </p>
 <p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/167598cd2e17b8ec.png" alt="我的公众号"></p>
 
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
-
-
-
-          </div>
-          
-
-        </div>
-        
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">syf</p>
-              <div class="site-description motion-element" itemprop="description"></div>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
                 
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">105</span>
-                    <span class="site-state-item-name">posts</span>
-                  </a>
+                <div class="readmore">
+                    <a href="/2019/07/14/docs/essential-content-for-interview/面试必备之乐观锁与悲观锁/">
+                        Read More
+                    </a>
                 </div>
-              
-
-              
-
-              
-            </nav>
-          
-
-          
-
-          
-
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </div>
-
-      
-
-      
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
+            </div>
         
-      </div>
-    </main>
+    </div>
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">syf</span>
 
-  
+    <div id="content-aside">
+    <div class="content-aside-owner">
+        <div id="owner">
+    <div class="avatar-bg">
+        <div class="index-page">
+            <div class="banner">
+                <div class="slide slide1">
+                    <div class="bg-wrapper">
+                        <div class="bg" id="container_left">
+                            <div id="canvas_left"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide slide2">
+                    <div class="bg-wrapper">
+                        <div class="bg" id="container_right">
+                            <div id="canvas_right"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="/"><img class="avatar" src="/images/avatar.jpg" alt=""></a>
+    <a href="/"><h3 class="author">syf</h3></a>
+    <h4></h4>
+    <div class="social">
+        
+            
+              <a href="https://github.com/markyong" title="github" class="fa fa-github" target="_blank"></a>
+            
+        
+            
+              <a href="#" title="weibo" class="fa fa-weibo" target="_blank"></a>
+            
+        
+    </div>
+</div>
+    </div>
+    
+        <div class="content-aside-about">
+            <h2>
+                <a href="/about">About</a>
+            </h2>
+        </div>
+    
+    <div class="content-aside-tags">
+        <h2>
+            <a href="/tags">
+                Tags
+                <sup style="font-size: 12px">
+                    [0]
+                </sup>
+            </a>
+        </h2>
+    </div>
+    
+<aside id="categories">
+    <h2>Categories</h2>
+    
+        <p>None.</p>
+    
+</aside>
 
-  
+    
+<aside id="acchives">
+    <h2>Archives</h2>
+    
+    <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li></ul>
+    
+</aside>
+
 </div>
 
-
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
-
-
-
-
-        
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-    
-  </div>
-
-  
-
-<script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script src="/lib/jquery/index.js?v=3.4.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-
-
-  <script src="/js/utils.js?v=7.2.0"></script>
-
-  <script src="/js/motion.js?v=7.2.0"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/schemes/muse.js?v=7.2.0"></script>
-
-
-
-  
-
-  <script src="/js/next-boot.js?v=7.2.0"></script>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-
-
-  
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-
-  
+</div>
+<nav id="pagination" class="clearfix">
+    <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
+</nav>
+
+    </div>
+</div>
+<footer id="footer">
+    <div id="copyright">&copy; syf  2019</div>
+    <div id="theme">
+        Powered by <a href="http://hexo.io">Hexo</a>. Theme by <a href="https://github.com/markyong/hexo-theme-stage">Stage</a>
+    </div>
+</footer>
+<script src="/lib/js/waterrippleeffect.min.js"></script>
+<script src="/js/header-bg.main.js"></script>
+
+    <script src="/lib/js/cav.js"></script>
+    <script src="/js/avatar-bg.main.js"></script>
 
 </body>
 </html>

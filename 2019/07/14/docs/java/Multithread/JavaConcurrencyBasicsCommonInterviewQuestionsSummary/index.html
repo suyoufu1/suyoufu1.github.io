@@ -1,378 +1,78 @@
+
 <!DOCTYPE html>
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next muse use-motion" lang>
+<html>
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-
-<link rel="stylesheet" href="/css/main.css?v=7.2.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
-
-
-
-
-
-
-
-<script id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.2.0',
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    }
-  };
-</script>
-
-
-
-  <meta name="description" content="点击关注公众号及时获取笔主最新更新文章，并可免费领取本文档配套的《Java面试突击》以及Java工程师必备学习资源。    Java 并发基础常见面试题总结 1. 什么是线程和进程? 1.1. 何为进程? 1.2. 何为线程?   2. 请简要描述线程与进程的关系,区别及优缺点？ 2.1. 图解进程和线程的关系 2.2. 程序计数器为什么是私有的? 2.3. 虚拟机栈和本地方法栈为什么是私有的?">
-<meta property="og:type" content="article">
-<meta property="og:title" content="苏有福的博客">
-<meta property="og:url" content="http://yoursite.com/2019/07/14/docs/java/Multithread/JavaConcurrencyBasicsCommonInterviewQuestionsSummary/index.html">
-<meta property="og:site_name" content="苏有福的博客">
-<meta property="og:description" content="点击关注公众号及时获取笔主最新更新文章，并可免费领取本文档配套的《Java面试突击》以及Java工程师必备学习资源。    Java 并发基础常见面试题总结 1. 什么是线程和进程? 1.1. 何为进程? 1.2. 何为线程?   2. 请简要描述线程与进程的关系,区别及优缺点？ 2.1. 图解进程和线程的关系 2.2. 程序计数器为什么是私有的? 2.3. 虚拟机栈和本地方法栈为什么是私有的?">
-<meta property="og:locale" content="default">
-<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/%E8%BF%9B%E7%A8%8B%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87-Windows.png">
-<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-3/JVM运行时数据区域.png">
-<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/19-1-29/Java%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81.png">
-<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/19-1-29/Java+%E7%BA%BF%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%98%E8%BF%81.png">
-<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-3/RUNNABLE-VS-RUNNING.png">
-<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-4/2019-4%E6%AD%BB%E9%94%811.png">
-<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/167598cd2e17b8ec.png">
-<meta property="og:updated_time" content="2019-07-14T14:47:16.520Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="苏有福的博客">
-<meta name="twitter:description" content="点击关注公众号及时获取笔主最新更新文章，并可免费领取本文档配套的《Java面试突击》以及Java工程师必备学习资源。    Java 并发基础常见面试题总结 1. 什么是线程和进程? 1.1. 何为进程? 1.2. 何为线程?   2. 请简要描述线程与进程的关系,区别及优缺点？ 2.1. 图解进程和线程的关系 2.2. 程序计数器为什么是私有的? 2.3. 虚拟机栈和本地方法栈为什么是私有的?">
-<meta name="twitter:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/%E8%BF%9B%E7%A8%8B%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87-Windows.png">
-
-
-
-
-
-  
-  
-  <link rel="canonical" href="http://yoursite.com/2019/07/14/docs/java/Multithread/JavaConcurrencyBasicsCommonInterviewQuestionsSummary/">
-
-
-
-<script id="page.configurations">
-  CONFIG.page = {
-    sidebar: "",
-  };
-</script>
-
-  <title> | 苏有福的博客</title>
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .motion-element,
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
-
-  .use-motion .logo,
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
+    <meta charset="UTF-8">
+    <title>苏有福的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content>
+    <meta name="description" content="点击关注公众号及时获取笔主最新更新文章，并可免费领取本文档配套的《Java面试突击》以及Java工程师必备学习资源。
+
+
+
+Java 并发基础常见面试题总结
+1. 什么是线程和进程?
+1.1. 何为进程?
+1.2. 何为线程?
+
+
+2. 请简要描述线程与进程的关系,区别及优缺点？
+2.1. 图解进程和线程的关系
+2.2. 程序计数器为什么是私有的?
+2.3. 虚拟机栈和本地方法栈为什么是私有的?
+2.4. 一句话简单了解堆和方法区
+
+
+3. 说说并发与并行的区别?
+4. 为什么要使用多线程呢?
+5. 使用多线程可能带来什么问题?
+6. 说说线程的生命周期和状态?
+7. 什么是上下文切换?
+8. 什么是线程死锁?如何避免死...">
+    
+        <link rel="icon" href="/favicon.ico">
+    
+    
+        
+            <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+        
+            <link rel="stylesheet" href="/css/stage.css">
+        
+            <link rel="stylesheet" href="/css/avatar-bg.css">
+        
+    
 </head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="default">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">苏有福的博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+</html>
+<body>
+<header id="header">
+    <div class="menu">
+        <i class="fa fa-bars"></i>
     </div>
-    
-    
-  </div>
-
-  <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-
-
-<nav class="site-nav">
-  
-    <ul id="menu" class="menu">
-      
-        
-        
-        
-          
-          <li class="menu-item menu-item-home">
-
-    
-    
-      
-    
-
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
-
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-archives">
-
-    
-    
-      
-    
-
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
-
-  </li>
-
-      
-      
-    </ul>
-  
-
-  
-    
-
-  
-
-  
-</nav>
-
-
-
-</div>
-    </header>
-
-    
-
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/java/Multithread/JavaConcurrencyBasicsCommonInterviewQuestionsSummary/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
-            </span>
-          
-
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
+    <div class="header-main">
+        <h1><a href="/">苏有福的博客</a></h1>
+    </div>
+    <div id="nav">
+        <div class="nav-img" id="nav-img"></div>
+        <div class="sentences">
+            云里写诗，泥里生活，岁月里洒脱。
         </div>
-      </header>
-    
+    </div>
+</header>
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
+<div id="content-outer">
+    <div id="content-inner">
+        <div class="clearfix">
+    <article id="post">
+        <h1></h1>
+        <div class="create">
+            <span>Created</span>
+            
+                <time datetime="2019-07-14T14:47:16.520Z">
+                    2019-07-14
+                </time>
+            
+            
+        </div>
         <p>点击关注<a href="#公众号">公众号</a>及时获取笔主最新更新文章，并可免费领取本文档配套的《Java面试突击》以及Java工程师必备学习资源。</p>
 <!-- TOC -->
 
@@ -519,342 +219,57 @@
 <p><strong>Java工程师必备学习资源:</strong> 一些Java工程师常用学习资源公众号后台回复关键字 <strong>“1”</strong> 即可免费无套路获取。 </p>
 <p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/167598cd2e17b8ec.png" alt="我的公众号"></p>
 
-      
-    </div>
-
-    
-
-    
-      
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
+        <div>
             
-              <a href="/2019/07/14/docs/java/Multithread/synchronized/" rel="next" title>
-                <i class="fa fa-chevron-left"></i> 
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/14/docs/java/What's New in JDK8/通过反射获得方法的参数信息/" rel="prev" title>
-                 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
         </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-  </div>
-
-
-          </div>
-          
-
-  
-
-
-
-        </div>
+        <div class="bottom-line"></div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <nav id="article-nav">
+        
+            <a href="/2019/07/14/docs/java/What's New in JDK8/Java8教程推荐/" id="article-nav-newer" class="article-nav-link-wrap">
+        <span class="article-nav-title">
             
-              <p class="site-author-name" itemprop="name">syf</p>
-              <div class="site-description motion-element" itemprop="description"></div>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
+                no title
+            
+        </span>
+                <strong class="article-nav-caption">&gt;</strong>
+            </a>
+        
+        
+            <a href="/2019/07/14/docs/java/What's New in JDK8/JDK8接口规范-静态、默认方法/" id="article-nav-older" class="article-nav-link-wrap">
+                <strong class="article-nav-caption">&lt;</strong>
+                <span class="article-nav-title">
+                    
+                    no title
                 
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">105</span>
-                    <span class="site-state-item-name">posts</span>
-                  </a>
-                </div>
-              
-
-              
-
-              
-            </nav>
-          
-
-          
-
-          
-
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </div>
-
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-并发基础常见面试题总结"><span class="nav-number">1.</span> <span class="nav-text">Java 并发基础常见面试题总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-什么是线程和进程"><span class="nav-number">1.1.</span> <span class="nav-text">1. 什么是线程和进程?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-何为进程"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1. 何为进程?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-何为线程"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2. 何为线程?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-请简要描述线程与进程的关系-区别及优缺点？"><span class="nav-number">1.2.</span> <span class="nav-text">2. 请简要描述线程与进程的关系,区别及优缺点？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-图解进程和线程的关系"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1. 图解进程和线程的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-程序计数器为什么是私有的"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2. 程序计数器为什么是私有的?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-虚拟机栈和本地方法栈为什么是私有的"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3. 虚拟机栈和本地方法栈为什么是私有的?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-一句话简单了解堆和方法区"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4. 一句话简单了解堆和方法区</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-说说并发与并行的区别"><span class="nav-number">1.3.</span> <span class="nav-text">3. 说说并发与并行的区别?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-为什么要使用多线程呢"><span class="nav-number">1.4.</span> <span class="nav-text">4. 为什么要使用多线程呢?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-使用多线程可能带来什么问题"><span class="nav-number">1.5.</span> <span class="nav-text">5. 使用多线程可能带来什么问题?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-说说线程的生命周期和状态"><span class="nav-number">1.6.</span> <span class="nav-text">6. 说说线程的生命周期和状态?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-什么是上下文切换"><span class="nav-number">1.7.</span> <span class="nav-text">7. 什么是上下文切换?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-什么是线程死锁-如何避免死锁"><span class="nav-number">1.8.</span> <span class="nav-text">8. 什么是线程死锁?如何避免死锁?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-认识线程死锁"><span class="nav-number">1.8.1.</span> <span class="nav-text">8.1. 认识线程死锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-如何避免线程死锁"><span class="nav-number">1.8.2.</span> <span class="nav-text">8.2. 如何避免线程死锁?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-说说-sleep-方法和-wait-方法区别和共同点"><span class="nav-number">1.9.</span> <span class="nav-text">9. 说说 sleep() 方法和 wait() 方法区别和共同点?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-为什么我们调用-start-方法时会执行-run-方法，为什么我们不能直接调用-run-方法？"><span class="nav-number">1.10.</span> <span class="nav-text">10. 为什么我们调用 start() 方法时会执行 run() 方法，为什么我们不能直接调用 run() 方法？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公众号"><span class="nav-number">1.11.</span> <span class="nav-text">公众号</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
+            </a>
+        
+    </nav>
 
 
         
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">syf</span>
-
-  
-
-  
+    </article>
+    <div id="toc">
+        
+            <h2>Table of Contents</h2>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java-并发基础常见面试题总结"><span class="toc-number">1.</span> <span class="toc-text">Java 并发基础常见面试题总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-什么是线程和进程"><span class="toc-number">1.1.</span> <span class="toc-text">1. 什么是线程和进程?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-何为进程"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1. 何为进程?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-何为线程"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2. 何为线程?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-请简要描述线程与进程的关系-区别及优缺点？"><span class="toc-number">1.2.</span> <span class="toc-text">2. 请简要描述线程与进程的关系,区别及优缺点？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-图解进程和线程的关系"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1. 图解进程和线程的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-程序计数器为什么是私有的"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2. 程序计数器为什么是私有的?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-虚拟机栈和本地方法栈为什么是私有的"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3. 虚拟机栈和本地方法栈为什么是私有的?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-一句话简单了解堆和方法区"><span class="toc-number">1.2.4.</span> <span class="toc-text">2.4. 一句话简单了解堆和方法区</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-说说并发与并行的区别"><span class="toc-number">1.3.</span> <span class="toc-text">3. 说说并发与并行的区别?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-为什么要使用多线程呢"><span class="toc-number">1.4.</span> <span class="toc-text">4. 为什么要使用多线程呢?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-使用多线程可能带来什么问题"><span class="toc-number">1.5.</span> <span class="toc-text">5. 使用多线程可能带来什么问题?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-说说线程的生命周期和状态"><span class="toc-number">1.6.</span> <span class="toc-text">6. 说说线程的生命周期和状态?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-什么是上下文切换"><span class="toc-number">1.7.</span> <span class="toc-text">7. 什么是上下文切换?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-什么是线程死锁-如何避免死锁"><span class="toc-number">1.8.</span> <span class="toc-text">8. 什么是线程死锁?如何避免死锁?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-认识线程死锁"><span class="toc-number">1.8.1.</span> <span class="toc-text">8.1. 认识线程死锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-如何避免线程死锁"><span class="toc-number">1.8.2.</span> <span class="toc-text">8.2. 如何避免线程死锁?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-说说-sleep-方法和-wait-方法区别和共同点"><span class="toc-number">1.9.</span> <span class="toc-text">9. 说说 sleep() 方法和 wait() 方法区别和共同点?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-为什么我们调用-start-方法时会执行-run-方法，为什么我们不能直接调用-run-方法？"><span class="toc-number">1.10.</span> <span class="toc-text">10. 为什么我们调用 start() 方法时会执行 run() 方法，为什么我们不能直接调用 run() 方法？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#公众号"><span class="toc-number">1.11.</span> <span class="toc-text">公众号</span></a></li></ol></li></ol>
+        
+    </div>
 </div>
 
-
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
-
-
-
-
-        
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-    
-  </div>
-
-  
-
-<script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script src="/lib/jquery/index.js?v=3.4.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-
-
-  <script src="/js/utils.js?v=7.2.0"></script>
-
-  <script src="/js/motion.js?v=7.2.0"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/schemes/muse.js?v=7.2.0"></script>
-
-
-
-  
-  <script src="/js/scrollspy.js?v=7.2.0"></script>
-<script src="/js/post-details.js?v=7.2.0"></script>
-
-
-
-  <script src="/js/next-boot.js?v=7.2.0"></script>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-
-  
-
-
-  
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-
-  
+    </div>
+</div>
+<footer id="footer">
+    <div id="copyright">&copy; syf  2019</div>
+    <div id="theme">
+        Powered by <a href="http://hexo.io">Hexo</a>. Theme by <a href="https://github.com/markyong/hexo-theme-stage">Stage</a>
+    </div>
+</footer>
+<script src="/lib/js/waterrippleeffect.min.js"></script>
+<script src="/js/header-bg.main.js"></script>
+
+    <script src="/lib/js/smooth-scroll.min.js"></script>
+    <script src="/js/toc.main.js"></script>
 
 </body>
 </html>

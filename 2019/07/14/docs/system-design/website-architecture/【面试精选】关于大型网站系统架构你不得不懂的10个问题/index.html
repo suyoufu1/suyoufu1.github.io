@@ -1,378 +1,67 @@
+
 <!DOCTYPE html>
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next muse use-motion" lang>
+<html>
 <head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-
-<link rel="stylesheet" href="/css/main.css?v=7.2.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
-
-
-
-
-
-
-
-<script id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.2.0',
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    }
-  };
-</script>
-
-
-
-  <meta name="description" content="下面这些问题都是一线大厂的真实面试问题，不论是对你面试还是说拓宽知识面都很有帮助。之前发过一篇8 张图读懂大型网站技术架构 可以作为不太了解大型网站系统技术架构朋友的入门文章。    1. 你使用过哪些组件或者方法来提升网站性能,可用性以及并发量 2. 设计高可用系统的常用手段 3. 现代互联网应用系统通常具有哪些特点? 4. 谈谈你对微服务领域的了解和认识 5. 谈谈你对 Dubbo 和 Spr">
-<meta property="og:type" content="article">
-<meta property="og:title" content="苏有福的博客">
-<meta property="og:url" content="http://yoursite.com/2019/07/14/docs/system-design/website-architecture/【面试精选】关于大型网站系统架构你不得不懂的10个问题/index.html">
-<meta property="og:site_name" content="苏有福的博客">
-<meta property="og:description" content="下面这些问题都是一线大厂的真实面试问题，不论是对你面试还是说拓宽知识面都很有帮助。之前发过一篇8 张图读懂大型网站技术架构 可以作为不太了解大型网站系统技术架构朋友的入门文章。    1. 你使用过哪些组件或者方法来提升网站性能,可用性以及并发量 2. 设计高可用系统的常用手段 3. 现代互联网应用系统通常具有哪些特点? 4. 谈谈你对微服务领域的了解和认识 5. 谈谈你对 Dubbo 和 Spr">
-<meta property="og:locale" content="default">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/6/16/164084354ba2e0fd?w=950&h=279&f=jpeg&s=26015">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/6/16/164084b7e9e423e3?w=690&h=271&f=jpeg&s=23119">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/4/21/162e63a8e34ba534?w=910&h=350&f=jpeg&s=29123">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/4/21/162e64583dd3ed01?w=780&h=384&f=jpeg&s=13550">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/4/21/162e6665fa394b3b?w=790&h=290&f=jpeg&s=14946">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/5/24/163912e973ecb93c?w=624&h=471&f=png&s=32984">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/5/24/163914806d9e15c6?w=612&h=461&f=png&s=39129">
-<meta property="og:updated_time" content="2019-07-14T14:47:16.584Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="苏有福的博客">
-<meta name="twitter:description" content="下面这些问题都是一线大厂的真实面试问题，不论是对你面试还是说拓宽知识面都很有帮助。之前发过一篇8 张图读懂大型网站技术架构 可以作为不太了解大型网站系统技术架构朋友的入门文章。    1. 你使用过哪些组件或者方法来提升网站性能,可用性以及并发量 2. 设计高可用系统的常用手段 3. 现代互联网应用系统通常具有哪些特点? 4. 谈谈你对微服务领域的了解和认识 5. 谈谈你对 Dubbo 和 Spr">
-<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/6/16/164084354ba2e0fd?w=950&h=279&f=jpeg&s=26015">
-
-
-
-
-
-  
-  
-  <link rel="canonical" href="http://yoursite.com/2019/07/14/docs/system-design/website-architecture/【面试精选】关于大型网站系统架构你不得不懂的10个问题/">
-
-
-
-<script id="page.configurations">
-  CONFIG.page = {
-    sidebar: "",
-  };
-</script>
-
-  <title> | 苏有福的博客</title>
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .motion-element,
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
-
-  .use-motion .logo,
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
+    <meta charset="UTF-8">
+    <title>苏有福的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content>
+    <meta name="description" content="下面这些问题都是一线大厂的真实面试问题，不论是对你面试还是说拓宽知识面都很有帮助。之前发过一篇8 张图读懂大型网站技术架构 可以作为不太了解大型网站系统技术架构朋友的入门文章。
+
+
+
+1. 你使用过哪些组件或者方法来提升网站性能,可用性以及并发量
+2. 设计高可用系统的常用手段
+3. 现代互联网应用系统通常具有哪些特点?
+4. 谈谈你对微服务领域的了解和认识
+5. 谈谈你对 Dubbo 和 Spring Cloud 的认识(两者关系)
+6. 性能测试了解吗?说说你知道的性能测试工具?
+7. 对于一个单体应用系统,随着产品使用的用户越来越多,网站的流量会增加,最终单台服务器无法处理那么大的流量怎么办?
+8. 大表优化的常见...">
+    
+        <link rel="icon" href="/favicon.ico">
+    
+    
+        
+            <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+        
+            <link rel="stylesheet" href="/css/stage.css">
+        
+            <link rel="stylesheet" href="/css/avatar-bg.css">
+        
+    
 </head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="default">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">苏有福的博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+</html>
+<body>
+<header id="header">
+    <div class="menu">
+        <i class="fa fa-bars"></i>
     </div>
-    
-    
-  </div>
-
-  <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
-</div>
-
-
-
-<nav class="site-nav">
-  
-    <ul id="menu" class="menu">
-      
-        
-        
-        
-          
-          <li class="menu-item menu-item-home">
-
-    
-    
-      
-    
-
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
-
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-archives">
-
-    
-    
-      
-    
-
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
-
-  </li>
-
-      
-      
-    </ul>
-  
-
-  
-    
-
-  
-
-  
-</nav>
-
-
-
-</div>
-    </header>
-
-    
-
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/website-architecture/【面试精选】关于大型网站系统架构你不得不懂的10个问题/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
-            </span>
-          
-
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
+    <div class="header-main">
+        <h1><a href="/">苏有福的博客</a></h1>
+    </div>
+    <div id="nav">
+        <div class="nav-img" id="nav-img"></div>
+        <div class="sentences">
+            时光荏苒，旦夕之间，略有遗憾，似白驹过隙，蹉跎自悟。
         </div>
-      </header>
-    
+    </div>
+</header>
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
+<div id="content-outer">
+    <div id="content-inner">
+        <div class="clearfix">
+    <article id="post">
+        <h1></h1>
+        <div class="create">
+            <span>Created</span>
+            
+                <time datetime="2019-07-14T14:47:16.584Z">
+                    2019-07-14
+                </time>
+            
+            
+        </div>
         <p>下面这些问题都是一线大厂的真实面试问题，不论是对你面试还是说拓宽知识面都很有帮助。之前发过一篇<a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484416&idx=1&sn=6ced00d65491ef8fd33151bdfa8895c9&chksm=fd985261caefdb779412974a6a7207c93d0c2da5b28489afb74acd2fee28505daebbadb018ff&token=177958022&lang=zh_CN#rd" target="_blank" rel="noopener">8 张图读懂大型网站技术架构</a> 可以作为不太了解大型网站系统技术架构朋友的入门文章。</p>
 <!-- MarkdownTOC -->
 
@@ -509,342 +198,57 @@
 <li><a href="https://www.cnblogs.com/puresoul/p/5456855.html" target="_blank" rel="noopener">https://www.cnblogs.com/puresoul/p/5456855.html</a></li>
 </ul>
 
-      
-    </div>
-
-    
-
-    
-      
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
+        <div>
             
-              <a href="/2019/07/14/docs/system-design/framework/spring/SpringMVC-Principle/" rel="next" title>
-                <i class="fa fa-chevron-left"></i> 
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/14/docs/system-design/website-architecture/8 张图读懂大型网站技术架构/" rel="prev" title>
-                 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
         </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-  </div>
-
-
-          </div>
-          
-
-  
-
-
-
-        </div>
+        <div class="bottom-line"></div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <nav id="article-nav">
+        
+            <a href="/2019/07/14/docs/system-design/website-architecture/分布式/" id="article-nav-newer" class="article-nav-link-wrap">
+        <span class="article-nav-title">
             
-              <p class="site-author-name" itemprop="name">syf</p>
-              <div class="site-description motion-element" itemprop="description"></div>
-          </div>
-
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
+                no title
+            
+        </span>
+                <strong class="article-nav-caption">&gt;</strong>
+            </a>
+        
+        
+            <a href="/2019/07/14/docs/system-design/website-architecture/8 张图读懂大型网站技术架构/" id="article-nav-older" class="article-nav-link-wrap">
+                <strong class="article-nav-caption">&lt;</strong>
+                <span class="article-nav-title">
+                    
+                    no title
                 
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">105</span>
-                    <span class="site-state-item-name">posts</span>
-                  </a>
-                </div>
-              
-
-              
-
-              
-            </nav>
-          
-
-          
-
-          
-
-          
-
-          
-
-          
-          
-
-          
-        </div>
-      </div>
-
-      
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-你使用过哪些组件或者方法来提升网站性能-可用性以及并发量"><span class="nav-number">1.</span> <span class="nav-text">1. 你使用过哪些组件或者方法来提升网站性能,可用性以及并发量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-设计高可用系统的常用手段"><span class="nav-number">2.</span> <span class="nav-text">2. 设计高可用系统的常用手段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-现代互联网应用系统通常具有哪些特点"><span class="nav-number">3.</span> <span class="nav-text">3. 现代互联网应用系统通常具有哪些特点?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-谈谈你对微服务领域的了解和认识"><span class="nav-number">4.</span> <span class="nav-text">4. 谈谈你对微服务领域的了解和认识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-谈谈你对-Dubbo-和-Spring-Cloud-的认识-两者关系"><span class="nav-number">5.</span> <span class="nav-text">5. 谈谈你对 Dubbo 和 Spring Cloud 的认识(两者关系)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-性能测试了解吗-说说你知道的性能测试工具"><span class="nav-number">6.</span> <span class="nav-text">6. 性能测试了解吗?说说你知道的性能测试工具?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-对于一个单体应用系统-随着产品使用的用户越来越多-网站的流量会增加-最终单台服务器无法处理那么大的流量怎么办"><span class="nav-number">7.</span> <span class="nav-text">7. 对于一个单体应用系统,随着产品使用的用户越来越多,网站的流量会增加,最终单台服务器无法处理那么大的流量怎么办?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-大表优化的常见手段"><span class="nav-number">8.</span> <span class="nav-text">8. 大表优化的常见手段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-在系统中使用消息队列能带来什么好处"><span class="nav-number">9.</span> <span class="nav-text">9. 在系统中使用消息队列能带来什么好处?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-通过异步处理提高系统性能"><span class="nav-number">9.1.</span> <span class="nav-text">1) 通过异步处理提高系统性能</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-降低系统耦合性"><span class="nav-number">10.</span> <span class="nav-text">2) 降低系统耦合性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-说说自己对-CAP-定理-BASE-理论的了解"><span class="nav-number">11.</span> <span class="nav-text">10. 说说自己对 CAP 定理,BASE 理论的了解</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CAP-定理"><span class="nav-number">11.1.</span> <span class="nav-text">CAP 定理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BASE-理论"><span class="nav-number">11.2.</span> <span class="nav-text">BASE 理论</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">12.</span> <span class="nav-text">参考</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
+            </a>
+        
+    </nav>
 
 
         
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
-  <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">syf</span>
-
-  
-
-  
+    </article>
+    <div id="toc">
+        
+            <h2>Table of Contents</h2>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-你使用过哪些组件或者方法来提升网站性能-可用性以及并发量"><span class="toc-number">1.</span> <span class="toc-text">1. 你使用过哪些组件或者方法来提升网站性能,可用性以及并发量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-设计高可用系统的常用手段"><span class="toc-number">2.</span> <span class="toc-text">2. 设计高可用系统的常用手段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-现代互联网应用系统通常具有哪些特点"><span class="toc-number">3.</span> <span class="toc-text">3. 现代互联网应用系统通常具有哪些特点?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-谈谈你对微服务领域的了解和认识"><span class="toc-number">4.</span> <span class="toc-text">4. 谈谈你对微服务领域的了解和认识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-谈谈你对-Dubbo-和-Spring-Cloud-的认识-两者关系"><span class="toc-number">5.</span> <span class="toc-text">5. 谈谈你对 Dubbo 和 Spring Cloud 的认识(两者关系)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-性能测试了解吗-说说你知道的性能测试工具"><span class="toc-number">6.</span> <span class="toc-text">6. 性能测试了解吗?说说你知道的性能测试工具?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-对于一个单体应用系统-随着产品使用的用户越来越多-网站的流量会增加-最终单台服务器无法处理那么大的流量怎么办"><span class="toc-number">7.</span> <span class="toc-text">7. 对于一个单体应用系统,随着产品使用的用户越来越多,网站的流量会增加,最终单台服务器无法处理那么大的流量怎么办?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-大表优化的常见手段"><span class="toc-number">8.</span> <span class="toc-text">8. 大表优化的常见手段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-在系统中使用消息队列能带来什么好处"><span class="toc-number">9.</span> <span class="toc-text">9. 在系统中使用消息队列能带来什么好处?</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-通过异步处理提高系统性能"><span class="toc-number">9.1.</span> <span class="toc-text">1) 通过异步处理提高系统性能</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-降低系统耦合性"><span class="toc-number">10.</span> <span class="toc-text">2) 降低系统耦合性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-说说自己对-CAP-定理-BASE-理论的了解"><span class="toc-number">11.</span> <span class="toc-text">10. 说说自己对 CAP 定理,BASE 理论的了解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CAP-定理"><span class="toc-number">11.1.</span> <span class="toc-text">CAP 定理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BASE-理论"><span class="toc-number">11.2.</span> <span class="toc-text">BASE 理论</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#参考"><span class="toc-number">12.</span> <span class="toc-text">参考</span></a></li></ol>
+        
+    </div>
 </div>
 
-
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
-
-
-
-
-        
-
-
-
-
-
-
-
-
-        
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-
-    
-  </div>
-
-  
-
-<script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script src="/lib/jquery/index.js?v=3.4.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-
-
-  <script src="/js/utils.js?v=7.2.0"></script>
-
-  <script src="/js/motion.js?v=7.2.0"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/schemes/muse.js?v=7.2.0"></script>
-
-
-
-  
-  <script src="/js/scrollspy.js?v=7.2.0"></script>
-<script src="/js/post-details.js?v=7.2.0"></script>
-
-
-
-  <script src="/js/next-boot.js?v=7.2.0"></script>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-
-  
-
-
-  
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-
-  
+    </div>
+</div>
+<footer id="footer">
+    <div id="copyright">&copy; syf  2019</div>
+    <div id="theme">
+        Powered by <a href="http://hexo.io">Hexo</a>. Theme by <a href="https://github.com/markyong/hexo-theme-stage">Stage</a>
+    </div>
+</footer>
+<script src="/lib/js/waterrippleeffect.min.js"></script>
+<script src="/js/header-bg.main.js"></script>
+
+    <script src="/lib/js/smooth-scroll.min.js"></script>
+    <script src="/js/toc.main.js"></script>
 
 </body>
 </html>
