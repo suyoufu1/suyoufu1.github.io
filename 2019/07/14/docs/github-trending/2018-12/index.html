@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    }
+  };
+</script>
+
+
+
+  <meta name="description" content="本文数据统计于 1.1 号凌晨，由 SnailClimb 整理。 1. JavaGuide Github地址： https://github.com/Snailclimb/JavaGuide star: 18.2k 介绍: 【Java学习+面试指南】 一份涵盖大部分Java程序员所需要掌握的核心知识。  2. mall Github地址： https://github.com/macrozheng">
+<meta property="og:type" content="article">
+<meta property="og:title" content="苏有福的博客">
+<meta property="og:url" content="http://yoursite.com/2019/07/14/docs/github-trending/2018-12/index.html">
+<meta property="og:site_name" content="苏有福的博客">
+<meta property="og:description" content="本文数据统计于 1.1 号凌晨，由 SnailClimb 整理。 1. JavaGuide Github地址： https://github.com/Snailclimb/JavaGuide star: 18.2k 介绍: 【Java学习+面试指南】 一份涵盖大部分Java程序员所需要掌握的核心知识。  2. mall Github地址： https://github.com/macrozheng">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-14T14:47:16.500Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="苏有福的博客">
+<meta name="twitter:description" content="本文数据统计于 1.1 号凌晨，由 SnailClimb 整理。 1. JavaGuide Github地址： https://github.com/Snailclimb/JavaGuide star: 18.2k 介绍: 【Java学习+面试指南】 一份涵盖大部分Java程序员所需要掌握的核心知识。  2. mall Github地址： https://github.com/macrozheng">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/07/14/docs/github-trending/2018-12/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | 苏有福的博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">苏有福的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/github-trending/2018-12/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="syf">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="苏有福的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
+            </span>
+          
+
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文数据统计于 1.1 号凌晨，由 SnailClimb 整理。</p>
+<h3 id="1-JavaGuide"><a href="#1-JavaGuide" class="headerlink" title="1. JavaGuide"></a>1. JavaGuide</h3><ul>
+<li><strong>Github地址</strong>： <a href="https://github.com/Snailclimb/JavaGuide" target="_blank" rel="noopener">https://github.com/Snailclimb/JavaGuide</a></li>
+<li><strong>star</strong>: 18.2k</li>
+<li><strong>介绍</strong>: 【Java学习+面试指南】 一份涵盖大部分Java程序员所需要掌握的核心知识。</li>
+</ul>
+<h3 id="2-mall"><a href="#2-mall" class="headerlink" title="2. mall"></a>2. mall</h3><ul>
+<li><strong>Github地址</strong>： <a href="https://github.com/macrozheng/mall" target="_blank" rel="noopener">https://github.com/macrozheng/mall</a></li>
+<li><strong>star</strong>: 3.3k</li>
+<li><strong>介绍</strong>: mall项目是一套电商系统，包括前台商城系统及后台管理系统，基于SpringBoot+MyBatis实现。 前台商城系统包含首页门户、商品推荐、商品搜索、商品展示、购物车、订单流程、会员中心、客户服务、帮助中心等模块。 后台管理系统包含商品管理、订单管理、会员管理、促销管理、运营管理、内容管理、统计报表、财务管理、权限管理、设置等模块。</li>
+</ul>
+<h3 id="3-advanced-java"><a href="#3-advanced-java" class="headerlink" title="3. advanced-java"></a>3. advanced-java</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/doocs/advanced-java" target="_blank" rel="noopener">https://github.com/doocs/advanced-java</a></li>
+<li><strong>star</strong>: 3.3k</li>
+<li><strong>介绍</strong>: 互联网 Java 工程师进阶知识完全扫盲</li>
+</ul>
+<h3 id="4-matrix"><a href="#4-matrix" class="headerlink" title="4. matrix"></a>4. matrix</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/Tencent/matrix" target="_blank" rel="noopener">https://github.com/Tencent/matrix</a></li>
+<li><strong>star</strong>: 2.5k</li>
+<li><strong>介绍</strong>: Matrix 是一款微信研发并日常使用的 APM（Application Performance Manage），当前主要运行在 Android 平台上。 Matrix 的目标是建立统一的应用性能接入框架，通过各种性能监控方案，对性能监控项的异常数据进行采集和分析，输出相应的问题分析、定位与优化建议，从而帮助开发者开发出更高质量的应用。</li>
+</ul>
+<h3 id="5-miaosha"><a href="#5-miaosha" class="headerlink" title="5. miaosha"></a>5. miaosha</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/qiurunze123/miaosha" target="_blank" rel="noopener">https://github.com/qiurunze123/miaosha</a></li>
+<li><strong>star</strong>: 2.4k</li>
+<li><strong>介绍</strong>: 高并发大流量如何进行秒杀架构，我对这部分知识做了一个系统的整理，写了一套系统。</li>
+</ul>
+<h3 id="6-arthas"><a href="#6-arthas" class="headerlink" title="6. arthas"></a>6. arthas</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/alibaba/arthas" target="_blank" rel="noopener">https://github.com/alibaba/arthas</a></li>
+<li><strong>star</strong>: 8.2k</li>
+<li><strong>介绍</strong>: Arthas 是Alibaba开源的Java诊断工具，深受开发者喜爱。</li>
+</ul>
+<h3 id="7-spring-boot"><a href="#7-spring-boot" class="headerlink" title="7 spring-boot"></a>7 spring-boot</h3><ul>
+<li><p><strong>Github地址</strong>： <a href="https://github.com/spring-projects/spring-boot" target="_blank" rel="noopener">https://github.com/spring-projects/spring-boot</a></p>
+</li>
+<li><p><strong>star:</strong> 32.6k</p>
+</li>
+<li><p><strong>介绍</strong>： 虽然Spring的组件代码是轻量级的，但它的配置却是重量级的（需要大量XML配置）,不过Spring Boot 让这一切成为了过去。 另外Spring Cloud也是基于Spring Boot构建的，我个人非常有必要学习一下。</p>
+<p> <strong>关于Spring Boot官方的介绍：</strong></p>
+<blockquote>
+<p>Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can “just run”…Most Spring Boot applications need very little Spring configuration.(Spring Boot可以轻松创建独立的生产级基于Spring的应用程序,只要通过 “just run”（可能是run ‘Application’或java -jar 或 tomcat 或 maven插件run 或 shell脚本）便可以运行项目。大部分Spring Boot项目只需要少量的配置即可)</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="8-tutorials"><a href="#8-tutorials" class="headerlink" title="8. tutorials"></a>8. tutorials</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/eugenp/tutorials" target="_blank" rel="noopener">https://github.com/eugenp/tutorials</a></li>
+<li><strong>star</strong>: 10k</li>
+<li><strong>介绍</strong>: 该项目是一系列小而专注的教程 - 每个教程都涵盖Java生态系统中单一且定义明确的开发领域。 当然，它们的重点是Spring Framework  -  Spring，Spring Boot和Spring Securiyt。 除了Spring之外，还有以下技术：核心Java，Jackson，HttpClient，Guava。</li>
+</ul>
+<h3 id="9-qmq"><a href="#9-qmq" class="headerlink" title="9. qmq"></a>9. qmq</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/qunarcorp/qmq" target="_blank" rel="noopener">https://github.com/qunarcorp/qmq</a></li>
+<li><strong>star</strong>: 1.1k</li>
+<li><strong>介绍</strong>: QMQ是去哪儿网内部广泛使用的消息中间件，自2012年诞生以来在去哪儿网所有业务场景中广泛的应用，包括跟交易息息相关的订单场景； 也包括报价搜索等高吞吐量场景。</li>
+</ul>
+<h3 id="10-symphony"><a href="#10-symphony" class="headerlink" title="10. symphony"></a>10. symphony</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/b3log/symphony" target="_blank" rel="noopener">https://github.com/b3log/symphony</a></li>
+<li><strong>star</strong>: 9k</li>
+<li><strong>介绍</strong>:  一款用 Java 实现的现代化社区（论坛/BBS/社交网络/博客）平台。</li>
+</ul>
+<h3 id="11-incubator-dubbo"><a href="#11-incubator-dubbo" class="headerlink" title="11. incubator-dubbo"></a>11. incubator-dubbo</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/apache/incubator-dubbo" target="_blank" rel="noopener">https://github.com/apache/incubator-dubbo</a></li>
+<li><strong>star</strong>: 23.6k</li>
+<li><strong>介绍</strong>:  阿里开源的一个基于Java的高性能开源RPC框架。</li>
+</ul>
+<h3 id="12-apollo"><a href="#12-apollo" class="headerlink" title="12. apollo"></a>12. apollo</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/ctripcorp/apollo" target="_blank" rel="noopener">https://github.com/ctripcorp/apollo</a></li>
+<li><strong>star</strong>: 10k</li>
+<li><strong>介绍</strong>:  Apollo（阿波罗）是携程框架部门研发的分布式配置中心，能够集中化管理应用不同环境、不同集群的配置，配置修改后能够实时推送到应用端，并且具备规范的权限、流程治理等特性，适用于微服务配置管理场景。</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/14/docs/java/BIO-NIO-AIO/" rel="next" title>
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/14/docs/github-trending/2019-3/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">syf</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">102</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-JavaGuide"><span class="nav-number">1.</span> <span class="nav-text">1. JavaGuide</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-mall"><span class="nav-number">2.</span> <span class="nav-text">2. mall</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-advanced-java"><span class="nav-number">3.</span> <span class="nav-text">3. advanced-java</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-matrix"><span class="nav-number">4.</span> <span class="nav-text">4. matrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-miaosha"><span class="nav-number">5.</span> <span class="nav-text">5. miaosha</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-arthas"><span class="nav-number">6.</span> <span class="nav-text">6. arthas</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-spring-boot"><span class="nav-number">7.</span> <span class="nav-text">7 spring-boot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-tutorials"><span class="nav-number">8.</span> <span class="nav-text">8. tutorials</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-qmq"><span class="nav-number">9.</span> <span class="nav-text">9. qmq</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-symphony"><span class="nav-number">10.</span> <span class="nav-text">10. symphony</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-incubator-dubbo"><span class="nav-number">11.</span> <span class="nav-text">11. incubator-dubbo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-apollo"><span class="nav-number">12.</span> <span class="nav-text">12. apollo</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">syf</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

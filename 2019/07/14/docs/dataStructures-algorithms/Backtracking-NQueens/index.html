@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    }
+  };
+</script>
+
+
+
+  <meta name="description" content="N皇后51. N皇后 题目描述 n 皇后问题研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。     上图为 8 皇后问题的一种解法。   给定一个整数 n，返回所有不同的 n 皇后问题的解决方案。   每一种解法包含一个明确的 n 皇后问题的棋子放置方案，该方案中 ‘Q’ 和 ‘.’ 分别代表了皇后和空位。 示例： 12345678910111213输入: 4">
+<meta property="og:type" content="article">
+<meta property="og:title" content="苏有福的博客">
+<meta property="og:url" content="http://yoursite.com/2019/07/14/docs/dataStructures-algorithms/Backtracking-NQueens/index.html">
+<meta property="og:site_name" content="苏有福的博客">
+<meta property="og:description" content="N皇后51. N皇后 题目描述 n 皇后问题研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。     上图为 8 皇后问题的一种解法。   给定一个整数 n，返回所有不同的 n 皇后问题的解决方案。   每一种解法包含一个明确的 n 皇后问题的棋子放置方案，该方案中 ‘Q’ 和 ‘.’ 分别代表了皇后和空位。 示例： 12345678910111213输入: 4">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://s2.ax1x.com/2019/03/26/ANUzjA.png">
+<meta property="og:image" content="https://s2.ax1x.com/2019/03/26/ANXG79.png">
+<meta property="og:updated_time" content="2019-07-14T14:47:16.428Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="苏有福的博客">
+<meta name="twitter:description" content="N皇后51. N皇后 题目描述 n 皇后问题研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。     上图为 8 皇后问题的一种解法。   给定一个整数 n，返回所有不同的 n 皇后问题的解决方案。   每一种解法包含一个明确的 n 皇后问题的棋子放置方案，该方案中 ‘Q’ 和 ‘.’ 分别代表了皇后和空位。 示例： 12345678910111213输入: 4">
+<meta name="twitter:image" content="https://s2.ax1x.com/2019/03/26/ANUzjA.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/07/14/docs/dataStructures-algorithms/Backtracking-NQueens/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | 苏有福的博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">苏有福的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/dataStructures-algorithms/Backtracking-NQueens/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="syf">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="苏有福的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
+            </span>
+          
+
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="N皇后"><a href="#N皇后" class="headerlink" title="N皇后"></a>N皇后</h1><p><a href="https://leetcode-cn.com/problems/n-queens/" target="_blank" rel="noopener">51. N皇后</a></p>
+<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><blockquote>
+<p>n 皇后问题研究的是如何将 n 个皇后放置在 n×n 的棋盘上，并且使皇后彼此之间不能相互攻击。</p>
+</blockquote>
+<p><img src="https://s2.ax1x.com/2019/03/26/ANUzjA.png" alt="ANUzjA.png"></p>
+<blockquote>
+</blockquote>
+<p>上图为 8 皇后问题的一种解法。</p>
+<blockquote>
+</blockquote>
+<p>给定一个整数 n，返回所有不同的 n 皇后问题的解决方案。</p>
+<blockquote>
+</blockquote>
+<p>每一种解法包含一个明确的 n 皇后问题的棋子放置方案，该方案中 ‘Q’ 和 ‘.’ 分别代表了皇后和空位。</p>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">输入: 4</span><br><span class="line">输出: [</span><br><span class="line"> [&quot;.Q..&quot;,  // 解法 1</span><br><span class="line">  &quot;...Q&quot;,</span><br><span class="line">  &quot;Q...&quot;,</span><br><span class="line">  &quot;..Q.&quot;],</span><br><span class="line"></span><br><span class="line"> [&quot;..Q.&quot;,  // 解法 2</span><br><span class="line">  &quot;Q...&quot;,</span><br><span class="line">  &quot;...Q&quot;,</span><br><span class="line">  &quot;.Q..&quot;]</span><br><span class="line">]</span><br><span class="line">解释: 4 皇后问题存在两个不同的解法。</span><br></pre></td></tr></table></figure>
+
+<h3 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h3><p>约束条件为每个棋子所在的行、列、对角线都不能有另一个棋子。</p>
+<p>使用一维数组表示一种解法，下标（index）表示行，值（value）表示该行的Q（皇后）在哪一列。<br>每行只存储一个元素，然后递归到下一行，这样就不用判断行了，只需要判断列和对角线。</p>
+<h3 id="Solution1"><a href="#Solution1" class="headerlink" title="Solution1"></a>Solution1</h3><p>当result[row] = column时，即row行的棋子在column列。</p>
+<p>对于[0, row-1]的任意一行（i 行），若 row 行的棋子和 i 行的棋子在同一列，则有result[i] == column;<br>若 row 行的棋子和 i 行的棋子在同一对角线，等腰直角三角形两直角边相等，即 row - i == Math.abs(result[i] - column)</p>
+<p>布尔类型变量 isValid 的作用是剪枝，减少不必要的递归。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">public List&lt;List&lt;String&gt;&gt; solveNQueens(int n) &#123;</span><br><span class="line">	// 下标代表行，值代表列。如result[0] = 3 表示第1行的Q在第3列</span><br><span class="line">	int[] result = new int[n];</span><br><span class="line">	List&lt;List&lt;String&gt;&gt; resultList = new LinkedList&lt;&gt;();</span><br><span class="line">	dfs(resultList, result, 0, n);</span><br><span class="line">	return resultList;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void dfs(List&lt;List&lt;String&gt;&gt; resultList, int[] result, int row, int n) &#123;</span><br><span class="line">    // 递归终止条件</span><br><span class="line">	if (row == n) &#123;</span><br><span class="line">		List&lt;String&gt; list = new LinkedList&lt;&gt;();</span><br><span class="line">		for (int x = 0; x &lt; n; ++x) &#123;</span><br><span class="line">			StringBuilder sb = new StringBuilder();</span><br><span class="line">			for (int y = 0; y &lt; n; ++y)</span><br><span class="line">				sb.append(result[x] == y ? &quot;Q&quot; : &quot;.&quot;);</span><br><span class="line">			list.add(sb.toString());</span><br><span class="line">		&#125;</span><br><span class="line">		resultList.add(list);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	for (int column = 0; column &lt; n; ++column) &#123;</span><br><span class="line">		boolean isValid = true;</span><br><span class="line">		result[row] = column;</span><br><span class="line">		/*</span><br><span class="line">		 * 逐行往下考察每一行。同列，result[i] == column</span><br><span class="line">		 * 同对角线，row - i == Math.abs(result[i] - column)</span><br><span class="line">		 */</span><br><span class="line">		for (int i = row - 1; i &gt;= 0; --i) &#123;</span><br><span class="line">			if (result[i] == column || row - i == Math.abs(result[i] - column)) &#123;</span><br><span class="line">				isValid = false;</span><br><span class="line">				break;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		if (isValid) dfs(resultList, result, row + 1, n);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Solution2"><a href="#Solution2" class="headerlink" title="Solution2"></a>Solution2</h3><p>使用LinkedList表示一种解法，下标（index）表示行，值（value）表示该行的Q（皇后）在哪一列。</p>
+<p>解法二和解法一的不同在于，相同列以及相同对角线的校验。<br>将对角线抽象成【一次函数】这个简单的数学模型，根据一次函数的截距是常量这一特性进行校验。</p>
+<p>这里，我将右上-左下对角线，简称为“\”对角线；左上-右下对角线简称为“/”对角线。</p>
+<p>“/”对角线斜率为1，对应方程为y = x + b，其中b为截距。<br>对于线上任意一点，均有y - x = b，即row - i = b;<br>定义一个布尔类型数组anti_diag，将b作为下标，当anti_diag[b] = true时，表示相应对角线上已经放置棋子。<br>但row - i有可能为负数，负数不能作为数组下标，row - i 的最小值为-n（当row = 0，i = n时），可以加上n作为数组下标，即将row -i + n 作为数组下标。<br>row - i + n 的最大值为 2n（当row = n，i = 0时），故anti_diag的容量设置为 2n 即可。</p>
+<p><img src="https://s2.ax1x.com/2019/03/26/ANXG79.png" alt="ANXG79.png"></p>
+<p>“\”对角线斜率为-1，对应方程为y = -x + b，其中b为截距。<br>对于线上任意一点，均有y + x = b，即row + i = b;<br>同理，定义数组main_diag，将b作为下标，当main_diag[row + i] = true时，表示相应对角线上已经放置棋子。</p>
+<p>有了两个校验对角线的数组，再来定义一个用于校验列的数组cols，这个太简单啦，不解释。</p>
+<p><strong>解法二时间复杂度为O(n!)，在校验相同列和相同对角线时，引入三个布尔类型数组进行判断。相比解法一，少了一层循环，用空间换时间。</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">List&lt;List&lt;String&gt;&gt; resultList = new LinkedList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">public List&lt;List&lt;String&gt;&gt; solveNQueens(int n) &#123;</span><br><span class="line">	boolean[] cols = new boolean[n];</span><br><span class="line">	boolean[] main_diag = new boolean[2 * n];</span><br><span class="line">	boolean[] anti_diag = new boolean[2 * n];</span><br><span class="line">	LinkedList&lt;Integer&gt; result = new LinkedList&lt;&gt;();</span><br><span class="line">	dfs(result, 0, cols, main_diag, anti_diag, n);</span><br><span class="line">	return resultList;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void dfs(LinkedList&lt;Integer&gt; result, int row, boolean[] cols, boolean[] main_diag, boolean[] anti_diag, int n) &#123;</span><br><span class="line">	if (row == n) &#123;</span><br><span class="line">		List&lt;String&gt; list = new LinkedList&lt;&gt;();</span><br><span class="line">		for (int x = 0; x &lt; n; ++x) &#123;</span><br><span class="line">			StringBuilder sb = new StringBuilder();</span><br><span class="line">			for (int y = 0; y &lt; n; ++y)</span><br><span class="line">				sb.append(result.get(x) == y ? &quot;Q&quot; : &quot;.&quot;);</span><br><span class="line">			list.add(sb.toString());</span><br><span class="line">		&#125;</span><br><span class="line">		resultList.add(list);</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line">	for (int i = 0; i &lt; n; ++i) &#123;</span><br><span class="line">		if (cols[i] || main_diag[row + i] || anti_diag[row - i + n])</span><br><span class="line">			continue;</span><br><span class="line">		result.add(i);</span><br><span class="line">		cols[i] = true;</span><br><span class="line">		main_diag[row + i] = true;</span><br><span class="line">		anti_diag[row - i + n] = true;</span><br><span class="line">		dfs(result, row + 1, cols, main_diag, anti_diag, n);</span><br><span class="line">		result.removeLast();</span><br><span class="line">		cols[i] = false;</span><br><span class="line">		main_diag[row + i] = false;</span><br><span class="line">		anti_diag[row - i + n] = false;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/14/docs/data/java-recommended-books/" rel="next" title>
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/14/docs/dataStructures-algorithms/公司真题/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">syf</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">102</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#N皇后"><span class="nav-number">1.</span> <span class="nav-text">N皇后</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目描述"><span class="nav-number">1.0.1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题分析"><span class="nav-number">1.0.2.</span> <span class="nav-text">问题分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution1"><span class="nav-number">1.0.3.</span> <span class="nav-text">Solution1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Solution2"><span class="nav-number">1.0.4.</span> <span class="nav-text">Solution2</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">syf</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

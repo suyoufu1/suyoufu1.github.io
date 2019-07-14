@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    }
+  };
+</script>
+
+
+
+  <meta name="description" content="本文是作者读 《大型网站技术架构》所做的思维导图，在这里分享给各位，公众号(JavaGuide)后台回复：“架构”。即可获得下面图片的源文件以及思维导图源文件！     1. 大型网站架构演化 2. 大型架构模式 3. 大型网站核心架构要素 4. 瞬时响应:网站的高性能架构 5. 万无一失:网站的高可用架构 6. 永无止境:网站的伸缩性架构 7. 随机应变:网站的可扩展性架构 8. 固若金汤:网">
+<meta property="og:type" content="article">
+<meta property="og:title" content="苏有福的博客">
+<meta property="og:url" content="http://yoursite.com/2019/07/14/docs/system-design/website-architecture/8 张图读懂大型网站技术架构/index.html">
+<meta property="og:site_name" content="苏有福的博客">
+<meta property="og:description" content="本文是作者读 《大型网站技术架构》所做的思维导图，在这里分享给各位，公众号(JavaGuide)后台回复：“架构”。即可获得下面图片的源文件以及思维导图源文件！     1. 大型网站架构演化 2. 大型架构模式 3. 大型网站核心架构要素 4. 瞬时响应:网站的高性能架构 5. 万无一失:网站的高可用架构 6. 永无止境:网站的伸缩性架构 7. 随机应变:网站的可扩展性架构 8. 固若金汤:网">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/1%20%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E6%9E%B6%E6%9E%84%E6%BC%94%E5%8C%96.png">
+<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2%20%E5%A4%A7%E5%9E%8B%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F.png">
+<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/3%20%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E6%A0%B8%E5%BF%83%E6%9E%B6%E6%9E%84%E8%A6%81%E7%B4%A0.png">
+<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/4%20%E7%9E%AC%E6%97%B6%E5%93%8D%E5%BA%94%EF%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E9%AB%98%E6%80%A7%E8%83%BD%E6%9E%B6%E6%9E%84.png">
+<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/5%20%E4%B8%87%E6%97%A0%E4%B8%80%E5%A4%B1%EF%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84.png">
+<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/6%20%E6%B0%B8%E6%97%A0%E6%AD%A2%E5%A2%83%EF%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E4%BC%B8%E7%BC%A9%E6%80%A7%E6%9E%B6%E6%9E%84.png">
+<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/7%20%E9%9A%8F%E6%9C%BA%E5%BA%94%E5%8F%98%EF%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E5%8F%AF%E6%89%A9%E5%B1%95%E6%9E%B6%E6%9E%84.png">
+<meta property="og:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/8%20%E5%9B%BA%E8%8B%A5%E9%87%91%E6%B1%A4%EF%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E5%AE%89%E5%85%A8%E6%9E%B6%E6%9E%84.png">
+<meta property="og:updated_time" content="2019-07-14T14:47:16.584Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="苏有福的博客">
+<meta name="twitter:description" content="本文是作者读 《大型网站技术架构》所做的思维导图，在这里分享给各位，公众号(JavaGuide)后台回复：“架构”。即可获得下面图片的源文件以及思维导图源文件！     1. 大型网站架构演化 2. 大型架构模式 3. 大型网站核心架构要素 4. 瞬时响应:网站的高性能架构 5. 万无一失:网站的高可用架构 6. 永无止境:网站的伸缩性架构 7. 随机应变:网站的可扩展性架构 8. 固若金汤:网">
+<meta name="twitter:image" content="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/1%20%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E6%9E%B6%E6%9E%84%E6%BC%94%E5%8C%96.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/07/14/docs/system-design/website-architecture/8 张图读懂大型网站技术架构/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | 苏有福的博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">苏有福的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/website-architecture/8 张图读懂大型网站技术架构/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="syf">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="苏有福的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
+            </span>
+          
+
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文是作者读 《大型网站技术架构》所做的思维导图，在这里分享给各位，公众号(JavaGuide)后台回复：“架构”。即可获得下面图片的源文件以及思维导图源文件！</p>
+</blockquote>
+<!-- MarkdownTOC -->
+
+<ul>
+<li><a href="#1-大型网站架构演化">1. 大型网站架构演化</a></li>
+<li><a href="#2-大型架构模式">2. 大型架构模式</a></li>
+<li><a href="#3-大型网站核心架构要素">3. 大型网站核心架构要素</a></li>
+<li><a href="#4-瞬时响应网站的高性能架构">4. 瞬时响应:网站的高性能架构</a></li>
+<li><a href="#5-万无一失网站的高可用架构">5. 万无一失:网站的高可用架构</a></li>
+<li><a href="#6-永无止境网站的伸缩性架构">6. 永无止境:网站的伸缩性架构</a></li>
+<li><a href="#7-随机应变网站的可扩展性架构">7. 随机应变:网站的可扩展性架构</a></li>
+<li><a href="#8-固若金汤网站的安全机构">8. 固若金汤:网站的安全机构</a></li>
+</ul>
+<!-- /MarkdownTOC -->
+
+
+<h3 id="1-大型网站架构演化"><a href="#1-大型网站架构演化" class="headerlink" title="1. 大型网站架构演化"></a>1. 大型网站架构演化</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/1%20%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E6%9E%B6%E6%9E%84%E6%BC%94%E5%8C%96.png" alt="1. 大型网站架构演化"></p>
+<h3 id="2-大型架构模式"><a href="#2-大型架构模式" class="headerlink" title="2. 大型架构模式"></a>2. 大型架构模式</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2%20%E5%A4%A7%E5%9E%8B%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F.png" alt="2. 大型架构模式"></p>
+<h3 id="3-大型网站核心架构要素"><a href="#3-大型网站核心架构要素" class="headerlink" title="3. 大型网站核心架构要素"></a>3. 大型网站核心架构要素</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/3%20%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E6%A0%B8%E5%BF%83%E6%9E%B6%E6%9E%84%E8%A6%81%E7%B4%A0.png" alt="3. 大型网站核心架构要素"></p>
+<h3 id="4-瞬时响应-网站的高性能架构"><a href="#4-瞬时响应-网站的高性能架构" class="headerlink" title="4. 瞬时响应:网站的高性能架构"></a>4. 瞬时响应:网站的高性能架构</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/4%20%E7%9E%AC%E6%97%B6%E5%93%8D%E5%BA%94%EF%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E9%AB%98%E6%80%A7%E8%83%BD%E6%9E%B6%E6%9E%84.png" alt="4. 瞬时响应:网站的高性能架构"></p>
+<h3 id="5-万无一失-网站的高可用架构"><a href="#5-万无一失-网站的高可用架构" class="headerlink" title="5. 万无一失:网站的高可用架构"></a>5. 万无一失:网站的高可用架构</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/5%20%E4%B8%87%E6%97%A0%E4%B8%80%E5%A4%B1%EF%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84.png" alt="5. 万无一失:网站的高可用架构"></p>
+<h3 id="6-永无止境-网站的伸缩性架构"><a href="#6-永无止境-网站的伸缩性架构" class="headerlink" title="6. 永无止境:网站的伸缩性架构"></a>6. 永无止境:网站的伸缩性架构</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/6%20%E6%B0%B8%E6%97%A0%E6%AD%A2%E5%A2%83%EF%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E4%BC%B8%E7%BC%A9%E6%80%A7%E6%9E%B6%E6%9E%84.png" alt="6. 永无止境:网站的伸缩性架构"></p>
+<h3 id="7-随机应变-网站的可扩展性架构"><a href="#7-随机应变-网站的可扩展性架构" class="headerlink" title="7. 随机应变:网站的可扩展性架构"></a>7. 随机应变:网站的可扩展性架构</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/7%20%E9%9A%8F%E6%9C%BA%E5%BA%94%E5%8F%98%EF%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E5%8F%AF%E6%89%A9%E5%B1%95%E6%9E%B6%E6%9E%84.png" alt="7. 随机应变:网站的可扩展性架构"></p>
+<h3 id="8-固若金汤-网站的安全机构"><a href="#8-固若金汤-网站的安全机构" class="headerlink" title="8. 固若金汤:网站的安全机构"></a>8. 固若金汤:网站的安全机构</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/8%20%E5%9B%BA%E8%8B%A5%E9%87%91%E6%B1%A4%EF%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E5%AE%89%E5%85%A8%E6%9E%B6%E6%9E%84.png" alt="enter image description here"></p>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/14/docs/system-design/website-architecture/【面试精选】关于大型网站系统架构你不得不懂的10个问题/" rel="next" title>
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/14/docs/system-design/website-architecture/分布式/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">syf</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">102</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-大型网站架构演化"><span class="nav-number">1.</span> <span class="nav-text">1. 大型网站架构演化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-大型架构模式"><span class="nav-number">2.</span> <span class="nav-text">2. 大型架构模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-大型网站核心架构要素"><span class="nav-number">3.</span> <span class="nav-text">3. 大型网站核心架构要素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-瞬时响应-网站的高性能架构"><span class="nav-number">4.</span> <span class="nav-text">4. 瞬时响应:网站的高性能架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-万无一失-网站的高可用架构"><span class="nav-number">5.</span> <span class="nav-text">5. 万无一失:网站的高可用架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-永无止境-网站的伸缩性架构"><span class="nav-number">6.</span> <span class="nav-text">6. 永无止境:网站的伸缩性架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-随机应变-网站的可扩展性架构"><span class="nav-number">7.</span> <span class="nav-text">7. 随机应变:网站的可扩展性架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-固若金汤-网站的安全机构"><span class="nav-number">8.</span> <span class="nav-text">8. 固若金汤:网站的安全机构</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">syf</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

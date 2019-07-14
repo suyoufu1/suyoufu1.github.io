@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    }
+  };
+</script>
+
+
+
+  <meta name="description" content="本文来自读者 PR。    1 单机版消息中心 2 分布式消息中心 2.1 问题与解决 2.1.1 消息丢失的问题 2.1.2 同步落盘怎么才能快 2.1.3 消息堆积的问题 2.1.4 定时消息的实现 2.1.5 顺序消息的实现 2.1.6 分布式消息的实现 2.1.7 消息的 push 实现 2.1.8 消息重复发送的避免 2.1.9 广播消费与集群消费 2.1.10 RocketMQ 不使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="苏有福的博客">
+<meta property="og:url" content="http://yoursite.com/2019/07/14/docs/system-design/data-communication/RocketMQ-Questions/index.html">
+<meta property="og:site_name" content="苏有福的博客">
+<meta property="og:description" content="本文来自读者 PR。    1 单机版消息中心 2 分布式消息中心 2.1 问题与解决 2.1.1 消息丢失的问题 2.1.2 同步落盘怎么才能快 2.1.3 消息堆积的问题 2.1.4 定时消息的实现 2.1.5 顺序消息的实现 2.1.6 分布式消息的实现 2.1.7 消息的 push 实现 2.1.8 消息重复发送的避免 2.1.9 广播消费与集群消费 2.1.10 RocketMQ 不使用">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://leran2deeplearnjavawebtech.oss-cn-beijing.aliyuncs.com/somephoto/RocketMQ%E6%B5%81%E7%A8%8B.png">
+<meta property="og:updated_time" content="2019-07-14T14:47:16.552Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="苏有福的博客">
+<meta name="twitter:description" content="本文来自读者 PR。    1 单机版消息中心 2 分布式消息中心 2.1 问题与解决 2.1.1 消息丢失的问题 2.1.2 同步落盘怎么才能快 2.1.3 消息堆积的问题 2.1.4 定时消息的实现 2.1.5 顺序消息的实现 2.1.6 分布式消息的实现 2.1.7 消息的 push 实现 2.1.8 消息重复发送的避免 2.1.9 广播消费与集群消费 2.1.10 RocketMQ 不使用">
+<meta name="twitter:image" content="https://leran2deeplearnjavawebtech.oss-cn-beijing.aliyuncs.com/somephoto/RocketMQ%E6%B5%81%E7%A8%8B.png">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/07/14/docs/system-design/data-communication/RocketMQ-Questions/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | 苏有福的博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">苏有福的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/data-communication/RocketMQ-Questions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="syf">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="苏有福的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
+            </span>
+          
+
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文来自读者 <a href="https://github.com/Snailclimb/JavaGuide/pull/291" target="_blank" rel="noopener">PR</a>。</p>
+<!-- TOC -->
+
+<ul>
+<li><a href="#1-%E5%8D%95%E6%9C%BA%E7%89%88%E6%B6%88%E6%81%AF%E4%B8%AD%E5%BF%83">1 单机版消息中心</a></li>
+<li><a href="#2-%E5%88%86%E5%B8%83%E5%BC%8F%E6%B6%88%E6%81%AF%E4%B8%AD%E5%BF%83">2 分布式消息中心</a><ul>
+<li><a href="#21-%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3">2.1 问题与解决</a><ul>
+<li><a href="#211-%E6%B6%88%E6%81%AF%E4%B8%A2%E5%A4%B1%E7%9A%84%E9%97%AE%E9%A2%98">2.1.1 消息丢失的问题</a></li>
+<li><a href="#212-%E5%90%8C%E6%AD%A5%E8%90%BD%E7%9B%98%E6%80%8E%E4%B9%88%E6%89%8D%E8%83%BD%E5%BF%AB">2.1.2 同步落盘怎么才能快</a></li>
+<li><a href="#213-%E6%B6%88%E6%81%AF%E5%A0%86%E7%A7%AF%E7%9A%84%E9%97%AE%E9%A2%98">2.1.3 消息堆积的问题</a></li>
+<li><a href="#214-%E5%AE%9A%E6%97%B6%E6%B6%88%E6%81%AF%E7%9A%84%E5%AE%9E%E7%8E%B0">2.1.4 定时消息的实现</a></li>
+<li><a href="#215-%E9%A1%BA%E5%BA%8F%E6%B6%88%E6%81%AF%E7%9A%84%E5%AE%9E%E7%8E%B0">2.1.5 顺序消息的实现</a></li>
+<li><a href="#216-%E5%88%86%E5%B8%83%E5%BC%8F%E6%B6%88%E6%81%AF%E7%9A%84%E5%AE%9E%E7%8E%B0">2.1.6 分布式消息的实现</a></li>
+<li><a href="#217-%E6%B6%88%E6%81%AF%E7%9A%84-push-%E5%AE%9E%E7%8E%B0">2.1.7 消息的 push 实现</a></li>
+<li><a href="#218-%E6%B6%88%E6%81%AF%E9%87%8D%E5%A4%8D%E5%8F%91%E9%80%81%E7%9A%84%E9%81%BF%E5%85%8D">2.1.8 消息重复发送的避免</a></li>
+<li><a href="#219-%E5%B9%BF%E6%92%AD%E6%B6%88%E8%B4%B9%E4%B8%8E%E9%9B%86%E7%BE%A4%E6%B6%88%E8%B4%B9">2.1.9 广播消费与集群消费</a></li>
+<li><a href="#2110-rocketmq-%E4%B8%8D%E4%BD%BF%E7%94%A8-zookeeper-%E4%BD%9C%E4%B8%BA%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E7%9A%84%E5%8E%9F%E5%9B%A0%E4%BB%A5%E5%8F%8A%E8%87%AA%E5%88%B6%E7%9A%84-nameserver-%E4%BC%98%E7%BC%BA%E7%82%B9">2.1.10 RocketMQ 不使用 ZooKeeper 作为注册中心的原因，以及自制的 NameServer 优缺点？</a></li>
+<li><a href="#2111-%E5%85%B6%E5%AE%83">2.1.11 其它</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#3-%E5%8F%82%E8%80%83">3 参考</a></li>
+</ul>
+<!-- TOC -->
+
+<h1 id="1-单机版消息中心"><a href="#1-单机版消息中心" class="headerlink" title="1 单机版消息中心"></a>1 单机版消息中心</h1><p>一个消息中心，最基本的需要支持多生产者、多消费者，例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Scratch</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 实际中会有 nameserver 服务来找到 broker 具体位置以及 broker 主从信息</span></span><br><span class="line">        Broker broker = <span class="keyword">new</span> Broker();</span><br><span class="line">        Producer producer1 = <span class="keyword">new</span> Producer();</span><br><span class="line">        producer1.connectBroker(broker);</span><br><span class="line">        Producer producer2 = <span class="keyword">new</span> Producer();</span><br><span class="line">        producer2.connectBroker(broker);</span><br><span class="line"></span><br><span class="line">        Consumer consumer1 = <span class="keyword">new</span> Consumer();</span><br><span class="line">        consumer1.connectBroker(broker);</span><br><span class="line">        Consumer consumer2 = <span class="keyword">new</span> Consumer();</span><br><span class="line">        consumer2.connectBroker(broker);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i++) &#123;</span><br><span class="line">            producer1.asyncSendMsg(<span class="string">"producer1 send msg"</span> + i);</span><br><span class="line">            producer2.asyncSendMsg(<span class="string">"producer2 send msg"</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"broker has msg:"</span> + broker.getAllMagByDisk());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1</span>; i++) &#123;</span><br><span class="line">            System.out.println(<span class="string">"consumer1 consume msg："</span> + consumer1.syncPullMsg());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">            System.out.println(<span class="string">"consumer2 consume msg："</span> + consumer2.syncPullMsg());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Producer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Broker broker;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">connectBroker</span><span class="params">(Broker broker)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.broker = broker;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">asyncSendMsg</span><span class="params">(String msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (broker == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"please connect broker first"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            broker.sendMsg(msg);</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Broker broker;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">connectBroker</span><span class="params">(Broker broker)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.broker = broker;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">syncPullMsg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> broker.getMsg();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Broker</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 对应 RocketMQ 中 MessageQueue，默认情况下 1 个 Topic 包含 4 个 MessageQueue</span></span><br><span class="line">    <span class="keyword">private</span> LinkedBlockingQueue&lt;String&gt; messageQueue = <span class="keyword">new</span> LinkedBlockingQueue(Integer.MAX_VALUE);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 实际发送消息到 broker 服务器使用 Netty 发送</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendMsg</span><span class="params">(String msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            messageQueue.put(msg);</span><br><span class="line">            <span class="comment">// 实际会同步或异步落盘，异步落盘使用的定时任务定时扫描落盘</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMsg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> messageQueue.take();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getAllMagByDisk</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder(<span class="string">"\n"</span>);</span><br><span class="line">        messageQueue.iterator().forEachRemaining((msg) -&gt; &#123;</span><br><span class="line">            sb.append(msg + <span class="string">"\n"</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">return</span> sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>问题：  </p>
+<ol>
+<li>没有实现真正执行消息存储落盘</li>
+<li>没有实现 NameServer 去作为注册中心，定位服务</li>
+<li>使用 LinkedBlockingQueue 作为消息队列，注意，参数是无限大，在真正 RocketMQ 也是如此是无限大，理论上不会出现对进来的数据进行抛弃，但是会有内存泄漏问题（阿里巴巴开发手册也因为这个问题，建议我们使用自制线程池）  </li>
+<li>没有使用多个队列（即多个 LinkedBlockingQueue），RocketMQ 的顺序消息是通过生产者和消费者同时使用同一个 MessageQueue 来实现，但是如果我们只有一个 MessageQueue，那我们天然就支持顺序消息</li>
+<li>没有使用 MappedByteBuffer 来实现文件映射从而使消息数据落盘非常的快（实际 RocketMQ 使用的是 FileChannel+DirectBuffer）</li>
+</ol>
+<h1 id="2-分布式消息中心"><a href="#2-分布式消息中心" class="headerlink" title="2 分布式消息中心"></a>2 分布式消息中心</h1><h2 id="2-1-问题与解决"><a href="#2-1-问题与解决" class="headerlink" title="2.1 问题与解决"></a>2.1 问题与解决</h2><h3 id="2-1-1-消息丢失的问题"><a href="#2-1-1-消息丢失的问题" class="headerlink" title="2.1.1 消息丢失的问题"></a>2.1.1 消息丢失的问题</h3><ol>
+<li>当你系统需要保证百分百消息不丢失，你可以使用生产者每发送一个消息，Broker 同步返回一个消息发送成功的反馈消息</li>
+<li>即每发送一个消息，同步落盘后才返回生产者消息发送成功，这样只要生产者得到了消息发送生成的返回，事后除了硬盘损坏，都可以保证不会消息丢失</li>
+<li>但是这同时引入了一个问题，同步落盘怎么才能快？</li>
+</ol>
+<h3 id="2-1-2-同步落盘怎么才能快"><a href="#2-1-2-同步落盘怎么才能快" class="headerlink" title="2.1.2 同步落盘怎么才能快"></a>2.1.2 同步落盘怎么才能快</h3><ol>
+<li>使用 FileChannel + DirectBuffer 池，使用堆外内存，加快内存拷贝  </li>
+<li>使用数据和索引分离，当消息需要写入时，使用 commitlog 文件顺序写，当需要定位某个消息时，查询index 文件来定位，从而减少文件IO随机读写的性能损耗</li>
+</ol>
+<h3 id="2-1-3-消息堆积的问题"><a href="#2-1-3-消息堆积的问题" class="headerlink" title="2.1.3 消息堆积的问题"></a>2.1.3 消息堆积的问题</h3><ol>
+<li>后台定时任务每隔72小时，删除旧的没有使用过的消息信息  </li>
+<li>根据不同的业务实现不同的丢弃任务，具体参考线程池的 AbortPolicy，例如FIFO/LRU等（RocketMQ没有此策略）  </li>
+<li>消息定时转移，或者对某些重要的 TAG 型（支付型）消息真正落库</li>
+</ol>
+<h3 id="2-1-4-定时消息的实现"><a href="#2-1-4-定时消息的实现" class="headerlink" title="2.1.4 定时消息的实现"></a>2.1.4 定时消息的实现</h3><ol>
+<li>实际 RocketMQ 没有实现任意精度的定时消息，它只支持某些特定的时间精度的定时消息</li>
+<li>实现定时消息的原理是：创建特定时间精度的 MessageQueue，例如生产者需要定时1s之后被消费者消费，你只需要将此消息发送到特定的 Topic，例如：MessageQueue-1 表示这个 MessageQueue 里面的消息都会延迟一秒被消费，然后 Broker 会在 1s 后发送到消费者消费此消息，使用 newSingleThreadScheduledExecutor 实现</li>
+</ol>
+<h3 id="2-1-5-顺序消息的实现"><a href="#2-1-5-顺序消息的实现" class="headerlink" title="2.1.5 顺序消息的实现"></a>2.1.5 顺序消息的实现</h3><ol>
+<li>与定时消息同原理，生产者生产消息时指定特定的 MessageQueue ，消费者消费消息时，消费特定的 MessageQueue，其实单机版的消息中心在一个 MessageQueue 就天然支持了顺序消息</li>
+<li>注意：同一个 MessageQueue 保证里面的消息是顺序消费的前提是：消费者是串行的消费该 MessageQueue，因为就算 MessageQueue 是顺序的，但是当并行消费时，还是会有顺序问题，但是串行消费也同时引入了两个问题：<blockquote>
+<ol>
+<li>引入锁来实现串行</li>
+<li>前一个消费阻塞时后面都会被阻塞</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<h3 id="2-1-6-分布式消息的实现"><a href="#2-1-6-分布式消息的实现" class="headerlink" title="2.1.6 分布式消息的实现"></a>2.1.6 分布式消息的实现</h3><ol>
+<li>需要前置知识：2PC  </li>
+<li>RocketMQ4.3 起支持，原理为2PC，即两阶段提交，prepared-&gt;commit/rollback</li>
+<li>生产者发送事务消息，假设该事务消息 Topic 为 Topic1-Trans，Broker 得到后首先更改该消息的 Topic 为 Topic1-Prepared，该 Topic1-Prepared 对消费者不可见。然后定时回调生产者的本地事务A执行状态，根据本地事务A执行状态，来是否将该消息修改为 Topic1-Commit 或 Topic1-Rollback，消费者就可以正常找到该事务消息或者不执行等</li>
+</ol>
+<blockquote>
+<p>注意，就算是事务消息最后回滚了也不会物理删除，只会逻辑删除该消息</p>
+</blockquote>
+<h3 id="2-1-7-消息的-push-实现"><a href="#2-1-7-消息的-push-实现" class="headerlink" title="2.1.7 消息的 push 实现"></a>2.1.7 消息的 push 实现</h3><ol>
+<li>注意，RocketMQ 已经说了自己会有低延迟问题，其中就包括这个消息的 push 延迟问题</li>
+<li>因为这并不是真正的将消息主动的推送到消费者，而是 Broker 定时任务每5s将消息推送到消费者</li>
+</ol>
+<h3 id="2-1-8-消息重复发送的避免"><a href="#2-1-8-消息重复发送的避免" class="headerlink" title="2.1.8 消息重复发送的避免"></a>2.1.8 消息重复发送的避免</h3><ol>
+<li>RocketMQ 会出现消息重复发送的问题，因为在网络延迟的情况下，这种问题不可避免的发生，如果非要实现消息不可重复发送，那基本太难，因为网络环境无法预知，还会使程序复杂度加大，因此默认允许消息重复发送</li>
+<li>RocketMQ 让使用者在消费者端去解决该问题，即需要消费者端在消费消息时支持幂等性的去消费消息</li>
+<li>最简单的解决方案是每条消费记录有个消费状态字段，根据这个消费状态字段来是否消费或者使用一个集中式的表，来存储所有消息的消费状态，从而避免重复消费</li>
+<li>具体实现可以查询关于消息幂等消费的解决方案</li>
+</ol>
+<h3 id="2-1-9-广播消费与集群消费"><a href="#2-1-9-广播消费与集群消费" class="headerlink" title="2.1.9 广播消费与集群消费"></a>2.1.9 广播消费与集群消费</h3><ol>
+<li>消息消费区别：广播消费，订阅该 Topic 的消息者们都会消费<strong>每个</strong>消息。集群消费，订阅该 Topic 的消息者们只会有一个去消费<strong>某个</strong>消息</li>
+<li>消息落盘区别：具体表现在消息消费进度的保存上。广播消费，由于每个消费者都独立的去消费每个消息，因此每个消费者各自保存自己的消息消费进度。而集群消费下，订阅了某个 Topic，而旗下又有多个 MessageQueue，每个消费者都可能会去消费不同的 MessageQueue，因此总体的消费进度保存在 Broker 上集中的管理</li>
+</ol>
+<h3 id="2-1-10-RocketMQ-不使用-ZooKeeper-作为注册中心的原因，以及自制的-NameServer-优缺点？"><a href="#2-1-10-RocketMQ-不使用-ZooKeeper-作为注册中心的原因，以及自制的-NameServer-优缺点？" class="headerlink" title="2.1.10 RocketMQ 不使用 ZooKeeper 作为注册中心的原因，以及自制的 NameServer 优缺点？"></a>2.1.10 RocketMQ 不使用 ZooKeeper 作为注册中心的原因，以及自制的 NameServer 优缺点？</h3><ol>
+<li>ZooKeeper 作为支持顺序一致性的中间件，在某些情况下，它为了满足一致性，会丢失一定时间内的可用性，RocketMQ 需要注册中心只是为了发现组件地址，在某些情况下，RocketMQ 的注册中心可以出现数据不一致性，这同时也是 NameServer 的缺点，因为 NameServer 集群间互不通信，它们之间的注册信息可能会不一致</li>
+<li>另外，当有新的服务器加入时，NameServer 并不会立马通知到 Produer，而是由 Produer 定时去请求 NameServer 获取最新的 Broker/Consumer 信息（这种情况是通过 Producer 发送消息时，负载均衡解决）</li>
+</ol>
+<h3 id="2-1-11-其它"><a href="#2-1-11-其它" class="headerlink" title="2.1.11 其它"></a>2.1.11 其它</h3><p><img src="https://leran2deeplearnjavawebtech.oss-cn-beijing.aliyuncs.com/somephoto/RocketMQ%E6%B5%81%E7%A8%8B.png" alt></p>
+<p>加分项咯 </p>
+<ol>
+<li>包括组件通信间使用 Netty 的自定义协议</li>
+<li>消息重试负载均衡策略（具体参考 Dubbo 负载均衡策略）</li>
+<li>消息过滤器（Producer 发送消息到 Broker，Broker 存储消息信息，Consumer 消费时请求 Broker 端从磁盘文件查询消息文件时,在 Broker 端就使用过滤服务器进行过滤）  </li>
+<li>Broker 同步双写和异步双写中 Master 和 Slave 的交互</li>
+<li>Broker 在 4.5.0 版本更新中引入了基于 Raft 协议的多副本选举，之前这是商业版才有的特性 <a href="http://rocketmq.apache.org/release_notes/release-notes-4.5.0/" target="_blank" rel="noopener">ISSUE-1046</a></li>
+</ol>
+<h1 id="3-参考"><a href="#3-参考" class="headerlink" title="3 参考"></a>3 参考</h1><ol>
+<li>《RocketMQ技术内幕》：<a href="https://blog.csdn.net/prestigeding/article/details/85233529" target="_blank" rel="noopener">https://blog.csdn.net/prestigeding/article/details/85233529</a></li>
+<li>关于 RocketMQ 对 MappedByteBuffer 的一点优化：<a href="https://lishoubo.github.io/2017/09/27/MappedByteBuffer%E7%9A%84%E4%B8%80%E7%82%B9%E4%BC%98%E5%8C%96/" target="_blank" rel="noopener">https://lishoubo.github.io/2017/09/27/MappedByteBuffer%E7%9A%84%E4%B8%80%E7%82%B9%E4%BC%98%E5%8C%96/</a></li>
+<li>阿里中间件团队博客-十分钟入门RocketMQ：<a href="http://jm.taobao.org/2017/01/12/rocketmq-quick-start-in-10-minutes/" target="_blank" rel="noopener">http://jm.taobao.org/2017/01/12/rocketmq-quick-start-in-10-minutes/</a></li>
+<li>分布式事务的种类以及 RocketMQ 支持的分布式消息：<a href="https://www.infoq.cn/article/2018/08/rocketmq-4.3-release" target="_blank" rel="noopener">https://www.infoq.cn/article/2018/08/rocketmq-4.3-release</a></li>
+<li>滴滴出行基于RocketMQ构建企业级消息队列服务的实践：<a href="https://yq.aliyun.com/articles/664608" target="_blank" rel="noopener">https://yq.aliyun.com/articles/664608</a></li>
+<li>基于《RocketMQ技术内幕》源码注释：<a href="https://github.com/LiWenGu/awesome-rocketmq" target="_blank" rel="noopener">https://github.com/LiWenGu/awesome-rocketmq</a></li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/14/docs/operating-system/后端程序员必备的Linux基础知识/" rel="next" title>
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/14/docs/operating-system/Shell/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">syf</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">102</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-单机版消息中心"><span class="nav-number">1.</span> <span class="nav-text">1 单机版消息中心</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-分布式消息中心"><span class="nav-number">2.</span> <span class="nav-text">2 分布式消息中心</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-问题与解决"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 问题与解决</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-消息丢失的问题"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1 消息丢失的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-同步落盘怎么才能快"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2 同步落盘怎么才能快</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3-消息堆积的问题"><span class="nav-number">2.1.3.</span> <span class="nav-text">2.1.3 消息堆积的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-4-定时消息的实现"><span class="nav-number">2.1.4.</span> <span class="nav-text">2.1.4 定时消息的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-5-顺序消息的实现"><span class="nav-number">2.1.5.</span> <span class="nav-text">2.1.5 顺序消息的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-6-分布式消息的实现"><span class="nav-number">2.1.6.</span> <span class="nav-text">2.1.6 分布式消息的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-7-消息的-push-实现"><span class="nav-number">2.1.7.</span> <span class="nav-text">2.1.7 消息的 push 实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-8-消息重复发送的避免"><span class="nav-number">2.1.8.</span> <span class="nav-text">2.1.8 消息重复发送的避免</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-9-广播消费与集群消费"><span class="nav-number">2.1.9.</span> <span class="nav-text">2.1.9 广播消费与集群消费</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-10-RocketMQ-不使用-ZooKeeper-作为注册中心的原因，以及自制的-NameServer-优缺点？"><span class="nav-number">2.1.10.</span> <span class="nav-text">2.1.10 RocketMQ 不使用 ZooKeeper 作为注册中心的原因，以及自制的 NameServer 优缺点？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-11-其它"><span class="nav-number">2.1.11.</span> <span class="nav-text">2.1.11 其它</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-参考"><span class="nav-number">3.</span> <span class="nav-text">3 参考</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">syf</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>

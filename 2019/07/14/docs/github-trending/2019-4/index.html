@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    }
+  };
+</script>
+
+
+
+  <meta name="description" content="以下涉及到的数据统计与 2019 年 5 月 1 日 12 点，数据来源：https://github.com/trending/java?since=monthly 。 下面的内容从 Java 学习文档到最热门的框架再到热门的工具应有尽有，比如下面推荐到的开源项目 Hutool 就是近期比较热门的项目之一，它是 Java 工具包，能够帮助我们简化代码！我觉得下面这些项目对于学习 Java 的朋友">
+<meta property="og:type" content="article">
+<meta property="og:title" content="苏有福的博客">
+<meta property="og:url" content="http://yoursite.com/2019/07/14/docs/github-trending/2019-4/index.html">
+<meta property="og:site_name" content="苏有福的博客">
+<meta property="og:description" content="以下涉及到的数据统计与 2019 年 5 月 1 日 12 点，数据来源：https://github.com/trending/java?since=monthly 。 下面的内容从 Java 学习文档到最热门的框架再到热门的工具应有尽有，比如下面推荐到的开源项目 Hutool 就是近期比较热门的项目之一，它是 Java 工具包，能够帮助我们简化代码！我觉得下面这些项目对于学习 Java 的朋友">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-14T14:47:16.500Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="苏有福的博客">
+<meta name="twitter:description" content="以下涉及到的数据统计与 2019 年 5 月 1 日 12 点，数据来源：https://github.com/trending/java?since=monthly 。 下面的内容从 Java 学习文档到最热门的框架再到热门的工具应有尽有，比如下面推荐到的开源项目 Hutool 就是近期比较热门的项目之一，它是 Java 工具包，能够帮助我们简化代码！我觉得下面这些项目对于学习 Java 的朋友">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/07/14/docs/github-trending/2019-4/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | 苏有福的博客</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">苏有福的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/github-trending/2019-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="syf">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="苏有福的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
+            </span>
+          
+
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>以下涉及到的数据统计与 2019 年 5 月 1 日 12 点，数据来源：<a href="https://github.com/trending/java?since=monthly" target="_blank" rel="noopener">https://github.com/trending/java?since=monthly</a> 。</p>
+<p>下面的内容从 Java 学习文档到最热门的框架再到热门的工具应有尽有，比如下面推荐到的开源项目 Hutool 就是近期比较热门的项目之一，它是 Java 工具包，能够帮助我们简化代码！我觉得下面这些项目对于学习 Java 的朋友还是很有帮助的！</p>
+<h3 id="1-JavaGuide"><a href="#1-JavaGuide" class="headerlink" title="1. JavaGuide"></a>1. JavaGuide</h3><ul>
+<li><strong>Github 地址</strong>： <a href="https://github.com/Snailclimb/JavaGuide" target="_blank" rel="noopener">https://github.com/Snailclimb/JavaGuide</a></li>
+<li><strong>Star</strong>:  37.9k (5,660 stars this month)</li>
+<li><strong>介绍</strong>: 【Java 学习+面试指南】 一份涵盖大部分 Java 程序员所需要掌握的核心知识。</li>
+</ul>
+<h3 id="2-advanced-java"><a href="#2-advanced-java" class="headerlink" title="2. advanced-java"></a>2. advanced-java</h3><ul>
+<li><strong>Github 地址</strong>：<a href="https://github.com/doocs/advanced-java" target="_blank" rel="noopener">https://github.com/doocs/advanced-java</a></li>
+<li><strong>Star</strong>: 15.1k (4,654 stars this month)</li>
+<li><strong>介绍</strong>: 互联网 Java 工程师进阶知识完全扫盲。</li>
+</ul>
+<h3 id="3-CS-Notes"><a href="#3-CS-Notes" class="headerlink" title="3. CS-Notes"></a>3. CS-Notes</h3><ul>
+<li><strong>Github 地址</strong>：<a href="https://github.com/CyC2018/CS-Notes" target="_blank" rel="noopener">https://github.com/CyC2018/CS-Notes</a></li>
+<li><strong>Star</strong>: 59.2k (4,012 stars this month)</li>
+<li><strong>介绍</strong>: 技术面试必备基础知识。</li>
+</ul>
+<h3 id="4-ghidra"><a href="#4-ghidra" class="headerlink" title="4. ghidra"></a>4. ghidra</h3><ul>
+<li><strong>Github 地址</strong>：<a href="https://github.com/NationalSecurityAgency/ghidra" target="_blank" rel="noopener">https://github.com/NationalSecurityAgency/ghidra</a></li>
+<li><strong>Star</strong>: 15.0k (2,995 stars this month)</li>
+<li><strong>介绍</strong>: Ghidra是一个软件逆向工程（SRE）框架。</li>
+</ul>
+<h3 id="5-mall"><a href="#5-mall" class="headerlink" title="5. mall"></a>5. mall</h3><ul>
+<li><strong>Github 地址</strong>： <a href="https://github.com/macrozheng/mall" target="_blank" rel="noopener">https://github.com/macrozheng/mall</a></li>
+<li><strong>star</strong>: 11.6 k (2,100 stars this month)</li>
+<li><strong>介绍</strong>: mall 项目是一套电商系统，包括前台商城系统及后台管理系统，基于 SpringBoot+MyBatis 实现。 前台商城系统包含首页门户、商品推荐、商品搜索、商品展示、购物车、订单流程、会员中心、客户服务、帮助中心等模块。 后台管理系统包含商品管理、订单管理、会员管理、促销管理、运营管理、内容管理、统计报表、财务管理、权限管理、设置等模块。</li>
+</ul>
+<h3 id="6-ZXBlog"><a href="#6-ZXBlog" class="headerlink" title="6. ZXBlog"></a>6. ZXBlog</h3><ul>
+<li><strong>Github 地址</strong>： <a href="https://github.com/ZXZxin/ZXBlog" target="_blank" rel="noopener">https://github.com/ZXZxin/ZXBlog</a></li>
+<li><strong>star</strong>: 2.1 k (2,086 stars this month)</li>
+<li><strong>介绍</strong>: 记录各种学习笔记(算法、Java、数据库、并发……)。</li>
+</ul>
+<h3 id="7-DoraemonKit"><a href="#7-DoraemonKit" class="headerlink" title="7.DoraemonKit"></a>7.DoraemonKit</h3><ul>
+<li><strong>Github地址</strong>： <a href="https://github.com/didi/DoraemonKit" target="_blank" rel="noopener">https://github.com/didi/DoraemonKit</a></li>
+<li><strong>Star</strong>: 7.6k (1,541 stars this month)</li>
+<li><strong>介绍</strong>: 简称 “DoKit” 。一款功能齐全的客户端（ iOS 、Android ）研发助手，你值得拥有。</li>
+</ul>
+<h3 id="8-spring-boot"><a href="#8-spring-boot" class="headerlink" title="8.  spring-boot"></a>8.  spring-boot</h3><ul>
+<li><strong>Github地址</strong>： <a href="https://github.com/spring-projects/spring-boot" target="_blank" rel="noopener">https://github.com/spring-projects/spring-boot</a></li>
+<li><strong>star:</strong> 37.3k (1,489 stars this month)</li>
+<li><strong>介绍</strong>： 虽然Spring的组件代码是轻量级的，但它的配置却是重量级的（需要大量XML配置）,不过Spring Boot 让这一切成为了过去。 另外Spring Cloud也是基于Spring Boot构建的，我个人非常有必要学习一下。</li>
+</ul>
+<p><strong>Spring Boot官方的介绍：</strong></p>
+<blockquote>
+<p>Spring Boot makes it easy to create stand-alone, production-grade Spring based Applications that you can “just run”…Most Spring Boot applications need very little Spring configuration.(Spring Boot可以轻松创建独立的生产级基于Spring的应用程序,只要通过 “just run”（可能是run ‘Application’或java -jar 或 tomcat 或 maven插件run 或 shell脚本）便可以运行项目。大部分Spring Boot项目只需要少量的配置即可)</p>
+</blockquote>
+<h3 id="9-spring-boot-examples"><a href="#9-spring-boot-examples" class="headerlink" title="9. spring-boot-examples"></a>9. spring-boot-examples</h3><ul>
+<li><strong>Github 地址</strong>：<a href="https://github.com/ityouknow/spring-boot-examples" target="_blank" rel="noopener">https://github.com/ityouknow/spring-boot-examples</a></li>
+<li><strong>Star</strong>: 12.8k (1,453 stars this month)</li>
+<li><strong>介绍</strong>:  Spring Boot 教程、技术栈示例代码，快速简单上手教程。</li>
+</ul>
+<h3 id="10-seata"><a href="#10-seata" class="headerlink" title="10. seata"></a>10. seata</h3><ul>
+<li><strong>Github 地址</strong> : <a href="https://github.com/seata/seata" target="_blank" rel="noopener">https://github.com/seata/seata</a></li>
+<li><strong>star</strong>: 8.4 k (1441 stars this month)</li>
+<li><strong>介绍</strong>:  Seata 是一种易于使用，高性能，基于 Java 的开源分布式事务解决方案。</li>
+</ul>
+<h3 id="11-litemall"><a href="#11-litemall" class="headerlink" title="11. litemall"></a>11. litemall</h3><ul>
+<li><strong>Github 地址</strong>：<a href="https://github.com/ityouknow/spring-boot-examples" target="_blank" rel="noopener">https://github.com/ityouknow/spring-boot-examples</a></li>
+<li><strong>Star</strong>: 6.0k (1,427 stars this month)</li>
+<li><strong>介绍</strong>:  又一个小商城。litemall = Spring Boot后端 + Vue管理员前端 + 微信小程序用户前端 + Vue用户移动端。</li>
+</ul>
+<h3 id="12-skywalking"><a href="#12-skywalking" class="headerlink" title="12. skywalking"></a>12. skywalking</h3><ul>
+<li><strong>Github 地址</strong>：<a href="https://github.com/apache/skywalking" target="_blank" rel="noopener">https://github.com/apache/skywalking</a></li>
+<li><strong>Star</strong>: 8.0k (1,381 stars this month)</li>
+<li><strong>介绍</strong>:  针对分布式系统的应用性能监控，尤其是针对微服务、云原生和面向容器的分布式系统架构。</li>
+</ul>
+<h3 id="13-elasticsearch"><a href="#13-elasticsearch" class="headerlink" title="13. elasticsearch"></a>13. elasticsearch</h3><ul>
+<li><strong>Github 地址</strong>  <a href="https://github.com/elastic/elasticsearch" target="_blank" rel="noopener">https://github.com/elastic/elasticsearch</a></li>
+<li><strong>Star</strong>: 4.0k (1,068stars this month)</li>
+<li><strong>介绍</strong>: 开源，分布式，RESTful 搜索引擎。</li>
+</ul>
+<h3 id="14-arthas"><a href="#14-arthas" class="headerlink" title="14.  arthas"></a>14.  arthas</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/alibaba/arthas" target="_blank" rel="noopener">https://github.com/alibaba/arthas</a></li>
+<li><strong>star</strong>: 12.6 k (1,080 stars this month)</li>
+<li><strong>介绍</strong>: Arthas 是Alibaba开源的Java诊断工具。</li>
+</ul>
+<h3 id="15-hutool"><a href="#15-hutool" class="headerlink" title="15. hutool"></a>15. hutool</h3><ul>
+<li><strong>Github地址</strong>：<a href="https://github.com/looly/hutool" target="_blank" rel="noopener">https://github.com/looly/hutool</a></li>
+<li><strong>star</strong>: 4.5 k (1,031 stars this month)</li>
+<li><strong>介绍</strong>: Hutool是一个Java工具包，也只是一个工具包，它帮助我们简化每一行代码，减少每一个方法，让Java语言也可以“甜甜的”。Hutool最初是我项目中“util”包的一个整理，后来慢慢积累并加入更多非业务相关功能，并广泛学习其它开源项目精髓，经过自己整理修改，最终形成丰富的开源工具集。官网:<a href="https://www.hutool.cn/" target="_blank" rel="noopener">https://www.hutool.cn/</a> 。</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/14/docs/essential-content-for-interview/PreparingForInterview/美团面试常见问题总结/" rel="next" title>
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/14/docs/github-trending/JavaGithubTrending/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">syf</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">102</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-JavaGuide"><span class="nav-number">1.</span> <span class="nav-text">1. JavaGuide</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-advanced-java"><span class="nav-number">2.</span> <span class="nav-text">2. advanced-java</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-CS-Notes"><span class="nav-number">3.</span> <span class="nav-text">3. CS-Notes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-ghidra"><span class="nav-number">4.</span> <span class="nav-text">4. ghidra</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-mall"><span class="nav-number">5.</span> <span class="nav-text">5. mall</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-ZXBlog"><span class="nav-number">6.</span> <span class="nav-text">6. ZXBlog</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-DoraemonKit"><span class="nav-number">7.</span> <span class="nav-text">7.DoraemonKit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-spring-boot"><span class="nav-number">8.</span> <span class="nav-text">8.  spring-boot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-spring-boot-examples"><span class="nav-number">9.</span> <span class="nav-text">9. spring-boot-examples</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-seata"><span class="nav-number">10.</span> <span class="nav-text">10. seata</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-litemall"><span class="nav-number">11.</span> <span class="nav-text">11. litemall</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#12-skywalking"><span class="nav-number">12.</span> <span class="nav-text">12. skywalking</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#13-elasticsearch"><span class="nav-number">13.</span> <span class="nav-text">13. elasticsearch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#14-arthas"><span class="nav-number">14.</span> <span class="nav-text">14.  arthas</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#15-hutool"><span class="nav-number">15.</span> <span class="nav-text">15. hutool</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">syf</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
