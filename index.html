@@ -14,12 +14,12 @@
   
 
 
-<html class="theme-next muse use-motion" lang>
-<head><meta name="generator" content="Hexo 3.9.0">
-  <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222"/>
 
 
 
@@ -42,9 +42,9 @@
 
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0"/>
 
-<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+<link rel="stylesheet" href="/css/main.css?v=7.2.0"/>
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
@@ -109,7 +109,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://yoursite.com/"/>
 
 
 
@@ -215,7 +215,7 @@
 
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br/>Home</a>
 
   </li>
         
@@ -231,7 +231,7 @@
 
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br/>Archives</a>
 
   </li>
 
@@ -279,16 +279,729 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/tools/Git/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/javaGuide/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="syf"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客">
+      <meta itemprop="name" content="苏有福的博客"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/14/javaGuide/" class="post-title-link" itemprop="url">JavaGuide</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-14 23:00:37" itemprop="dateCreated datePublished" datetime="2019-07-14T23:00:37+08:00">2019-07-14</time>
+            </span>
+          
+
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br/>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li><a href="#java">Java</a><ul>
+<li><a href="#基础">基础</a></li>
+<li><a href="#容器">容器</a></li>
+<li><a href="#并发">并发</a></li>
+<li><a href="#jvm">JVM</a></li>
+<li><a href="#io">I/O</a></li>
+<li><a href="#java-8">Java 8</a></li>
+<li><a href="#编程规范">编程规范</a></li>
+</ul>
+</li>
+<li><a href="#网络">网络</a></li>
+<li><a href="#操作系统">操作系统</a><ul>
+<li><a href="#linux相关">Linux相关</a></li>
+</ul>
+</li>
+<li><a href="#数据结构与算法">数据结构与算法</a><ul>
+<li><a href="#数据结构">数据结构</a></li>
+<li><a href="#算法">算法</a></li>
+</ul>
+</li>
+<li><a href="#数据库">数据库</a><ul>
+<li><a href="#mysql">MySQL</a></li>
+<li><a href="#redis">Redis</a></li>
+</ul>
+</li>
+<li><a href="#系统设计">系统设计</a><ul>
+<li><a href="#设计模式">设计模式(工厂模式、单例模式 … )</a></li>
+<li><a href="#常用框架">常用框架(Spring、Zookeeper … )</a></li>
+<li><a href="#数据通信">数据通信(消息队列、Dubbo … )</a></li>
+<li><a href="#网站架构">网站架构</a></li>
+</ul>
+</li>
+<li><a href="#面试指南">面试指南</a><ul>
+<li><a href="#备战面试">备战面试</a></li>
+<li><a href="#常见面试题总结">常见面试题总结</a></li>
+<li><a href="#面经">面经</a></li>
+</ul>
+</li>
+<li><a href="#工具">工具</a><ul>
+<li><a href="#git">Git</a></li>
+<li><a href="#Docker">Docker</a></li>
+</ul>
+</li>
+<li><a href="#资料">资料</a><ul>
+<li><a href="#书单">书单</a></li>
+<li><a href="#Github榜单">Github榜单</a></li>
+</ul>
+</li>
+<li><a href="#待办">待办</a></li>
+<li><a href="#说明">说明</a></li>
+</ul>
+<h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ul>
+<li><a href="docs/java/Java基础知识.md">Java 基础知识回顾</a></li>
+<li><a href="docs/java/Java疑难点.md">Java 基础知识疑难点/易错点</a></li>
+<li><a href="docs/java/Java程序设计题.md">一些重要的Java程序设计题</a></li>
+<li><a href="docs/java/J2EE基础知识.md">J2EE 基础知识回顾</a></li>
+</ul>
+<h3 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h3><ul>
+<li><a href="docs/java/collection/Java集合框架常见面试题.md">Java容器常见面试题/知识点总结</a></li>
+<li><a href="docs/java/collection/ArrayList.md">ArrayList 源码学习</a>  </li>
+<li><a href="docs/java/collection/LinkedList.md">LinkedList 源码学习</a>   </li>
+<li><a href="docs/java/collection/HashMap.md">HashMap(JDK1.8)源码学习</a>  </li>
+</ul>
+<h3 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h3><ul>
+<li><a href="docs/java/Multithread/JavaConcurrencyBasicsCommonInterviewQuestionsSummary.md">Java 并发基础常见面试题总结</a></li>
+<li><a href="docs/java/Multithread/JavaConcurrencyAdvancedCommonInterviewQuestions.md">Java 并发进阶常见面试题总结</a></li>
+<li><a href="docs/java/Multithread/并发容器总结.md">并发容器总结</a></li>
+<li><a href="docs/essential-content-for-interview/面试必备之乐观锁与悲观锁.md">乐观锁与悲观锁</a></li>
+<li><a href="docs/java/Multithread/Atomic.md">JUC 中的 Atomic 原子类总结</a></li>
+<li><a href="docs/java/Multithread/AQS.md">AQS 原理以及 AQS 同步组件总结</a></li>
+</ul>
+<h3 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h3><ul>
+<li><a href="docs/java/jvm/Java内存区域.md">一 Java内存区域</a></li>
+<li><a href="docs/java/jvm/JVM垃圾回收.md">二 JVM垃圾回收</a></li>
+<li><a href="docs/java/jvm/JDK监控和故障处理工具总结.md">三 JDK 监控和故障处理工具</a></li>
+<li><a href="docs/java/jvm/类文件结构.md">四 类文件结构</a></li>
+<li><a href="docs/java/jvm/类加载过程.md">五 类加载过程</a></li>
+<li><a href="docs/java/jvm/类加载器.md">六 类加载器</a></li>
+</ul>
+<h3 id="I-O"><a href="#I-O" class="headerlink" title="I/O"></a>I/O</h3><ul>
+<li><a href="docs/java/BIO-NIO-AIO.md">BIO,NIO,AIO 总结 </a></li>
+<li><a href="docs/java/Java%20IO与NIO.md">Java IO 与 NIO系列文章</a></li>
+</ul>
+<h3 id="Java-8"><a href="#Java-8" class="headerlink" title="Java 8"></a>Java 8</h3><ul>
+<li><a href="docs/java/What's%20New%20in%20JDK8/Java8Tutorial.md">Java 8 新特性总结</a></li>
+<li><a href="docs/java/What's%20New%20in%20JDK8/Java8教程推荐.md">Java 8 学习资源推荐</a></li>
+</ul>
+<h3 id="编程规范"><a href="#编程规范" class="headerlink" title="编程规范"></a>编程规范</h3><ul>
+<li><a href="docs/java/Java编程规范.md">Java 编程规范</a></li>
+</ul>
+<h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><ul>
+<li><a href="docs/network/计算机网络.md">计算机网络常见面试题</a></li>
+<li><a href="docs/network/干货：计算机网络知识总结.md">计算机网络基础知识总结</a></li>
+<li><a href="docs/network/HTTPS中的TLS.md">HTTPS中的TLS</a></li>
+</ul>
+<h2 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h2><h3 id="Linux相关"><a href="#Linux相关" class="headerlink" title="Linux相关"></a>Linux相关</h3><ul>
+<li><a href="docs/operating-system/后端程序员必备的Linux基础知识.md">后端程序员必备的 Linux 基础知识</a>  </li>
+<li><a href="docs/operating-system/Shell.md">Shell 编程入门</a> </li>
+</ul>
+<h2 id="数据结构与算法"><a href="#数据结构与算法" class="headerlink" title="数据结构与算法"></a>数据结构与算法</h2><h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><ul>
+<li><a href="docs/dataStructures-algorithms/数据结构.md">数据结构知识学习与面试</a></li>
+</ul>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><ul>
+<li><a href="docs/dataStructures-algorithms/算法学习资源推荐.md">算法学习资源推荐</a>  </li>
+<li><a href="docs/dataStructures-algorithms/几道常见的子符串算法题.md">几道常见的字符串算法题总结 </a></li>
+<li><a href="docs/dataStructures-algorithms/几道常见的链表算法题.md">几道常见的链表算法题总结 </a>   </li>
+<li><a href="docs/dataStructures-algorithms/剑指offer部分编程题.md">剑指offer部分编程题</a></li>
+<li><a href="docs/dataStructures-algorithms/公司真题.md">公司真题</a></li>
+<li><a href="docs/dataStructures-algorithms/Backtracking-NQueens.md">回溯算法经典案例之N皇后问题</a></li>
+</ul>
+<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><h3 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h3><ul>
+<li><a href="docs/database/MySQL.md">MySQL 学习与面试</a></li>
+<li><a href="docs/database/一千行MySQL命令.md">一千行MySQL学习笔记</a></li>
+<li><a href="docs/database/MySQL高性能优化规范建议.md">MySQL高性能优化规范建议</a></li>
+<li><a href="docs/database/MySQL%20Index.md">数据库索引总结</a></li>
+<li><a href="docs/database/事务隔离级别(图文详解).md">事务隔离级别(图文详解)</a></li>
+<li><a href="docs/database/一条sql语句在mysql中如何执行的.md">一条SQL语句在MySQL中如何执行的</a></li>
+</ul>
+<h3 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h3><ul>
+<li><a href="docs/database/Redis/Redis.md">Redis 总结</a></li>
+<li><a href="docs/database/Redis/Redlock分布式锁.md">Redlock分布式锁</a></li>
+<li><a href="docs/database/Redis/如何做可靠的分布式锁，Redlock真的可行么.md">如何做可靠的分布式锁，Redlock真的可行么</a></li>
+</ul>
+<h2 id="系统设计"><a href="#系统设计" class="headerlink" title="系统设计"></a>系统设计</h2><h3 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h3><ul>
+<li><a href="docs/system-design/设计模式.md">设计模式系列文章</a></li>
+</ul>
+<h3 id="常用框架"><a href="#常用框架" class="headerlink" title="常用框架"></a>常用框架</h3><h4 id="Spring"><a href="#Spring" class="headerlink" title="Spring"></a>Spring</h4><ul>
+<li><a href="docs/system-design/framework/spring/Spring.md">Spring 学习与面试</a></li>
+<li><a href="docs/system-design/framework/spring/SpringInterviewQuestions.md">Spring 常见问题总结</a></li>
+<li><a href="docs/system-design/framework/spring/SpringBean.md">Spring中bean的作用域与生命周期</a></li>
+<li><a href="docs/system-design/framework/spring/SpringMVC-Principle.md">SpringMVC 工作原理详解</a></li>
+<li><a href="docs/system-design/framework/spring/Spring-Design-Patterns.md">Spring中都用到了那些设计模式?</a></li>
+</ul>
+<h4 id="ZooKeeper"><a href="#ZooKeeper" class="headerlink" title="ZooKeeper"></a>ZooKeeper</h4><ul>
+<li><a href="docs/system-design/framework/ZooKeeper.md">ZooKeeper 相关概念总结</a></li>
+<li><a href="docs/system-design/framework/ZooKeeper数据模型和常见命令.md">ZooKeeper 数据模型和常见命令</a></li>
+</ul>
+<h3 id="数据通信"><a href="#数据通信" class="headerlink" title="数据通信"></a>数据通信</h3><ul>
+<li><a href="docs/system-design/data-communication/summary.md">数据通信(RESTful、RPC、消息队列)相关知识点总结</a></li>
+<li><a href="docs/system-design/data-communication/dubbo.md">Dubbo 总结：关于 Dubbo 的重要知识点</a></li>
+<li><a href="docs/system-design/data-communication/message-queue.md">消息队列总结</a></li>
+<li><a href="docs/system-design/data-communication/rabbitmq.md">RabbitMQ 入门</a></li>
+<li><a href="docs/system-design/data-communication/RocketMQ-Questions.md">RocketMQ的几个简单问题与答案</a></li>
+</ul>
+<h3 id="网站架构"><a href="#网站架构" class="headerlink" title="网站架构"></a>网站架构</h3><ul>
+<li><a href="docs/system-design/website-architecture/分布式.md">一文读懂分布式应该学什么</a></li>
+<li><a href="docs/system-design/website-architecture/8%20张图读懂大型网站技术架构.md">8 张图读懂大型网站技术架构</a></li>
+<li><a href="docs/system-design/website-architecture/【面试精选】关于大型网站系统架构你不得不懂的10个问题.md">【面试精选】关于大型网站系统架构你不得不懂的10个问题</a></li>
+</ul>
+<h2 id="面试指南"><a href="#面试指南" class="headerlink" title="面试指南"></a>面试指南</h2><h3 id="备战面试"><a href="#备战面试" class="headerlink" title="备战面试"></a>备战面试</h3><ul>
+<li><a href="docs/essential-content-for-interview/PreparingForInterview/程序员的简历之道.md">【备战面试1】程序员的简历就该这样写</a></li>
+<li><a href="docs/essential-content-for-interview/PreparingForInterview/interviewPrepare.md">【备战面试2】初出茅庐的程序员该如何准备面试？</a></li>
+<li><a href="docs/essential-content-for-interview/PreparingForInterview/JavaProgrammerNeedKnow.md">【备战面试3】7个大部分程序员在面试前很关心的问题</a></li>
+<li><a href="docs/essential-content-for-interview/PreparingForInterview/JavaInterviewLibrary.md">【备战面试4】Github上开源的Java面试/学习相关的仓库推荐</a></li>
+<li><a href="docs/essential-content-for-interview/PreparingForInterview/如果面试官问你“你有什么问题问我吗？”时，你该如何回答.md">【备战面试5】如果面试官问你“你有什么问题问我吗？”时，你该如何回答</a></li>
+<li><a href="docs/essential-content-for-interview/PreparingForInterview/美团面试常见问题总结.md">【备战面试6】美团面试常见问题总结（附详解答案）</a></li>
+</ul>
+<h3 id="常见面试题总结"><a href="#常见面试题总结" class="headerlink" title="常见面试题总结"></a>常见面试题总结</h3><ul>
+<li><a href="docs/essential-content-for-interview/MostCommonJavaInterviewQuestions/第一周（2018-8-7）.md">第一周（2018-8-7）</a> (为什么 Java 中只有值传递、==与equals、 hashCode与equals)</li>
+<li><a href="docs/essential-content-for-interview/MostCommonJavaInterviewQuestions/第二周(2018-8-13).md">第二周（2018-8-13）</a>(String和StringBuffer、StringBuilder的区别是什么？String为什么是不可变的？、什么是反射机制？反射机制的应用场景有哪些？……)</li>
+<li><a href="docs/java/collection/Java集合框架常见面试题.md">第三周（2018-08-22）</a> （Arraylist 与 LinkedList 异同、ArrayList 与 Vector 区别、HashMap的底层实现、HashMap 和 Hashtable 的区别、HashMap 的长度为什么是2的幂次方、HashSet 和 HashMap 区别、ConcurrentHashMap 和 Hashtable 的区别、ConcurrentHashMap线程安全的具体实现方式/底层具体实现、集合框架底层数据结构总结）</li>
+<li><a href="docs/essential-content-for-interview/MostCommonJavaInterviewQuestions/第四周(2018-8-30).md">第四周(2018-8-30).md</a> （主要内容是几道面试常问的多线程基础题。）</li>
+</ul>
+<h3 id="面经"><a href="#面经" class="headerlink" title="面经"></a>面经</h3><ul>
+<li><a href="docs/essential-content-for-interview/BATJrealInterviewExperience/5面阿里,终获offer.md">5面阿里,终获offer(2018年秋招)</a></li>
+<li><a href="docs/essential-content-for-interview/BATJrealInterviewExperience/蚂蚁金服实习生面经总结(已拿口头offer).md">蚂蚁金服2019实习生面经总结(已拿口头offer)</a></li>
+<li><a href="docs/essential-content-for-interview/BATJrealInterviewExperience/2019alipay-pinduoduo-toutiao.md">2019年蚂蚁金服、头条、拼多多的面试总结</a></li>
+</ul>
+<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><h3 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h3><ul>
+<li><a href="docs/tools/Git.md">Git入门</a></li>
+</ul>
+<h3 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h3><ul>
+<li><a href="docs/tools/Docker.md">Docker 入门</a></li>
+<li><a href="docs/tools/Docker-Image.md">一文搞懂 Docker 镜像的常用操作！</a></li>
+</ul>
+<h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h2><h3 id="书单"><a href="#书单" class="headerlink" title="书单"></a>书单</h3><ul>
+<li><a href="docs/data/java-recommended-books.md">Java程序员必备书单</a></li>
+</ul>
+<h3 id="Github榜单"><a href="#Github榜单" class="headerlink" title="Github榜单"></a>Github榜单</h3><ul>
+<li><a href="docs/github-trending/JavaGithubTrending.md">Java 项目月榜单</a></li>
+</ul>
+<hr>
+<h2 id="待办"><a href="#待办" class="headerlink" title="待办"></a>待办</h2><ul>
+<li><input disabled type="checkbox"> Java 多线程类别知识重构(—正在进行中—)</li>
+<li><input disabled type="checkbox"> Netty 总结(—正在进行中—)</li>
+<li><input disabled type="checkbox"> 数据结构总结重构(—正在进行中—)</li>
+</ul>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><ul>
+<li><strong>对于 Java 初学者来说：</strong> 本文档倾向于给你提供一个比较详细的学习路径，让你对于Java整体的知识体系有一个初步认识。另外，本文的一些文章<br>也是你学习和复习 Java 知识不错的实践；</li>
+<li><strong>对于非 Java 初学者来说：</strong> 本文档更适合回顾知识，准备面试，搞清面试应该把重心放在那些问题上。要搞清楚这个道理：提前知道那些面试常见，不是为了背下来应付面试，而是为了让你可以更有针对的学习重点。</li>
+</ul>
+<p>Markdown 格式参考：<a href="https://guides.github.com/features/mastering-markdown/" target="_blank" rel="noopener">Github Markdown格式</a>，表情素材来自：<a href="https://www.webpagefx.com/tools/emoji-cheat-sheet/" target="_blank" rel="noopener">EMOJI CHEAT SHEET</a>。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/submission/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="syf"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="苏有福的博客"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/14/submission/" class="post-title-link" itemprop="url">Untitled</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-14 22:59:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:59:16+08:00">2019-07-14</time>
+            </span>
+          
+
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br/>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <!doctype html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width initial-scale=1">
+<title>Untitled</title><link href="https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext" rel="stylesheet" type="text/css"><style type="text/css">html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:first-child { margin-top: -20px; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; }
+button, input, select, textarea { color: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 2; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px !important; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { padding-left: 32px; padding-right: 32px; padding-bottom: 0px; break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  @page { margin: 20mm 0px; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="mermaid"] svg, [lang="flow"] svg { max-width: 100%; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+
+
+:root { --side-bar-bg-color: #fafafa; --control-text-color: #777; }
+html { font-size: 16px; }
+body { font-family: "Open Sans", "Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); line-height: 1.6; }
+#write { max-width: 860px; margin: 0px auto; padding: 30px 30px 100px; }
+#write > ul:first-child, #write > ol:first-child { margin-top: 30px; }
+a { color: rgb(65, 131, 196); }
+h1, h2, h3, h4, h5, h6 { position: relative; margin-top: 1rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.4; cursor: text; }
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor { text-decoration: none; }
+h1 tt, h1 code { font-size: inherit; }
+h2 tt, h2 code { font-size: inherit; }
+h3 tt, h3 code { font-size: inherit; }
+h4 tt, h4 code { font-size: inherit; }
+h5 tt, h5 code { font-size: inherit; }
+h6 tt, h6 code { font-size: inherit; }
+h1 { padding-bottom: 0.3em; font-size: 2.25em; line-height: 1.2; border-bottom: 1px solid rgb(238, 238, 238); }
+h2 { padding-bottom: 0.3em; font-size: 1.75em; line-height: 1.225; border-bottom: 1px solid rgb(238, 238, 238); }
+h3 { font-size: 1.5em; line-height: 1.43; }
+h4 { font-size: 1.25em; }
+h5 { font-size: 1em; }
+h6 { font-size: 1em; color: rgb(119, 119, 119); }
+p, blockquote, ul, ol, dl, table { margin: 0.8em 0px; }
+li > ol, li > ul { margin: 0px; }
+hr { height: 2px; padding: 0px; margin: 16px 0px; background-color: rgb(231, 231, 231); border: 0px none; overflow: hidden; box-sizing: content-box; }
+li p.first { display: inline-block; }
+ul, ol { padding-left: 30px; }
+ul:first-child, ol:first-child { margin-top: 0px; }
+ul:last-child, ol:last-child { margin-bottom: 0px; }
+blockquote { border-left: 4px solid rgb(223, 226, 229); padding: 0px 15px; color: rgb(119, 119, 119); }
+blockquote blockquote { padding-right: 0px; }
+table { padding: 0px; word-break: initial; }
+table tr { border-top: 1px solid rgb(223, 226, 229); margin: 0px; padding: 0px; }
+table tr:nth-child(2n), thead { background-color: rgb(248, 248, 248); }
+table tr th { font-weight: bold; border-width: 1px 1px 0px; border-top-style: solid; border-right-style: solid; border-left-style: solid; border-top-color: rgb(223, 226, 229); border-right-color: rgb(223, 226, 229); border-left-color: rgb(223, 226, 229); border-image: initial; border-bottom-style: initial; border-bottom-color: initial; text-align: left; margin: 0px; padding: 6px 13px; }
+table tr td { border: 1px solid rgb(223, 226, 229); text-align: left; margin: 0px; padding: 6px 13px; }
+table tr th:first-child, table tr td:first-child { margin-top: 0px; }
+table tr th:last-child, table tr td:last-child { margin-bottom: 0px; }
+.CodeMirror-lines { padding-left: 4px; }
+.code-tooltip { box-shadow: rgba(0, 28, 36, 0.3) 0px 1px 1px 0px; border-top: 1px solid rgb(238, 242, 242); }
+.md-fences, code, tt { border: 1px solid rgb(231, 234, 237); background-color: rgb(248, 248, 248); border-radius: 3px; padding: 2px 4px 0px; font-size: 0.9em; }
+code { background-color: rgb(243, 244, 244); padding: 0px 2px; }
+.md-fences { margin-bottom: 15px; margin-top: 15px; padding-top: 8px; padding-bottom: 6px; }
+.md-task-list-item > input { margin-left: -1.3em; }
+@media print {
+  html { font-size: 13px; }
+  table, pre { break-inside: avoid; }
+  pre { word-wrap: break-word; }
+}
+.md-fences { background-color: rgb(248, 248, 248); }
+#write pre.md-meta-block { padding: 1rem; font-size: 85%; line-height: 1.45; background-color: rgb(247, 247, 247); border: 0px; border-radius: 3px; color: rgb(119, 119, 119); margin-top: 0px !important; }
+.mathjax-block > .code-tooltip { bottom: 0.375rem; }
+.md-mathjax-midline { background: rgb(250, 250, 250); }
+#write > h3.md-focus::before { left: -1.5625rem; top: 0.375rem; }
+#write > h4.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+#write > h5.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+#write > h6.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+.md-image > .md-meta { border-radius: 3px; padding: 2px 0px 0px 4px; font-size: 0.9em; color: inherit; }
+.md-tag { color: rgb(167, 167, 167); opacity: 1; }
+.md-toc { margin-top: 20px; padding-bottom: 20px; }
+.sidebar-tabs { border-bottom: none; }
+#typora-quick-open { border: 1px solid rgb(221, 221, 221); background-color: rgb(248, 248, 248); }
+#typora-quick-open-item { background-color: rgb(250, 250, 250); border-color: rgb(254, 254, 254) rgb(229, 229, 229) rgb(229, 229, 229) rgb(238, 238, 238); border-style: solid; border-width: 1px; }
+.on-focus-mode blockquote { border-left-color: rgba(85, 85, 85, 0.12); }
+header, .context-menu, .megamenu-content, footer { font-family: "Segoe UI", Arial, sans-serif; }
+.file-node-content:hover .file-node-icon, .file-node-content:hover .file-node-open-state { visibility: visible; }
+.mac-seamless-mode #typora-sidebar { background-color: var(--side-bar-bg-color); }
+.md-lang { color: rgb(180, 101, 77); }
+.html-for-mac .context-menu { --item-hover-bg-color: #E6F0FE; }
+#md-notification .btn { border: 0px; }
+.dropdown-menu .divider { border-color: rgb(229, 229, 229); }
+
+
+
+
+
+ .typora-export li, .typora-export p, .typora-export,  .footnote-line {white-space: normal;} 
+</style>
+</head>
+<body class="typora-export os-windows">
+<div id="write" class="is-node"><h3><a name="header-n62" class="md-header-anchor "></a>前言</h3><p>如果你有不错的大厂面试经历</p><p>如果你对某一个Java知识点有过深刻的见解和记录</p><p>如果你有什么学习编程的经验分享给其他人</p><p>......</p><p>如果你想，你都可以把这些整理成文章投稿给我，你的文章将被更多人看到，你所写的东西也可能会默默影响到很多人。</p><h3><a name="header-n69" class="md-header-anchor "></a>欢迎的文章类型</h3><p>本公众号主要接受下面几类文章投稿：</p><ol start><li>大厂Java面试经历、面试总结、面试注意事项等等</li><li>对某一个Java知识点的深刻讲解</li><li>技术热点</li><li>一些行业内不错的人物或者公司传记</li><li>......</li></ol><p>因为本公众号主要是Java方向，所以还有其他Java方向的文章都可以投稿。</p><p>投稿的要求很简单，你能把一个知识点讲清楚就好，JavaGuide 里面还有很多知识点没有加，我觉得都是不错的方向（内容我会帮你完善）。 这个投稿的目的是完善开源项目 JavaGuide 的同时能够让大家自主去学习并总结知识点。</p><h3><a name="header-n84" class="md-header-anchor "></a>奖励</h3><p>投稿自己的原创文章成功之后不仅可以顺利加入32k+star 的开源项目 JavaGuide:<a href="https://github.com/Snailclimb/JavaGuide" target="_blank" class="url">https://github.com/Snailclimb/JavaGuide</a> 扩大自己的竞争力，还会有50元左右的任意书籍或者50元现金奖励(对于不错的文章会更高)。</p><h3><a name="header-n86" class="md-header-anchor "></a>投稿方式</h3><p>下面 2 种方式都可以</p><ol start><li>将你的文章以 Markdown 格式发送到我的邮箱：<a href="mailto:koushuangbwcx@163.com" target="_blank" class="url">koushuangbwcx@163.com</a> ;</li><li>直接在 Github : <a href="https://github.com/Snailclimb/JavaGuide" target="_blank" class="url">https://github.com/Snailclimb/JavaGuide</a> 提PR也可以 。</li></ol><p>如果你也是公众号号主，你也有自己不错的文章想投稿给我的话，虽然你不会有奖励，但是发了你的文章之后，肯定会为你带来一些新人关注。</p><p>&nbsp;</p></div>
+</body>
+</html>
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/tools/Git/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="syf"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="苏有福的博客"/>
     </span>
 
     
@@ -344,7 +1057,7 @@
 
           
 
-          <br>
+          <br/>
           
 
           
@@ -587,16 +1300,16 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/tools/Docker-Image/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/tools/Docker-Image/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="syf"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客">
+      <meta itemprop="name" content="苏有福的博客"/>
     </span>
 
     
@@ -652,7 +1365,7 @@
 
           
 
-          <br>
+          <br/>
           
 
           
@@ -1040,16 +1753,16 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/website-architecture/分布式/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/website-architecture/分布式/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="syf"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客">
+      <meta itemprop="name" content="苏有福的博客"/>
     </span>
 
     
@@ -1105,7 +1818,7 @@
 
           
 
-          <br>
+          <br/>
           
 
           
@@ -1220,187 +1933,16 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/website-architecture/8 张图读懂大型网站技术架构/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/website-architecture/【面试精选】关于大型网站系统架构你不得不懂的10个问题/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="syf"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/14/docs/system-design/website-architecture/8 张图读懂大型网站技术架构/" class="post-title-link" itemprop="url">Untitled</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
-            </span>
-          
-
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p>本文是作者读 《大型网站技术架构》所做的思维导图，在这里分享给各位，公众号(JavaGuide)后台回复：“架构”。即可获得下面图片的源文件以及思维导图源文件！</p>
-</blockquote>
-<!-- MarkdownTOC -->
-
-<ul>
-<li><a href="#1-大型网站架构演化">1. 大型网站架构演化</a></li>
-<li><a href="#2-大型架构模式">2. 大型架构模式</a></li>
-<li><a href="#3-大型网站核心架构要素">3. 大型网站核心架构要素</a></li>
-<li><a href="#4-瞬时响应网站的高性能架构">4. 瞬时响应:网站的高性能架构</a></li>
-<li><a href="#5-万无一失网站的高可用架构">5. 万无一失:网站的高可用架构</a></li>
-<li><a href="#6-永无止境网站的伸缩性架构">6. 永无止境:网站的伸缩性架构</a></li>
-<li><a href="#7-随机应变网站的可扩展性架构">7. 随机应变:网站的可扩展性架构</a></li>
-<li><a href="#8-固若金汤网站的安全机构">8. 固若金汤:网站的安全机构</a></li>
-</ul>
-<!-- /MarkdownTOC -->
-
-
-<h3 id="1-大型网站架构演化"><a href="#1-大型网站架构演化" class="headerlink" title="1. 大型网站架构演化"></a>1. 大型网站架构演化</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/1%20%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E6%9E%B6%E6%9E%84%E6%BC%94%E5%8C%96.png" alt="1. 大型网站架构演化"></p>
-<h3 id="2-大型架构模式"><a href="#2-大型架构模式" class="headerlink" title="2. 大型架构模式"></a>2. 大型架构模式</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2%20%E5%A4%A7%E5%9E%8B%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F.png" alt="2. 大型架构模式"></p>
-<h3 id="3-大型网站核心架构要素"><a href="#3-大型网站核心架构要素" class="headerlink" title="3. 大型网站核心架构要素"></a>3. 大型网站核心架构要素</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/3%20%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E6%A0%B8%E5%BF%83%E6%9E%B6%E6%9E%84%E8%A6%81%E7%B4%A0.png" alt="3. 大型网站核心架构要素"></p>
-<h3 id="4-瞬时响应-网站的高性能架构"><a href="#4-瞬时响应-网站的高性能架构" class="headerlink" title="4. 瞬时响应:网站的高性能架构"></a>4. 瞬时响应:网站的高性能架构</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/4%20%E7%9E%AC%E6%97%B6%E5%93%8D%E5%BA%94%EF%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E9%AB%98%E6%80%A7%E8%83%BD%E6%9E%B6%E6%9E%84.png" alt="4. 瞬时响应:网站的高性能架构"></p>
-<h3 id="5-万无一失-网站的高可用架构"><a href="#5-万无一失-网站的高可用架构" class="headerlink" title="5. 万无一失:网站的高可用架构"></a>5. 万无一失:网站的高可用架构</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/5%20%E4%B8%87%E6%97%A0%E4%B8%80%E5%A4%B1%EF%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84.png" alt="5. 万无一失:网站的高可用架构"></p>
-<h3 id="6-永无止境-网站的伸缩性架构"><a href="#6-永无止境-网站的伸缩性架构" class="headerlink" title="6. 永无止境:网站的伸缩性架构"></a>6. 永无止境:网站的伸缩性架构</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/6%20%E6%B0%B8%E6%97%A0%E6%AD%A2%E5%A2%83%EF%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E4%BC%B8%E7%BC%A9%E6%80%A7%E6%9E%B6%E6%9E%84.png" alt="6. 永无止境:网站的伸缩性架构"></p>
-<h3 id="7-随机应变-网站的可扩展性架构"><a href="#7-随机应变-网站的可扩展性架构" class="headerlink" title="7. 随机应变:网站的可扩展性架构"></a>7. 随机应变:网站的可扩展性架构</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/7%20%E9%9A%8F%E6%9C%BA%E5%BA%94%E5%8F%98%EF%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E5%8F%AF%E6%89%A9%E5%B1%95%E6%9E%B6%E6%9E%84.png" alt="7. 随机应变:网站的可扩展性架构"></p>
-<h3 id="8-固若金汤-网站的安全机构"><a href="#8-固若金汤-网站的安全机构" class="headerlink" title="8. 固若金汤:网站的安全机构"></a>8. 固若金汤:网站的安全机构</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/8%20%E5%9B%BA%E8%8B%A5%E9%87%91%E6%B1%A4%EF%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E5%AE%89%E5%85%A8%E6%9E%B6%E6%9E%84.png" alt="enter image description here"></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/website-architecture/【面试精选】关于大型网站系统架构你不得不懂的10个问题/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客">
+      <meta itemprop="name" content="苏有福的博客"/>
     </span>
 
     
@@ -1456,7 +1998,7 @@
 
           
 
-          <br>
+          <br/>
           
 
           
@@ -1671,16 +2213,16 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/设计模式/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/website-architecture/8 张图读懂大型网站技术架构/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="syf"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客">
+      <meta itemprop="name" content="苏有福的博客"/>
     </span>
 
     
@@ -1691,7 +2233,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/07/14/docs/system-design/设计模式/" class="post-title-link" itemprop="url">Untitled</a>
+                <a href="/2019/07/14/docs/system-design/website-architecture/8 张图读懂大型网站技术架构/" class="post-title-link" itemprop="url">Untitled</a>
               
             
           </h1>
@@ -1736,7 +2278,7 @@
 
           
 
-          <br>
+          <br/>
           
 
           
@@ -1758,75 +2300,243 @@
       
         
           
-            <h1 id="Java-设计模式"><a href="#Java-设计模式" class="headerlink" title="Java 设计模式"></a>Java 设计模式</h1><p>下面是自己学习设计模式的时候做的总结，有些是自己的原创文章，有些是网上写的比较好的文章，保存下来细细消化吧！</p>
-<p><strong>系列文章推荐：</strong><a href="https://design-patterns.readthedocs.io/zh_CN/latest/index.html" target="_blank" rel="noopener">https://design-patterns.readthedocs.io/zh_CN/latest/index.html</a></p>
-<h2 id="创建型模式"><a href="#创建型模式" class="headerlink" title="创建型模式"></a>创建型模式</h2><h3 id="创建型模式概述"><a href="#创建型模式概述" class="headerlink" title="创建型模式概述"></a>创建型模式概述</h3><ul>
-<li>创建型模式(Creational Pattern)对类的实例化过程进行了抽象，能够将软件模块中对象的创建和对象的使用分离。为了使软件的结构更加清晰，外界对于这些对象只需要知道它们共同的接口，而不清楚其具体的实现细节，使整个系统的设计更加符合单一职责原则。</li>
-<li>创建型模式在创建什么(What)，由谁创建(Who)，何时创建(When)等方面都为软件设计者提供了尽可能大的灵活性。创建型模式隐藏了类的实例的创建细节，通过隐藏对象如何被创建和组合在一起达到使整个系统独立的目的。 </li>
+            <blockquote>
+<p>本文是作者读 《大型网站技术架构》所做的思维导图，在这里分享给各位，公众号(JavaGuide)后台回复：“架构”。即可获得下面图片的源文件以及思维导图源文件！</p>
+</blockquote>
+<!-- MarkdownTOC -->
+
+<ul>
+<li><a href="#1-大型网站架构演化">1. 大型网站架构演化</a></li>
+<li><a href="#2-大型架构模式">2. 大型架构模式</a></li>
+<li><a href="#3-大型网站核心架构要素">3. 大型网站核心架构要素</a></li>
+<li><a href="#4-瞬时响应网站的高性能架构">4. 瞬时响应:网站的高性能架构</a></li>
+<li><a href="#5-万无一失网站的高可用架构">5. 万无一失:网站的高可用架构</a></li>
+<li><a href="#6-永无止境网站的伸缩性架构">6. 永无止境:网站的伸缩性架构</a></li>
+<li><a href="#7-随机应变网站的可扩展性架构">7. 随机应变:网站的可扩展性架构</a></li>
+<li><a href="#8-固若金汤网站的安全机构">8. 固若金汤:网站的安全机构</a></li>
 </ul>
-<p><img src="https://user-gold-cdn.xitu.io/2018/6/16/1640641afcb7559b?w=491&h=241&f=png&s=51443" alt="创建型模式"></p>
-<h3 id="常见创建型模式详解"><a href="#常见创建型模式详解" class="headerlink" title="常见创建型模式详解"></a>常见创建型模式详解</h3><ul>
-<li><strong>单例模式：</strong> <a href="https://blog.csdn.net/qq_34337272/article/details/80455972" target="_blank" rel="noopener">深入理解单例模式——只有一个实例</a></li>
-<li><strong>工厂模式：</strong> <a href="https://blog.csdn.net/qq_34337272/article/details/80472071" target="_blank" rel="noopener">深入理解工厂模式——由对象工厂生成对象</a></li>
-<li><strong>建造者模式：</strong> <a href="http://blog.csdn.net/qq_34337272/article/details/80540059" target="_blank" rel="noopener">深入理解建造者模式 ——组装复杂的实例</a></li>
-<li><strong>原型模式：</strong> <a href="https://blog.csdn.net/qq_34337272/article/details/80706444" target="_blank" rel="noopener">深入理解原型模式 ——通过复制生成实例</a></li>
+<!-- /MarkdownTOC -->
+
+
+<h3 id="1-大型网站架构演化"><a href="#1-大型网站架构演化" class="headerlink" title="1. 大型网站架构演化"></a>1. 大型网站架构演化</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/1%20%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E6%9E%B6%E6%9E%84%E6%BC%94%E5%8C%96.png" alt="1. 大型网站架构演化"></p>
+<h3 id="2-大型架构模式"><a href="#2-大型架构模式" class="headerlink" title="2. 大型架构模式"></a>2. 大型架构模式</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2%20%E5%A4%A7%E5%9E%8B%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F.png" alt="2. 大型架构模式"></p>
+<h3 id="3-大型网站核心架构要素"><a href="#3-大型网站核心架构要素" class="headerlink" title="3. 大型网站核心架构要素"></a>3. 大型网站核心架构要素</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/3%20%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E6%A0%B8%E5%BF%83%E6%9E%B6%E6%9E%84%E8%A6%81%E7%B4%A0.png" alt="3. 大型网站核心架构要素"></p>
+<h3 id="4-瞬时响应-网站的高性能架构"><a href="#4-瞬时响应-网站的高性能架构" class="headerlink" title="4. 瞬时响应:网站的高性能架构"></a>4. 瞬时响应:网站的高性能架构</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/4%20%E7%9E%AC%E6%97%B6%E5%93%8D%E5%BA%94%EF%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E9%AB%98%E6%80%A7%E8%83%BD%E6%9E%B6%E6%9E%84.png" alt="4. 瞬时响应:网站的高性能架构"></p>
+<h3 id="5-万无一失-网站的高可用架构"><a href="#5-万无一失-网站的高可用架构" class="headerlink" title="5. 万无一失:网站的高可用架构"></a>5. 万无一失:网站的高可用架构</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/5%20%E4%B8%87%E6%97%A0%E4%B8%80%E5%A4%B1%EF%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84.png" alt="5. 万无一失:网站的高可用架构"></p>
+<h3 id="6-永无止境-网站的伸缩性架构"><a href="#6-永无止境-网站的伸缩性架构" class="headerlink" title="6. 永无止境:网站的伸缩性架构"></a>6. 永无止境:网站的伸缩性架构</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/6%20%E6%B0%B8%E6%97%A0%E6%AD%A2%E5%A2%83%EF%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E4%BC%B8%E7%BC%A9%E6%80%A7%E6%9E%B6%E6%9E%84.png" alt="6. 永无止境:网站的伸缩性架构"></p>
+<h3 id="7-随机应变-网站的可扩展性架构"><a href="#7-随机应变-网站的可扩展性架构" class="headerlink" title="7. 随机应变:网站的可扩展性架构"></a>7. 随机应变:网站的可扩展性架构</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/7%20%E9%9A%8F%E6%9C%BA%E5%BA%94%E5%8F%98%EF%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E5%8F%AF%E6%89%A9%E5%B1%95%E6%9E%B6%E6%9E%84.png" alt="7. 随机应变:网站的可扩展性架构"></p>
+<h3 id="8-固若金汤-网站的安全机构"><a href="#8-固若金汤-网站的安全机构" class="headerlink" title="8. 固若金汤:网站的安全机构"></a>8. 固若金汤:网站的安全机构</h3><p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/8%20%E5%9B%BA%E8%8B%A5%E9%87%91%E6%B1%A4%EF%BC%9A%E7%BD%91%E7%AB%99%E7%9A%84%E5%AE%89%E5%85%A8%E6%9E%B6%E6%9E%84.png" alt="enter image description here"></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/framework/spring/Spring/"/>
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="syf"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="苏有福的博客"/>
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/14/docs/system-design/framework/spring/Spring/" class="post-title-link" itemprop="url">Untitled</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
+            </span>
+          
+
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br/>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Spring相关教程-资料"><a href="#Spring相关教程-资料" class="headerlink" title="Spring相关教程/资料"></a>Spring相关教程/资料</h2><h3 id="官网相关"><a href="#官网相关" class="headerlink" title="官网相关"></a>官网相关</h3><ul>
+<li><a href="https://spring.io/" target="_blank" rel="noopener">Spring官网</a></li>
+<li><a href="https://spring.io/projects" target="_blank" rel="noopener">Spring系列主要项目</a></li>
+<li><a href="https://spring.io/guides" target="_blank" rel="noopener">Spring官网指南</a></li>
+<li><a href="https://docs.spring.io/spring/docs/4.3.17.RELEASE/javadoc-api/" target="_blank" rel="noopener">Spring Framework 4.3.17.RELEASE API</a></li>
 </ul>
-<h2 id="结构型模式"><a href="#结构型模式" class="headerlink" title="结构型模式"></a>结构型模式</h2><h3 id="结构型模式概述"><a href="#结构型模式概述" class="headerlink" title="结构型模式概述"></a>结构型模式概述</h3><ul>
-<li><strong>结构型模式(Structural Pattern)：</strong> 描述如何将类或者对象结合在一起形成更大的结构，就像搭积木，可以通过简单积木的组合形成复杂的、功能更为强大的结构<br><img src="https://user-gold-cdn.xitu.io/2018/6/16/164064d6b3c205e3?w=719&h=233&f=png&s=270293" alt="结构型模式(Structural Pattern)"></li>
-<li><strong>结构型模式可以分为类结构型模式和对象结构型模式：</strong>  <ul>
-<li>类结构型模式关心类的组合，由多个类可以组合成一个更大的系统，在类结构型模式中一般只存在继承关系和实现关系。</li>
-<li>对象结构型模式关心类与对象的组合，通过关联关系使得在一个类中定义另一个类的实例对象，然后通过该对象调用其方法。根据“合成复用原则”，在系统中尽量使用关联关系来替代继承关系，因此大部分结构型模式都是对象结构型模式。</li>
+<h2 id="系统学习教程"><a href="#系统学习教程" class="headerlink" title="系统学习教程"></a>系统学习教程</h2><h3 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h3><ul>
+<li><a href="http://wiki.jikexueyuan.com/project/spring/transaction-management.html" target="_blank" rel="noopener">极客学院Spring Wiki</a></li>
+<li><a href="https://www.w3cschool.cn/wkspring/f6pk1ic8.html" target="_blank" rel="noopener">Spring W3Cschool教程 </a></li>
 </ul>
+<h3 id="视频"><a href="#视频" class="headerlink" title="视频"></a>视频</h3><ul>
+<li><p><a href="http://study.163.com/course/courseMain.htm?courseId=1004475015#/courseDetail?tab=1&35" target="_blank" rel="noopener">网易云课堂——58集精通java教程Spring框架开发</a></p>
+</li>
+<li><p><a href="https://www.imooc.com/" target="_blank" rel="noopener">慕课网相关视频</a></p>
+</li>
+<li><p><strong>黑马视频和尚硅谷视频（非常推荐）：</strong> 微信公众号：“<strong>JavaGuide</strong>”后台回复关键字 “<strong>1</strong>” 免费领取。</p>
 </li>
 </ul>
-<p><img src="https://user-gold-cdn.xitu.io/2018/6/16/1640655459d766d2?w=378&h=266&f=png&s=59652" alt="结构型模式"></p>
-<h3 id="常见结构型模式详解"><a href="#常见结构型模式详解" class="headerlink" title="常见结构型模式详解"></a>常见结构型模式详解</h3><ul>
-<li><strong>适配器模式：</strong><ul>
-<li><a href="https://segmentfault.com/a/1190000011856448" target="_blank" rel="noopener">深入理解适配器模式——加个“适配器”以便于复用</a></li>
-<li><a href="https://www.ibm.com/developerworks/cn/java/j-lo-adapter-pattern/index.html" target="_blank" rel="noopener">适配器模式原理及实例介绍-IBM</a></li>
-</ul>
+<h2 id="面试必备知识点"><a href="#面试必备知识点" class="headerlink" title="面试必备知识点"></a>面试必备知识点</h2><h3 id="SpringAOP-IOC实现原理"><a href="#SpringAOP-IOC实现原理" class="headerlink" title="SpringAOP,IOC实现原理"></a>SpringAOP,IOC实现原理</h3><p>AOP实现原理、动态代理和静态代理、Spring IOC的初始化过程、IOC原理、自己实现怎么实现一个IOC容器？这些东西都是经常会被问到的。</p>
+<p>推荐阅读：</p>
+<ul>
+<li><p><a href="http://www.coolblog.xyz/2018/01/18/自己动手实现的-Spring-IOC-和-AOP-上篇/" target="_blank" rel="noopener">自己动手实现的 Spring IOC 和 AOP - 上篇</a></p>
 </li>
-<li><strong>桥接模式：</strong> <a href="https://blog.csdn.net/yangzl2008/article/details/7670996" target="_blank" rel="noopener">设计模式笔记16：桥接模式(Bridge Pattern)</a></li>
-<li><strong>组合模式：</strong> <a href="https://blog.csdn.net/lmb55/article/details/51039781" target="_blank" rel="noopener">大话设计模式—组合模式</a></li>
-<li><strong>装饰模式：</strong> <a href="https://www.cnblogs.com/chenxing818/p/4705919.html" target="_blank" rel="noopener">java模式—装饰者模式</a>、<a href="https://blog.csdn.net/cauchyweierstrass/article/details/48240147" target="_blank" rel="noopener">Java设计模式-装饰者模式</a></li>
-<li><strong>外观模式：</strong> <a href="https://www.cnblogs.com/lthIU/p/5860607.html" target="_blank" rel="noopener">java设计模式之外观模式（门面模式）</a></li>
-<li><strong>享元模式：</strong> <a href="http://www.jasongj.com/design_pattern/flyweight/" target="_blank" rel="noopener">享元模式</a></li>
-<li><strong>代理模式：</strong><ul>
-<li><a href="https://www.ibm.com/developerworks/cn/java/j-lo-proxy-pattern/index.html" target="_blank" rel="noopener">代理模式原理及实例讲解 （IBM出品，很不错）</a></li>
-<li><a href="https://blog.csdn.net/briblue/article/details/73928350" target="_blank" rel="noopener">轻松学，Java 中的代理模式及动态代理</a></li>
-<li><a href="https://blog.csdn.net/justloveyou_/article/details/74203025" target="_blank" rel="noopener">Java代理模式及其应用</a></li>
-</ul>
+<li><p><a href="http://www.coolblog.xyz/2018/01/18/自己动手实现的-Spring-IOC-和-AOP-下篇/" target="_blank" rel="noopener">自己动手实现的 Spring IOC 和 AOP - 下篇</a></p>
 </li>
 </ul>
-<h2 id="行为型模式"><a href="#行为型模式" class="headerlink" title="行为型模式"></a>行为型模式</h2><h3 id="行为型模式概述"><a href="#行为型模式概述" class="headerlink" title="行为型模式概述"></a>行为型模式概述</h3><ul>
-<li>行为型模式(Behavioral Pattern)是对在不同的对象之间划分责任和算法的抽象化。</li>
-<li>行为型模式不仅仅关注类和对象的结构，而且重点关注它们之间的相互作用。</li>
-<li>通过行为型模式，可以更加清晰地划分类与对象的职责，并研究系统在运行时实例对象之间的交互。在系统运行时，对象并不是孤立的，它们可以通过相互通信与协作完成某些复杂功能，一个对象在运行时也将影响到其他对象的运行。 </li>
-</ul>
-<p><strong>行为型模式分为类行为型模式和对象行为型模式两种：</strong></p>
+<h3 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h3><p>AOP思想的实现一般都是基于 <strong>代理模式</strong> ，在JAVA中一般采用JDK动态代理模式，但是我们都知道，<strong>JDK动态代理模式只能代理接口而不能代理类</strong>。因此，Spring AOP 会这样子来进行切换，因为Spring AOP 同时支持 CGLIB、ASPECTJ、JDK动态代理。</p>
 <ul>
-<li><strong>类行为型模式：</strong> 类的行为型模式使用继承关系在几个类之间分配行为，类行为型模式主要通过多态等方式来分配父类与子类的职责。</li>
-<li><strong>对象行为型模式：</strong> 对象的行为型模式则使用对象的聚合关联关系来分配行为，对象行为型模式主要是通过对象关联等方式来分配两个或多个类的职责。根据“合成复用原则”，系统中要尽量使用关联关系来取代继承关系，因此大部分行为型设计模式都属于对象行为型设计模式。</li>
+<li>如果目标对象的实现类实现了接口，Spring AOP 将会采用 JDK 动态代理来生成 AOP 代理类；</li>
+<li>如果目标对象的实现类没有实现接口，Spring AOP 将会采用 CGLIB 来生成 AOP 代理类——不过这个选择过程对开发者完全透明、开发者也无需关心。</li>
 </ul>
-<p><img src="https://user-gold-cdn.xitu.io/2018/6/28/164467dd92c6172c?w=453&h=269&f=png&s=63270" alt="行为型模式"></p>
+<p>推荐阅读：</p>
 <ul>
-<li><strong>职责链模式：</strong></li>
-<li><a href="https://blog.csdn.net/jason0539/article/details/45091639" target="_blank" rel="noopener">Java设计模式之责任链模式、职责链模式</a></li>
-<li><a href="https://www.cnblogs.com/lizo/p/7503862.html" target="_blank" rel="noopener">责任链模式实现的三种方式</a></li>
-<li><strong>命令模式：</strong> <a href="https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/command.html" target="_blank" rel="noopener">https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/command.html</a> 在软件设计中，我们经常需要向某些对象发送请求，但是并不知道请求的接收者是谁，也不知道被请求的操作是哪个，我们只需在程序运行时指定具体的请求接收者即可，此时，可以使用命令模式来进行设计，使得请求发送者与请求接收者消除彼此之间的耦合，让对象之间的调用关系更加灵活。命令模式可以对发送者和接收者完全解耦，发送者与接收者之间没有直接引用关系，发送请求的对象只需要知道如何发送请求，而不必知道如何完成请求。这就是命令模式的模式动机。</li>
-<li><strong>解释器模式：</strong></li>
-<li><strong>迭代器模式：</strong></li>
-<li><strong>中介者模式：</strong> <a href="https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/mediator.html" target="_blank" rel="noopener">https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/mediator.html</a></li>
-<li><strong>备忘录模式：</strong></li>
-<li><strong>观察者模式：</strong> <a href="https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/observer.html" target="_blank" rel="noopener">https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/observer.html</a>、<a href="https://juejin.im/post/5c712ab56fb9a049a7127114" target="_blank" rel="noopener">https://juejin.im/post/5c712ab56fb9a049a7127114</a></li>
-<li><strong>状态模式：</strong><a href="https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/state.html" target="_blank" rel="noopener">https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/state.html</a></li>
-<li><strong>策略模式：</strong><a href="https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/strategy.html" target="_blank" rel="noopener">https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/strategy.html</a></li>
+<li><a href="http://www.cnblogs.com/puyangsky/p/6218925.html" target="_blank" rel="noopener">静态代理、JDK动态代理、CGLIB动态代理讲解</a> ：我们知道AOP思想的实现一般都是基于 <strong>代理模式</strong> ，所以在看下面的文章之前建议先了解一下静态代理以及JDK动态代理、CGLIB动态代理的实现方式。</li>
+<li><a href="https://juejin.im/post/5aa7818af265da23844040c6" target="_blank" rel="noopener">Spring AOP 入门</a> ：带你入门的一篇文章。这篇文章主要介绍了AOP中的基本概念：5种类型的通知（Before，After，After-returning，After-throwing，Around）；Spring中对AOP的支持：AOP思想的实现一般都是基于代理模式，在Java中一般采用JDK动态代理模式，Spring AOP 同时支持 CGLIB、ASPECTJ、JDK动态代理，</li>
+<li><a href="https://juejin.im/post/5a55af9e518825734d14813f" target="_blank" rel="noopener">Spring AOP 基于AspectJ注解如何实现AOP</a> ： <strong>AspectJ是一个AOP框架，它能够对java代码进行AOP编译（一般在编译期进行），让java代码具有AspectJ的AOP功能（当然需要特殊的编译器）</strong>，可以这样说AspectJ是目前实现AOP框架中最成熟，功能最丰富的语言，更幸运的是，AspectJ与java程序完全兼容，几乎是无缝关联，因此对于有java编程基础的工程师，上手和使用都非常容易。Spring注意到AspectJ在AOP的实现方式上依赖于特殊编译器(ajc编译器)，因此Spring很机智回避了这点，转向采用动态代理技术的实现原理来构建Spring AOP的内部机制（动态织入），这是与AspectJ（静态织入）最根本的区别。<strong>Spring 只是使用了与 AspectJ 5 一样的注解，但仍然没有使用 AspectJ 的编译器，底层依是动态代理技术的实现，因此并不依赖于 AspectJ 的编译器</strong>。 Spring AOP虽然是使用了那一套注解，其实实现AOP的底层是使用了动态代理(JDK或者CGLib)来动态植入。至于AspectJ的静态植入，不是本文重点，所以只提一提。</li>
+<li><a href="https://www.imooc.com/learn/869" target="_blank" rel="noopener">探秘Spring AOP（慕课网视频，很不错）</a>:慕课网视频，讲解的很不错，详细且深入</li>
+<li><a href="https://blog.csdn.net/fighterandknight/article/details/51209822" target="_blank" rel="noopener">spring源码剖析（六）AOP实现原理剖析</a> :通过源码分析Spring AOP的原理</li>
 </ul>
-<p>策略模式作为设计原则中开闭原则最典型的体现，也是经常使用的。下面这篇博客介绍了策略模式一般的组成部分和概念，并用了一个小demo去说明了策略模式的应用。</p>
-<p><a href="https://blog.csdn.net/zlj1217/article/details/81230077" target="_blank" rel="noopener">java设计模式之策略模式</a></p>
+<h3 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h3><p>Spring IOC的初始化过程：<br><img src="https://user-gold-cdn.xitu.io/2018/5/22/16387903ee72c831?w=709&h=56&f=png&s=4673" alt="Spring IOC的初始化过程"></p>
 <ul>
-<li><strong>模板方法模式：</strong></li>
-<li><strong>访问者模式：</strong></li>
+<li><p><a href="https://www.cnblogs.com/wang-meng/p/5597490.html" target="_blank" rel="noopener">[Spring框架]Spring IOC的原理及详解。</a></p>
+</li>
+<li><p><a href="https://yikun.github.io/2015/05/29/Spring-IOC核心源码学习/" target="_blank" rel="noopener">Spring IOC核心源码学习</a> :比较简短，推荐阅读。</p>
+</li>
+<li><p><a href="https://javadoop.com/post/spring-ioc" target="_blank" rel="noopener">Spring IOC 容器源码分析</a> :强烈推荐，内容详尽，而且便于阅读。</p>
+</li>
+</ul>
+<h2 id="Spring事务管理"><a href="#Spring事务管理" class="headerlink" title="Spring事务管理"></a>Spring事务管理</h2><ul>
+<li><a href="https://juejin.im/post/5b00c52ef265da0b95276091" target="_blank" rel="noopener">可能是最漂亮的Spring事务管理详解</a></li>
+<li><a href="https://juejin.im/post/5b010f27518825426539ba38" target="_blank" rel="noopener">Spring编程式和声明式事务实例讲解</a></li>
+</ul>
+<h3 id="Spring单例与线程安全"><a href="#Spring单例与线程安全" class="headerlink" title="Spring单例与线程安全"></a>Spring单例与线程安全</h3><ul>
+<li><a href="http://www.cnblogs.com/chengxuyuanzhilu/p/6404991.html" target="_blank" rel="noopener">Spring框架中的单例模式（源码解读）</a>:单例模式是一种常用的软件设计模式。通过单例模式可以保证系统中一个类只有一个实例。spring依赖注入时，使用了 多重判断加锁 的单例模式。</li>
+</ul>
+<h3 id="Spring源码阅读"><a href="#Spring源码阅读" class="headerlink" title="Spring源码阅读"></a>Spring源码阅读</h3><p>阅读源码不仅可以加深我们对Spring设计思想的理解，提高自己的编码水品，还可以让自己在面试中如鱼得水。下面的是Github上的一个开源的Spring源码阅读，大家有时间可以看一下，当然你如果有时间也可以自己慢慢研究源码。</p>
+<ul>
+<li><a href="https://github.com/seaswalker/Spring/blob/master/note/Spring.md" target="_blank" rel="noopener">spring-core</a><ul>
+<li><a href="https://github.com/seaswalker/Spring/blob/master/note/spring-aop.md" target="_blank" rel="noopener">spring-aop</a></li>
+<li><a href="https://github.com/seaswalker/Spring/blob/master/note/spring-context.md" target="_blank" rel="noopener">spring-context</a></li>
+<li><a href="https://github.com/seaswalker/Spring/blob/master/note/spring-task.md" target="_blank" rel="noopener">spring-task</a></li>
+<li><a href="https://github.com/seaswalker/Spring/blob/master/note/spring-transaction.md" target="_blank" rel="noopener">spring-transaction</a></li>
+<li><a href="https://github.com/seaswalker/Spring/blob/master/note/spring-mvc.md" target="_blank" rel="noopener">spring-mvc</a></li>
+<li><a href="https://github.com/seaswalker/Spring/blob/master/note/guava-cache.md" target="_blank" rel="noopener">guava-cache</a></li>
+</ul>
+</li>
 </ul>
 
           
@@ -1886,359 +2596,16 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/framework/spring/SpringInterviewQuestions/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/framework/spring/SpringMVC-Principle/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="syf"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/14/docs/system-design/framework/spring/SpringInterviewQuestions/" class="post-title-link" itemprop="url">Untitled</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
-            </span>
-          
-
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <!-- TOC -->
-
-<ul>
-<li><a href="#什么是-spring-框架">什么是 Spring 框架?</a></li>
-<li><a href="#列举一些重要的spring模块">列举一些重要的Spring模块？</a></li>
-<li><a href="#谈谈自己对于-spring-ioc-和-aop-的理解">谈谈自己对于 Spring IoC 和 AOP 的理解</a></li>
-<li><a href="#spring-aop-和-aspectj-aop-有什么区别">Spring AOP 和 AspectJ AOP 有什么区别？</a></li>
-<li><a href="#spring-中的-bean-的作用域有哪些">Spring 中的 bean 的作用域有哪些?</a></li>
-<li><a href="#spring-中的单例-bean-的线程安全问题了解吗">Spring 中的单例 bean 的线程安全问题了解吗？</a></li>
-<li><a href="#spring-中的-bean-生命周期">Spring 中的 bean 生命周期?</a></li>
-<li><a href="#说说自己对于-spring-mvc-了解">说说自己对于 Spring MVC 了解?</a></li>
-<li><a href="#springmvc-工作原理了解吗">SpringMVC 工作原理了解吗?</a></li>
-<li><a href="#spring-框架中用到了哪些设计模式">Spring 框架中用到了哪些设计模式？</a></li>
-<li><a href="#component-和-bean-的区别是什么">@Component 和 @Bean 的区别是什么？</a></li>
-<li><a href="#将一个类声明为spring的-bean-的注解有哪些">将一个类声明为Spring的 bean 的注解有哪些?</a></li>
-<li><a href="#spring-管理事务的方式有几种">Spring 管理事务的方式有几种？</a></li>
-<li><a href="#spring-事务中的隔离级别有哪几种">Spring 事务中的隔离级别有哪几种?</a></li>
-<li><a href="#spring-事务中哪几种事务传播行为">Spring 事务中哪几种事务传播行为?</a></li>
-<li><a href="#参考">参考</a></li>
-</ul>
-<!-- /TOC -->
-
-<p>这篇文章主要是想通过一些问题，加深大家对于 Spring 的理解，所以不会涉及太多的代码！这篇文章整理了挺长时间，下面的很多问题我自己在使用 Spring 的过程中也并没有注意，自己也是临时查阅了很多资料和书籍补上的。网上也有一些很多关于 Spring 常见问题/面试题整理的文章，我感觉大部分都是互相 copy，而且很多问题也不是很汗，有些回答也存在问题。所以，自己花了一周的业余时间整理了一下，希望对大家有帮助。</p>
-<h2 id="什么是-Spring-框架"><a href="#什么是-Spring-框架" class="headerlink" title="什么是 Spring 框架?"></a>什么是 Spring 框架?</h2><p>Spring 是一种轻量级开发框架，旨在提高开发人员的开发效率以及系统的可维护性。Spring 官网：<a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a>。</p>
-<p>我们一般说 Spring 框架指的都是 Spring Framework，它是很多模块的集合，使用这些模块可以很方便地协助我们进行开发。这些模块是：核心容器、数据访问/集成,、Web、AOP（面向切面编程）、工具、消息和测试模块。比如：Core Container 中的 Core 组件是Spring 所有组件的核心，Beans 组件和 Context 组件是实现IOC和依赖注入的基础，AOP组件用来实现面向切面编程。</p>
-<p>Spring 官网列出的 Spring 的 6 个特征:</p>
-<ul>
-<li><strong>核心技术</strong> ：依赖注入(DI)，AOP，事件(events)，资源，i18n，验证，数据绑定，类型转换，SpEL。</li>
-<li><strong>测试</strong> ：模拟对象，TestContext框架，Spring MVC 测试，WebTestClient。</li>
-<li><strong>数据访问</strong> ：事务，DAO支持，JDBC，ORM，编组XML。</li>
-<li><strong>Web支持</strong> : Spring MVC和Spring WebFlux Web框架。</li>
-<li><strong>集成</strong> ：远程处理，JMS，JCA，JMX，电子邮件，任务，调度，缓存。</li>
-<li><strong>语言</strong> ：Kotlin，Groovy，动态语言。</li>
-</ul>
-<h2 id="列举一些重要的Spring模块？"><a href="#列举一些重要的Spring模块？" class="headerlink" title="列举一些重要的Spring模块？"></a>列举一些重要的Spring模块？</h2><p>下图对应的是 Spring4.x 版本。目前最新的5.x版本中 Web 模块的 Portlet 组件已经被废弃掉，同时增加了用于异步响应式处理的 WebFlux 组件。</p>
-<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/Spring%E4%B8%BB%E8%A6%81%E6%A8%A1%E5%9D%97.png" alt="Spring主要模块"></p>
-<ul>
-<li><strong>Spring Core：</strong> 基础,可以说 Spring 其他所有的功能都需要依赖于该类库。主要提供 IoC 依赖注入功能。</li>
-<li>*<em>Spring  Aspects *</em> ： 该模块为与AspectJ的集成提供支持。</li>
-<li><strong>Spring AOP</strong> ：提供了面向方面的编程实现。</li>
-<li><strong>Spring JDBC</strong> : Java数据库连接。</li>
-<li><strong>Spring JMS</strong> ：Java消息服务。</li>
-<li><strong>Spring ORM</strong> : 用于支持Hibernate等ORM工具。</li>
-<li><strong>Spring Web</strong> : 为创建Web应用程序提供支持。</li>
-<li><strong>Spring Test</strong> : 提供了对 JUnit 和 TestNG 测试的支持。</li>
-</ul>
-<h2 id="谈谈自己对于-Spring-IoC-和-AOP-的理解"><a href="#谈谈自己对于-Spring-IoC-和-AOP-的理解" class="headerlink" title="谈谈自己对于 Spring IoC 和 AOP 的理解"></a>谈谈自己对于 Spring IoC 和 AOP 的理解</h2><h3 id="IoC"><a href="#IoC" class="headerlink" title="IoC"></a>IoC</h3><p>IoC（Inverse of Control:控制反转）是一种<strong>设计思想</strong>，就是 <strong>将原本在程序中手动创建对象的控制权，交由Spring框架来管理。</strong>  IoC 在其他语言中也有应用，并非 Spirng 特有。 <strong>IoC 容器是 Spring 用来实现 IoC 的载体，  IoC 容器实际上就是个Map（key，value）,Map 中存放的是各种对象。</strong></p>
-<p>将对象之间的相互依赖关系交给 IoC 容器来管理，并由 IoC 容器完成对象的注入。这样可以很大程度上简化应用的开发，把应用从复杂的依赖关系中解放出来。  <strong>IoC 容器就像是一个工厂一样，当我们需要创建一个对象的时候，只需要配置好配置文件/注解即可，完全不用考虑对象是如何被创建出来的。</strong> 在实际项目中一个 Service 类可能有几百甚至上千个类作为它的底层，假如我们需要实例化这个 Service，你可能要每次都要搞清这个 Service 所有底层类的构造函数，这可能会把人逼疯。如果利用 IoC 的话，你只需要配置好，然后在需要的地方引用就行了，这大大增加了项目的可维护性且降低了开发难度。</p>
-<p>Spring 时代我们一般通过 XML 文件来配置 Bean，后来开发人员觉得 XML 文件来配置不太好，于是 SpringBoot 注解配置就慢慢开始流行起来。</p>
-<p>推荐阅读：<a href="https://www.zhihu.com/question/23277575/answer/169698662" target="_blank" rel="noopener">https://www.zhihu.com/question/23277575/answer/169698662</a></p>
-<p><strong>Spring IoC的初始化过程：</strong><br><img src="https://user-gold-cdn.xitu.io/2018/9/22/165fea36b569d4f4?w=709&h=56&f=png&s=4673" alt="Spring IoC的初始化过程"></p>
-<p>IoC源码阅读</p>
-<ul>
-<li><a href="https://javadoop.com/post/spring-ioc" target="_blank" rel="noopener">https://javadoop.com/post/spring-ioc</a></li>
-</ul>
-<h3 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h3><p>AOP(Aspect-Oriented Programming:面向切面编程)能够将那些与业务无关，<strong>却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来</strong>，便于<strong>减少系统的重复代码</strong>，<strong>降低模块间的耦合度</strong>，并<strong>有利于未来的可拓展性和可维护性</strong>。</p>
-<p><strong>Spring AOP就是基于动态代理的</strong>，如果要代理的对象，实现了某个接口，那么Spring AOP会使用<strong>JDK Proxy</strong>，去创建代理对象，而对于没有实现接口的对象，就无法使用 JDK Proxy 去进行代理了，这时候Spring AOP会使用<strong>Cglib</strong> ，这时候Spring AOP会使用 <strong>Cglib</strong> 生成一个被代理对象的子类来作为代理，如下图所示：</p>
-<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/SpringAOPProcess.jpg" alt="SpringAOPProcess"></p>
-<p>当然你也可以使用 AspectJ ,Spring AOP 已经集成了AspectJ  ，AspectJ  应该算的上是 Java 生态系统中最完整的 AOP 框架了。</p>
-<p>使用 AOP 之后我们可以把一些通用功能抽象出来，在需要用到的地方直接使用即可，这样大大简化了代码量。我们需要增加新功能时也方便，这样也提高了系统扩展性。日志功能、事务管理等等场景都用到了 AOP 。</p>
-<h2 id="Spring-AOP-和-AspectJ-AOP-有什么区别？"><a href="#Spring-AOP-和-AspectJ-AOP-有什么区别？" class="headerlink" title="Spring AOP 和 AspectJ AOP 有什么区别？"></a>Spring AOP 和 AspectJ AOP 有什么区别？</h2><p><strong>Spring AOP 属于运行时增强，而 AspectJ 是编译时增强。</strong> Spring AOP 基于代理(Proxying)，而 AspectJ 基于字节码操作(Bytecode Manipulation)。</p>
-<p> Spring AOP 已经集成了 AspectJ  ，AspectJ  应该算的上是 Java 生态系统中最完整的 AOP 框架了。AspectJ  相比于 Spring AOP 功能更加强大，但是 Spring AOP 相对来说更简单，</p>
-<p>如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择 AspectJ ，它比Spring AOP 快很多。</p>
-<h2 id="Spring-中的-bean-的作用域有哪些"><a href="#Spring-中的-bean-的作用域有哪些" class="headerlink" title="Spring 中的 bean 的作用域有哪些?"></a>Spring 中的 bean 的作用域有哪些?</h2><ul>
-<li>singleton : 唯一 bean 实例，Spring 中的 bean 默认都是单例的。</li>
-<li>prototype : 每次请求都会创建一个新的 bean 实例。</li>
-<li>request : 每一次HTTP请求都会产生一个新的bean，该bean仅在当前HTTP request内有效。</li>
-<li>session : 每一次HTTP请求都会产生一个新的 bean，该bean仅在当前 HTTP session 内有效。</li>
-<li>global-session： 全局session作用域，仅仅在基于portlet的web应用中才有意义，Spring5已经没有了。Portlet是能够生成语义代码(例如：HTML)片段的小型Java Web插件。它们基于portlet容器，可以像servlet一样处理HTTP请求。但是，与 servlet 不同，每个 portlet 都有不同的会话</li>
-</ul>
-<h2 id="Spring-中的单例-bean-的线程安全问题了解吗？"><a href="#Spring-中的单例-bean-的线程安全问题了解吗？" class="headerlink" title="Spring 中的单例 bean 的线程安全问题了解吗？"></a>Spring 中的单例 bean 的线程安全问题了解吗？</h2><p>大部分时候我们并没有在系统中使用多线程，所以很少有人会关注这个问题。单例 bean 存在线程问题，主要是因为当多个线程操作同一个对象的时候，对这个对象的非静态成员变量的写操作会存在线程安全问题。</p>
-<p>常见的有两种解决办法：</p>
-<ol>
-<li><p>在Bean对象中尽量避免定义可变的成员变量（不太现实）。</p>
-</li>
-<li><p>在类中定义一个ThreadLocal成员变量，将需要的可变成员变量保存在 ThreadLocal 中（推荐的一种方式）。</p>
-</li>
-</ol>
-<h2 id="Spring-中的-bean-生命周期"><a href="#Spring-中的-bean-生命周期" class="headerlink" title="Spring 中的 bean 生命周期?"></a>Spring 中的 bean 生命周期?</h2><p>这部分网上有很多文章都讲到了，下面的内容整理自：<a href="https://yemengying.com/2016/07/14/spring-bean-life-cycle/" target="_blank" rel="noopener">https://yemengying.com/2016/07/14/spring-bean-life-cycle/</a> ，除了这篇文章，再推荐一篇很不错的文章 ：<a href="https://www.cnblogs.com/zrtqsk/p/3735273.html" target="_blank" rel="noopener">https://www.cnblogs.com/zrtqsk/p/3735273.html</a> 。</p>
-<ul>
-<li>Bean 容器找到配置文件中 Spring Bean 的定义。</li>
-<li>Bean 容器利用 Java Reflection API 创建一个Bean的实例。</li>
-<li>如果涉及到一些属性值 利用 <code>set()</code>方法设置一些属性值。</li>
-<li>如果 Bean 实现了 <code>BeanNameAware</code> 接口，调用 <code>setBeanName()</code>方法，传入Bean的名字。</li>
-<li>如果 Bean 实现了 <code>BeanClassLoaderAware</code> 接口，调用 <code>setBeanClassLoader()</code>方法，传入 <code>ClassLoader</code>对象的实例。</li>
-<li>如果Bean实现了 <code>BeanFactoryAware</code> 接口，调用 <code>setBeanClassLoader()</code>方法，传入 <code>ClassLoade</code> r对象的实例。</li>
-<li>与上面的类似，如果实现了其他 <code>*.Aware</code>接口，就调用相应的方法。</li>
-<li>如果有和加载这个 Bean 的 Spring 容器相关的 <code>BeanPostProcessor</code> 对象，执行<code>postProcessBeforeInitialization()</code> 方法</li>
-<li>如果Bean实现了<code>InitializingBean</code>接口，执行<code>afterPropertiesSet()</code>方法。</li>
-<li>如果 Bean 在配置文件中的定义包含  init-method 属性，执行指定的方法。</li>
-<li>如果有和加载这个 Bean的 Spring 容器相关的 <code>BeanPostProcessor</code> 对象，执行<code>postProcessAfterInitialization()</code> 方法</li>
-<li>当要销毁 Bean 的时候，如果 Bean 实现了 <code>DisposableBean</code> 接口，执行 <code>destroy()</code> 方法。</li>
-<li>当要销毁 Bean 的时候，如果 Bean 在配置文件中的定义包含 destroy-method 属性，执行指定的方法。</li>
-</ul>
-<p>图示：</p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-17/48376272.jpg" alt="Spring Bean 生命周期"></p>
-<p>与之比较类似的中文版本:</p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-17/5496407.jpg" alt="Spring Bean 生命周期"></p>
-<h2 id="说说自己对于-Spring-MVC-了解"><a href="#说说自己对于-Spring-MVC-了解" class="headerlink" title="说说自己对于 Spring MVC 了解?"></a>说说自己对于 Spring MVC 了解?</h2><p>谈到这个问题，我们不得不提提之前 Model1 和 Model2 这两个没有 Spring MVC 的时代。</p>
-<ul>
-<li><strong>Model1 时代</strong> : 很多学 Java 后端比较晚的朋友可能并没有接触过  Model1 模式下的 JavaWeb 应用开发。在 Model1 模式下，整个 Web 应用几乎全部用 JSP 页面组成，只用少量的 JavaBean 来处理数据库连接、访问等操作。这个模式下 JSP 即是控制层又是表现层。显而易见，这种模式存在很多问题。比如①将控制逻辑和表现逻辑混杂在一起，导致代码重用率极低；②前端和后端相互依赖，难以进行测试并且开发效率极低；</li>
-<li><strong>Model2 时代</strong> ：学过 Servlet 并做过相关 Demo 的朋友应该了解“Java Bean(Model)+ JSP（View,）+Servlet（Controller）  ”这种开发模式,这就是早期的 JavaWeb MVC 开发模式。Model:系统涉及的数据，也就是 dao 和 bean。View：展示模型中的数据，只是用来展示。Controller：处理用户请求都发送给 ，返回数据给 JSP 并展示给用户。</li>
-</ul>
-<p>Model2 模式下还存在很多问题，Model2的抽象和封装程度还远远不够，使用Model2进行开发时不可避免地会重复造轮子，这就大大降低了程序的可维护性和复用性。于是很多JavaWeb开发相关的 MVC 框架营运而生比如Struts2，但是 Struts2 比较笨重。随着 Spring 轻量级开发框架的流行，Spring 生态圈出现了 Spring MVC 框架， Spring MVC 是当前最优秀的 MVC 框架。相比于 Struts2 ， Spring MVC 使用更加简单和方便，开发效率更高，并且 Spring MVC 运行速度更快。</p>
-<p>MVC 是一种设计模式,Spring MVC 是一款很优秀的 MVC 框架。Spring MVC 可以帮助我们进行更简洁的Web层的开发，并且它天生与 Spring 框架集成。Spring MVC 下我们一般把后端项目分为 Service层（处理业务）、Dao层（数据库操作）、Entity层（实体类）、Controller层(控制层，返回数据给前台页面)。</p>
-<p><strong>Spring MVC 的简单原理图如下：</strong></p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-11/60679444.jpg" alt></p>
-<h2 id="SpringMVC-工作原理了解吗"><a href="#SpringMVC-工作原理了解吗" class="headerlink" title="SpringMVC 工作原理了解吗?"></a>SpringMVC 工作原理了解吗?</h2><p><strong>原理如下图所示：</strong><br><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-11/49790288.jpg" alt="SpringMVC运行原理"></p>
-<p>上图的一个笔误的小问题：Spring MVC 的入口函数也就是前端控制器 <code>DispatcherServlet</code> 的作用是接收请求，响应结果。</p>
-<p><strong>流程说明（重要）：</strong></p>
-<ol>
-<li>客户端（浏览器）发送请求，直接请求到 <code>DispatcherServlet</code>。</li>
-<li><code>DispatcherServlet</code> 根据请求信息调用 <code>HandlerMapping</code>，解析请求对应的 <code>Handler</code>。</li>
-<li>解析到对应的 <code>Handler</code>（也就是我们平常说的 <code>Controller</code> 控制器）后，开始由 <code>HandlerAdapter</code> 适配器处理。</li>
-<li><code>HandlerAdapter</code> 会根据 <code>Handler</code>来调用真正的处理器开处理请求，并处理相应的业务逻辑。</li>
-<li>处理器处理完业务后，会返回一个 <code>ModelAndView</code> 对象，<code>Model</code> 是返回的数据对象，<code>View</code> 是个逻辑上的 <code>View</code>。</li>
-<li><code>ViewResolver</code> 会根据逻辑 <code>View</code> 查找实际的 <code>View</code>。</li>
-<li><code>DispaterServlet</code> 把返回的 <code>Model</code> 传给 <code>View</code>（视图渲染）。</li>
-<li>把 <code>View</code> 返回给请求者（浏览器）</li>
-</ol>
-<h2 id="Spring-框架中用到了哪些设计模式？"><a href="#Spring-框架中用到了哪些设计模式？" class="headerlink" title="Spring 框架中用到了哪些设计模式？"></a>Spring 框架中用到了哪些设计模式？</h2><p>关于下面一些设计模式的详细介绍，可以看笔主前段时间的原创文章<a href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&mid=2247485303&idx=1&sn=9e4626a1e3f001f9b0d84a6fa0cff04a&chksm=cea248bcf9d5c1aaf48b67cc52bac74eb29d6037848d6cf213b0e5466f2d1fda970db700ba41&token=255050878&lang=zh_CN#rd" target="_blank" rel="noopener">《面试官:“谈谈Spring中都用到了那些设计模式?”。》</a> 。</p>
-<ul>
-<li><strong>工厂设计模式</strong> : Spring使用工厂模式通过 <code>BeanFactory</code>、<code>ApplicationContext</code> 创建 bean 对象。</li>
-<li><strong>代理设计模式</strong> : Spring AOP 功能的实现。</li>
-<li><strong>单例设计模式</strong> : Spring 中的 Bean 默认都是单例的。</li>
-<li><strong>模板方法模式</strong> : Spring 中 <code>jdbcTemplate</code>、<code>hibernateTemplate</code> 等以 Template 结尾的对数据库操作的类，它们就使用到了模板模式。</li>
-<li><strong>包装器设计模式</strong> : 我们的项目需要连接多个数据库，而且不同的客户在每次访问中根据需要会去访问不同的数据库。这种模式让我们可以根据客户的需求能够动态切换不同的数据源。</li>
-<li><strong>观察者模式:</strong> Spring 事件驱动模型就是观察者模式很经典的一个应用。</li>
-<li><strong>适配器模式</strong> :Spring AOP 的增强或通知(Advice)使用到了适配器模式、spring MVC 中也是用到了适配器模式适配<code>Controller</code>。</li>
-<li>……</li>
-</ul>
-<h2 id="Component-和-Bean-的区别是什么？"><a href="#Component-和-Bean-的区别是什么？" class="headerlink" title="@Component 和 @Bean 的区别是什么？"></a>@Component 和 @Bean 的区别是什么？</h2><ol>
-<li>作用对象不同: <code>@Component</code> 注解作用于类，而<code>@Bean</code>注解作用于方法。</li>
-<li><code>@Component</code>通常是通过类路径扫描来自动侦测以及自动装配到Spring容器中（我们可以使用 <code>@ComponentScan</code> 注解定义要扫描的路径从中找出标识了需要装配的类自动装配到 Spring 的 bean 容器中）。<code>@Bean</code> 注解通常是我们在标有该注解的方法中定义产生这个 bean,<code>@Bean</code>告诉了Spring这是某个类的示例，当我需要用它的时候还给我。</li>
-<li><code>@Bean</code> 注解比 <code>Component</code> 注解的自定义性更强，而且很多地方我们只能通过 <code>@Bean</code> 注解来注册bean。比如当我们引用第三方库中的类需要装配到 <code>Spring</code>容器时，则只能通过 <code>@Bean</code>来实现。</li>
-</ol>
-<p><code>@Bean</code>注解使用示例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> TransferService <span class="title">transferService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> TransferServiceImpl();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p> 上面的代码相当于下面的 xml 配置</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"transferService"</span> <span class="attr">class</span>=<span class="string">"com.acme.TransferServiceImpl"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>下面这个例子是通过 <code>@Component</code> 无法实现的。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> OneService <span class="title">getService</span><span class="params">(status)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> (status)  &#123;</span><br><span class="line">        when <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> serviceImpl1();</span><br><span class="line">        when <span class="number">2</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> serviceImpl2();</span><br><span class="line">        when <span class="number">3</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> serviceImpl3();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="将一个类声明为Spring的-bean-的注解有哪些"><a href="#将一个类声明为Spring的-bean-的注解有哪些" class="headerlink" title="将一个类声明为Spring的 bean 的注解有哪些?"></a>将一个类声明为Spring的 bean 的注解有哪些?</h2><p>我们一般使用 <code>@Autowired</code> 注解自动装配 bean，要想把类标识成可用于 <code>@Autowired</code> 注解自动装配的 bean 的类,采用以下注解可实现：</p>
-<ul>
-<li><code>@Component</code> ：通用的注解，可标注任意类为 <code>Spring</code> 组件。如果一个Bean不知道属于拿个层，可以使用<code>@Component</code> 注解标注。</li>
-<li><code>@Repository</code> : 对应持久层即 Dao 层，主要用于数据库相关操作。</li>
-<li><code>@Service</code> : 对应服务层，主要涉及一些复杂的逻辑，需要用到 Dao层。</li>
-<li><code>@Controller</code> : 对应 Spring MVC 控制层，主要用户接受用户请求并调用 Service 层返回数据给前端页面。</li>
-</ul>
-<h2 id="Spring-管理事务的方式有几种？"><a href="#Spring-管理事务的方式有几种？" class="headerlink" title="Spring 管理事务的方式有几种？"></a>Spring 管理事务的方式有几种？</h2><ol>
-<li>编程式事务，在代码中硬编码。(不推荐使用)</li>
-<li>声明式事务，在配置文件中配置（推荐使用）</li>
-</ol>
-<p><strong>声明式事务又分为两种：</strong></p>
-<ol>
-<li>基于XML的声明式事务</li>
-<li>基于注解的声明式事务</li>
-</ol>
-<h2 id="Spring-事务中的隔离级别有哪几种"><a href="#Spring-事务中的隔离级别有哪几种" class="headerlink" title="Spring 事务中的隔离级别有哪几种?"></a>Spring 事务中的隔离级别有哪几种?</h2><p><strong>TransactionDefinition 接口中定义了五个表示隔离级别的常量：</strong></p>
-<ul>
-<li><strong>TransactionDefinition.ISOLATION_DEFAULT:</strong>  使用后端数据库默认的隔离级别，Mysql 默认采用的 REPEATABLE_READ隔离级别 Oracle 默认采用的 READ_COMMITTED隔离级别.</li>
-<li><strong>TransactionDefinition.ISOLATION_READ_UNCOMMITTED:</strong> 最低的隔离级别，允许读取尚未提交的数据变更，<strong>可能会导致脏读、幻读或不可重复读</strong></li>
-<li><strong>TransactionDefinition.ISOLATION_READ_COMMITTED:</strong>   允许读取并发事务已经提交的数据，<strong>可以阻止脏读，但是幻读或不可重复读仍有可能发生</strong></li>
-<li><strong>TransactionDefinition.ISOLATION_REPEATABLE_READ:</strong>  对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，<strong>可以阻止脏读和不可重复读，但幻读仍有可能发生。</strong></li>
-<li><strong>TransactionDefinition.ISOLATION_SERIALIZABLE:</strong>   最高的隔离级别，完全服从ACID的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，<strong>该级别可以防止脏读、不可重复读以及幻读</strong>。但是这将严重影响程序的性能。通常情况下也不会用到该级别。</li>
-</ul>
-<h2 id="Spring-事务中哪几种事务传播行为"><a href="#Spring-事务中哪几种事务传播行为" class="headerlink" title="Spring 事务中哪几种事务传播行为?"></a>Spring 事务中哪几种事务传播行为?</h2><p><strong>支持当前事务的情况：</strong></p>
-<ul>
-<li><strong>TransactionDefinition.PROPAGATION_REQUIRED：</strong> 如果当前存在事务，则加入该事务；如果当前没有事务，则创建一个新的事务。</li>
-<li><strong>TransactionDefinition.PROPAGATION_SUPPORTS：</strong> 如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。</li>
-<li><strong>TransactionDefinition.PROPAGATION_MANDATORY：</strong> 如果当前存在事务，则加入该事务；如果当前没有事务，则抛出异常。（mandatory：强制性）</li>
-</ul>
-<p><strong>不支持当前事务的情况：</strong></p>
-<ul>
-<li><strong>TransactionDefinition.PROPAGATION_REQUIRES_NEW：</strong> 创建一个新的事务，如果当前存在事务，则把当前事务挂起。</li>
-<li><strong>TransactionDefinition.PROPAGATION_NOT_SUPPORTED：</strong> 以非事务方式运行，如果当前存在事务，则把当前事务挂起。</li>
-<li><strong>TransactionDefinition.PROPAGATION_NEVER：</strong> 以非事务方式运行，如果当前存在事务，则抛出异常。</li>
-</ul>
-<p><strong>其他情况：</strong></p>
-<ul>
-<li><strong>TransactionDefinition.PROPAGATION_NESTED：</strong> 如果当前存在事务，则创建一个事务作为当前事务的嵌套事务来运行；如果当前没有事务，则该取值等价于TransactionDefinition.PROPAGATION_REQUIRED。</li>
-</ul>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li>《Spring 技术内幕》</li>
-<li><a href="http://www.cnblogs.com/wmyskxz/p/8820371.html" target="_blank" rel="noopener">http://www.cnblogs.com/wmyskxz/p/8820371.html</a></li>
-<li><a href="https://www.journaldev.com/2696/spring-interview-questions-and-answers" target="_blank" rel="noopener">https://www.journaldev.com/2696/spring-interview-questions-and-answers</a></li>
-<li><a href="https://www.edureka.co/blog/interview-questions/spring-interview-questions/" target="_blank" rel="noopener">https://www.edureka.co/blog/interview-questions/spring-interview-questions/</a></li>
-<li><a href="https://howtodoinjava.com/interview-questions/top-spring-interview-questions-with-answers/" target="_blank" rel="noopener">https://howtodoinjava.com/interview-questions/top-spring-interview-questions-with-answers/</a></li>
-<li><a href="http://www.tomaszezula.com/2014/02/09/spring-series-part-5-component-vs-bean/" target="_blank" rel="noopener">http://www.tomaszezula.com/2014/02/09/spring-series-part-5-component-vs-bean/</a></li>
-<li><a href="https://stackoverflow.com/questions/34172888/difference-between-bean-and-autowired" target="_blank" rel="noopener">https://stackoverflow.com/questions/34172888/difference-between-bean-and-autowired</a></li>
-</ul>
-<h3 id="公众号"><a href="#公众号" class="headerlink" title="公众号"></a>公众号</h3><p>如果大家想要实时关注我更新的文章以及分享的干货的话，可以关注我的公众号。</p>
-<p><strong>《Java面试突击》:</strong> 由本文档衍生的专为面试而生的《Java面试突击》V2.0 PDF 版本<a href="#公众号">公众号</a>后台回复 <strong>“Java面试突击”</strong> 即可免费领取！</p>
-<p><strong>Java工程师必备学习资源:</strong> 一些Java工程师常用学习资源公众号后台回复关键字 <strong>“1”</strong> 即可免费无套路获取。 </p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/11/28/167598cd2e17b8ec?w=258&h=258&f=jpeg&s=27334" alt="我的公众号"></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/framework/spring/SpringMVC-Principle/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客">
+      <meta itemprop="name" content="苏有福的博客"/>
     </span>
 
     
@@ -2294,7 +2661,7 @@
 
           
 
-          <br>
+          <br/>
           
 
           
@@ -2445,16 +2812,16 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/framework/spring/Spring/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/设计模式/"/>
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="syf"/>
+      <meta itemprop="description" content=""/>
+      <meta itemprop="image" content="/images/avatar.gif"/>
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客">
+      <meta itemprop="name" content="苏有福的博客"/>
     </span>
 
     
@@ -2465,7 +2832,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/07/14/docs/system-design/framework/spring/Spring/" class="post-title-link" itemprop="url">Untitled</a>
+                <a href="/2019/07/14/docs/system-design/设计模式/" class="post-title-link" itemprop="url">Untitled</a>
               
             
           </h1>
@@ -2510,7 +2877,7 @@
 
           
 
-          <br>
+          <br/>
           
 
           
@@ -2532,376 +2899,76 @@
       
         
           
-            <h2 id="Spring相关教程-资料"><a href="#Spring相关教程-资料" class="headerlink" title="Spring相关教程/资料"></a>Spring相关教程/资料</h2><h3 id="官网相关"><a href="#官网相关" class="headerlink" title="官网相关"></a>官网相关</h3><ul>
-<li><a href="https://spring.io/" target="_blank" rel="noopener">Spring官网</a></li>
-<li><a href="https://spring.io/projects" target="_blank" rel="noopener">Spring系列主要项目</a></li>
-<li><a href="https://spring.io/guides" target="_blank" rel="noopener">Spring官网指南</a></li>
-<li><a href="https://docs.spring.io/spring/docs/4.3.17.RELEASE/javadoc-api/" target="_blank" rel="noopener">Spring Framework 4.3.17.RELEASE API</a></li>
+            <h1 id="Java-设计模式"><a href="#Java-设计模式" class="headerlink" title="Java 设计模式"></a>Java 设计模式</h1><p>下面是自己学习设计模式的时候做的总结，有些是自己的原创文章，有些是网上写的比较好的文章，保存下来细细消化吧！</p>
+<p><strong>系列文章推荐：</strong><a href="https://design-patterns.readthedocs.io/zh_CN/latest/index.html" target="_blank" rel="noopener">https://design-patterns.readthedocs.io/zh_CN/latest/index.html</a></p>
+<h2 id="创建型模式"><a href="#创建型模式" class="headerlink" title="创建型模式"></a>创建型模式</h2><h3 id="创建型模式概述"><a href="#创建型模式概述" class="headerlink" title="创建型模式概述"></a>创建型模式概述</h3><ul>
+<li>创建型模式(Creational Pattern)对类的实例化过程进行了抽象，能够将软件模块中对象的创建和对象的使用分离。为了使软件的结构更加清晰，外界对于这些对象只需要知道它们共同的接口，而不清楚其具体的实现细节，使整个系统的设计更加符合单一职责原则。</li>
+<li>创建型模式在创建什么(What)，由谁创建(Who)，何时创建(When)等方面都为软件设计者提供了尽可能大的灵活性。创建型模式隐藏了类的实例的创建细节，通过隐藏对象如何被创建和组合在一起达到使整个系统独立的目的。 </li>
 </ul>
-<h2 id="系统学习教程"><a href="#系统学习教程" class="headerlink" title="系统学习教程"></a>系统学习教程</h2><h3 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h3><ul>
-<li><a href="http://wiki.jikexueyuan.com/project/spring/transaction-management.html" target="_blank" rel="noopener">极客学院Spring Wiki</a></li>
-<li><a href="https://www.w3cschool.cn/wkspring/f6pk1ic8.html" target="_blank" rel="noopener">Spring W3Cschool教程 </a></li>
+<p><img src="https://user-gold-cdn.xitu.io/2018/6/16/1640641afcb7559b?w=491&h=241&f=png&s=51443" alt="创建型模式"></p>
+<h3 id="常见创建型模式详解"><a href="#常见创建型模式详解" class="headerlink" title="常见创建型模式详解"></a>常见创建型模式详解</h3><ul>
+<li><strong>单例模式：</strong> <a href="https://blog.csdn.net/qq_34337272/article/details/80455972" target="_blank" rel="noopener">深入理解单例模式——只有一个实例</a></li>
+<li><strong>工厂模式：</strong> <a href="https://blog.csdn.net/qq_34337272/article/details/80472071" target="_blank" rel="noopener">深入理解工厂模式——由对象工厂生成对象</a></li>
+<li><strong>建造者模式：</strong> <a href="http://blog.csdn.net/qq_34337272/article/details/80540059" target="_blank" rel="noopener">深入理解建造者模式 ——组装复杂的实例</a></li>
+<li><strong>原型模式：</strong> <a href="https://blog.csdn.net/qq_34337272/article/details/80706444" target="_blank" rel="noopener">深入理解原型模式 ——通过复制生成实例</a></li>
 </ul>
-<h3 id="视频"><a href="#视频" class="headerlink" title="视频"></a>视频</h3><ul>
-<li><p><a href="http://study.163.com/course/courseMain.htm?courseId=1004475015#/courseDetail?tab=1&35" target="_blank" rel="noopener">网易云课堂——58集精通java教程Spring框架开发</a></p>
-</li>
-<li><p><a href="https://www.imooc.com/" target="_blank" rel="noopener">慕课网相关视频</a></p>
-</li>
-<li><p><strong>黑马视频和尚硅谷视频（非常推荐）：</strong> 微信公众号：“<strong>JavaGuide</strong>”后台回复关键字 “<strong>1</strong>” 免费领取。</p>
+<h2 id="结构型模式"><a href="#结构型模式" class="headerlink" title="结构型模式"></a>结构型模式</h2><h3 id="结构型模式概述"><a href="#结构型模式概述" class="headerlink" title="结构型模式概述"></a>结构型模式概述</h3><ul>
+<li><strong>结构型模式(Structural Pattern)：</strong> 描述如何将类或者对象结合在一起形成更大的结构，就像搭积木，可以通过简单积木的组合形成复杂的、功能更为强大的结构<br><img src="https://user-gold-cdn.xitu.io/2018/6/16/164064d6b3c205e3?w=719&h=233&f=png&s=270293" alt="结构型模式(Structural Pattern)"></li>
+<li><strong>结构型模式可以分为类结构型模式和对象结构型模式：</strong>  <ul>
+<li>类结构型模式关心类的组合，由多个类可以组合成一个更大的系统，在类结构型模式中一般只存在继承关系和实现关系。</li>
+<li>对象结构型模式关心类与对象的组合，通过关联关系使得在一个类中定义另一个类的实例对象，然后通过该对象调用其方法。根据“合成复用原则”，在系统中尽量使用关联关系来替代继承关系，因此大部分结构型模式都是对象结构型模式。</li>
+</ul>
 </li>
 </ul>
-<h2 id="面试必备知识点"><a href="#面试必备知识点" class="headerlink" title="面试必备知识点"></a>面试必备知识点</h2><h3 id="SpringAOP-IOC实现原理"><a href="#SpringAOP-IOC实现原理" class="headerlink" title="SpringAOP,IOC实现原理"></a>SpringAOP,IOC实现原理</h3><p>AOP实现原理、动态代理和静态代理、Spring IOC的初始化过程、IOC原理、自己实现怎么实现一个IOC容器？这些东西都是经常会被问到的。</p>
-<p>推荐阅读：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/6/16/1640655459d766d2?w=378&h=266&f=png&s=59652" alt="结构型模式"></p>
+<h3 id="常见结构型模式详解"><a href="#常见结构型模式详解" class="headerlink" title="常见结构型模式详解"></a>常见结构型模式详解</h3><ul>
+<li><strong>适配器模式：</strong><ul>
+<li><a href="https://segmentfault.com/a/1190000011856448" target="_blank" rel="noopener">深入理解适配器模式——加个“适配器”以便于复用</a></li>
+<li><a href="https://www.ibm.com/developerworks/cn/java/j-lo-adapter-pattern/index.html" target="_blank" rel="noopener">适配器模式原理及实例介绍-IBM</a></li>
+</ul>
+</li>
+<li><strong>桥接模式：</strong> <a href="https://blog.csdn.net/yangzl2008/article/details/7670996" target="_blank" rel="noopener">设计模式笔记16：桥接模式(Bridge Pattern)</a></li>
+<li><strong>组合模式：</strong> <a href="https://blog.csdn.net/lmb55/article/details/51039781" target="_blank" rel="noopener">大话设计模式—组合模式</a></li>
+<li><strong>装饰模式：</strong> <a href="https://www.cnblogs.com/chenxing818/p/4705919.html" target="_blank" rel="noopener">java模式—装饰者模式</a>、<a href="https://blog.csdn.net/cauchyweierstrass/article/details/48240147" target="_blank" rel="noopener">Java设计模式-装饰者模式</a></li>
+<li><strong>外观模式：</strong> <a href="https://www.cnblogs.com/lthIU/p/5860607.html" target="_blank" rel="noopener">java设计模式之外观模式（门面模式）</a></li>
+<li><strong>享元模式：</strong> <a href="http://www.jasongj.com/design_pattern/flyweight/" target="_blank" rel="noopener">享元模式</a></li>
+<li><strong>代理模式：</strong><ul>
+<li><a href="https://www.ibm.com/developerworks/cn/java/j-lo-proxy-pattern/index.html" target="_blank" rel="noopener">代理模式原理及实例讲解 （IBM出品，很不错）</a></li>
+<li><a href="https://blog.csdn.net/briblue/article/details/73928350" target="_blank" rel="noopener">轻松学，Java 中的代理模式及动态代理</a></li>
+<li><a href="https://blog.csdn.net/justloveyou_/article/details/74203025" target="_blank" rel="noopener">Java代理模式及其应用</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="行为型模式"><a href="#行为型模式" class="headerlink" title="行为型模式"></a>行为型模式</h2><h3 id="行为型模式概述"><a href="#行为型模式概述" class="headerlink" title="行为型模式概述"></a>行为型模式概述</h3><ul>
+<li>行为型模式(Behavioral Pattern)是对在不同的对象之间划分责任和算法的抽象化。</li>
+<li>行为型模式不仅仅关注类和对象的结构，而且重点关注它们之间的相互作用。</li>
+<li>通过行为型模式，可以更加清晰地划分类与对象的职责，并研究系统在运行时实例对象之间的交互。在系统运行时，对象并不是孤立的，它们可以通过相互通信与协作完成某些复杂功能，一个对象在运行时也将影响到其他对象的运行。 </li>
+</ul>
+<p><strong>行为型模式分为类行为型模式和对象行为型模式两种：</strong></p>
 <ul>
-<li><p><a href="http://www.coolblog.xyz/2018/01/18/自己动手实现的-Spring-IOC-和-AOP-上篇/" target="_blank" rel="noopener">自己动手实现的 Spring IOC 和 AOP - 上篇</a></p>
-</li>
-<li><p><a href="http://www.coolblog.xyz/2018/01/18/自己动手实现的-Spring-IOC-和-AOP-下篇/" target="_blank" rel="noopener">自己动手实现的 Spring IOC 和 AOP - 下篇</a></p>
-</li>
+<li><strong>类行为型模式：</strong> 类的行为型模式使用继承关系在几个类之间分配行为，类行为型模式主要通过多态等方式来分配父类与子类的职责。</li>
+<li><strong>对象行为型模式：</strong> 对象的行为型模式则使用对象的聚合关联关系来分配行为，对象行为型模式主要是通过对象关联等方式来分配两个或多个类的职责。根据“合成复用原则”，系统中要尽量使用关联关系来取代继承关系，因此大部分行为型设计模式都属于对象行为型设计模式。</li>
 </ul>
-<h3 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h3><p>AOP思想的实现一般都是基于 <strong>代理模式</strong> ，在JAVA中一般采用JDK动态代理模式，但是我们都知道，<strong>JDK动态代理模式只能代理接口而不能代理类</strong>。因此，Spring AOP 会这样子来进行切换，因为Spring AOP 同时支持 CGLIB、ASPECTJ、JDK动态代理。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/6/28/164467dd92c6172c?w=453&h=269&f=png&s=63270" alt="行为型模式"></p>
 <ul>
-<li>如果目标对象的实现类实现了接口，Spring AOP 将会采用 JDK 动态代理来生成 AOP 代理类；</li>
-<li>如果目标对象的实现类没有实现接口，Spring AOP 将会采用 CGLIB 来生成 AOP 代理类——不过这个选择过程对开发者完全透明、开发者也无需关心。</li>
+<li><strong>职责链模式：</strong></li>
+<li><a href="https://blog.csdn.net/jason0539/article/details/45091639" target="_blank" rel="noopener">Java设计模式之责任链模式、职责链模式</a></li>
+<li><a href="https://www.cnblogs.com/lizo/p/7503862.html" target="_blank" rel="noopener">责任链模式实现的三种方式</a></li>
+<li><strong>命令模式：</strong> <a href="https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/command.html" target="_blank" rel="noopener">https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/command.html</a> 在软件设计中，我们经常需要向某些对象发送请求，但是并不知道请求的接收者是谁，也不知道被请求的操作是哪个，我们只需在程序运行时指定具体的请求接收者即可，此时，可以使用命令模式来进行设计，使得请求发送者与请求接收者消除彼此之间的耦合，让对象之间的调用关系更加灵活。命令模式可以对发送者和接收者完全解耦，发送者与接收者之间没有直接引用关系，发送请求的对象只需要知道如何发送请求，而不必知道如何完成请求。这就是命令模式的模式动机。</li>
+<li><strong>解释器模式：</strong></li>
+<li><strong>迭代器模式：</strong></li>
+<li><strong>中介者模式：</strong> <a href="https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/mediator.html" target="_blank" rel="noopener">https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/mediator.html</a></li>
+<li><strong>备忘录模式：</strong></li>
+<li><strong>观察者模式：</strong> <a href="https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/observer.html" target="_blank" rel="noopener">https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/observer.html</a>、<a href="https://juejin.im/post/5c712ab56fb9a049a7127114" target="_blank" rel="noopener">https://juejin.im/post/5c712ab56fb9a049a7127114</a></li>
+<li><strong>状态模式：</strong><a href="https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/state.html" target="_blank" rel="noopener">https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/state.html</a></li>
+<li><strong>策略模式：</strong><a href="https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/strategy.html" target="_blank" rel="noopener">https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/strategy.html</a></li>
 </ul>
-<p>推荐阅读：</p>
+<p>策略模式作为设计原则中开闭原则最典型的体现，也是经常使用的。下面这篇博客介绍了策略模式一般的组成部分和概念，并用了一个小demo去说明了策略模式的应用。</p>
+<p><a href="https://blog.csdn.net/zlj1217/article/details/81230077" target="_blank" rel="noopener">java设计模式之策略模式</a></p>
 <ul>
-<li><a href="http://www.cnblogs.com/puyangsky/p/6218925.html" target="_blank" rel="noopener">静态代理、JDK动态代理、CGLIB动态代理讲解</a> ：我们知道AOP思想的实现一般都是基于 <strong>代理模式</strong> ，所以在看下面的文章之前建议先了解一下静态代理以及JDK动态代理、CGLIB动态代理的实现方式。</li>
-<li><a href="https://juejin.im/post/5aa7818af265da23844040c6" target="_blank" rel="noopener">Spring AOP 入门</a> ：带你入门的一篇文章。这篇文章主要介绍了AOP中的基本概念：5种类型的通知（Before，After，After-returning，After-throwing，Around）；Spring中对AOP的支持：AOP思想的实现一般都是基于代理模式，在Java中一般采用JDK动态代理模式，Spring AOP 同时支持 CGLIB、ASPECTJ、JDK动态代理，</li>
-<li><a href="https://juejin.im/post/5a55af9e518825734d14813f" target="_blank" rel="noopener">Spring AOP 基于AspectJ注解如何实现AOP</a> ： <strong>AspectJ是一个AOP框架，它能够对java代码进行AOP编译（一般在编译期进行），让java代码具有AspectJ的AOP功能（当然需要特殊的编译器）</strong>，可以这样说AspectJ是目前实现AOP框架中最成熟，功能最丰富的语言，更幸运的是，AspectJ与java程序完全兼容，几乎是无缝关联，因此对于有java编程基础的工程师，上手和使用都非常容易。Spring注意到AspectJ在AOP的实现方式上依赖于特殊编译器(ajc编译器)，因此Spring很机智回避了这点，转向采用动态代理技术的实现原理来构建Spring AOP的内部机制（动态织入），这是与AspectJ（静态织入）最根本的区别。<strong>Spring 只是使用了与 AspectJ 5 一样的注解，但仍然没有使用 AspectJ 的编译器，底层依是动态代理技术的实现，因此并不依赖于 AspectJ 的编译器</strong>。 Spring AOP虽然是使用了那一套注解，其实实现AOP的底层是使用了动态代理(JDK或者CGLib)来动态植入。至于AspectJ的静态植入，不是本文重点，所以只提一提。</li>
-<li><a href="https://www.imooc.com/learn/869" target="_blank" rel="noopener">探秘Spring AOP（慕课网视频，很不错）</a>:慕课网视频，讲解的很不错，详细且深入</li>
-<li><a href="https://blog.csdn.net/fighterandknight/article/details/51209822" target="_blank" rel="noopener">spring源码剖析（六）AOP实现原理剖析</a> :通过源码分析Spring AOP的原理</li>
+<li><strong>模板方法模式：</strong></li>
+<li><strong>访问者模式：</strong></li>
 </ul>
-<h3 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h3><p>Spring IOC的初始化过程：<br><img src="https://user-gold-cdn.xitu.io/2018/5/22/16387903ee72c831?w=709&h=56&f=png&s=4673" alt="Spring IOC的初始化过程"></p>
-<ul>
-<li><p><a href="https://www.cnblogs.com/wang-meng/p/5597490.html" target="_blank" rel="noopener">[Spring框架]Spring IOC的原理及详解。</a></p>
-</li>
-<li><p><a href="https://yikun.github.io/2015/05/29/Spring-IOC核心源码学习/" target="_blank" rel="noopener">Spring IOC核心源码学习</a> :比较简短，推荐阅读。</p>
-</li>
-<li><p><a href="https://javadoop.com/post/spring-ioc" target="_blank" rel="noopener">Spring IOC 容器源码分析</a> :强烈推荐，内容详尽，而且便于阅读。</p>
-</li>
-</ul>
-<h2 id="Spring事务管理"><a href="#Spring事务管理" class="headerlink" title="Spring事务管理"></a>Spring事务管理</h2><ul>
-<li><a href="https://juejin.im/post/5b00c52ef265da0b95276091" target="_blank" rel="noopener">可能是最漂亮的Spring事务管理详解</a></li>
-<li><a href="https://juejin.im/post/5b010f27518825426539ba38" target="_blank" rel="noopener">Spring编程式和声明式事务实例讲解</a></li>
-</ul>
-<h3 id="Spring单例与线程安全"><a href="#Spring单例与线程安全" class="headerlink" title="Spring单例与线程安全"></a>Spring单例与线程安全</h3><ul>
-<li><a href="http://www.cnblogs.com/chengxuyuanzhilu/p/6404991.html" target="_blank" rel="noopener">Spring框架中的单例模式（源码解读）</a>:单例模式是一种常用的软件设计模式。通过单例模式可以保证系统中一个类只有一个实例。spring依赖注入时，使用了 多重判断加锁 的单例模式。</li>
-</ul>
-<h3 id="Spring源码阅读"><a href="#Spring源码阅读" class="headerlink" title="Spring源码阅读"></a>Spring源码阅读</h3><p>阅读源码不仅可以加深我们对Spring设计思想的理解，提高自己的编码水品，还可以让自己在面试中如鱼得水。下面的是Github上的一个开源的Spring源码阅读，大家有时间可以看一下，当然你如果有时间也可以自己慢慢研究源码。</p>
-<ul>
-<li><a href="https://github.com/seaswalker/Spring/blob/master/note/Spring.md" target="_blank" rel="noopener">spring-core</a><ul>
-<li><a href="https://github.com/seaswalker/Spring/blob/master/note/spring-aop.md" target="_blank" rel="noopener">spring-aop</a></li>
-<li><a href="https://github.com/seaswalker/Spring/blob/master/note/spring-context.md" target="_blank" rel="noopener">spring-context</a></li>
-<li><a href="https://github.com/seaswalker/Spring/blob/master/note/spring-task.md" target="_blank" rel="noopener">spring-task</a></li>
-<li><a href="https://github.com/seaswalker/Spring/blob/master/note/spring-transaction.md" target="_blank" rel="noopener">spring-transaction</a></li>
-<li><a href="https://github.com/seaswalker/Spring/blob/master/note/spring-mvc.md" target="_blank" rel="noopener">spring-mvc</a></li>
-<li><a href="https://github.com/seaswalker/Spring/blob/master/note/guava-cache.md" target="_blank" rel="noopener">guava-cache</a></li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/framework/spring/SpringBean/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/14/docs/system-design/framework/spring/SpringBean/" class="post-title-link" itemprop="url">Untitled</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
-            </span>
-          
-
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <!-- MarkdownTOC -->
-
-<ul>
-<li><a href="#前言">前言</a></li>
-<li><a href="#一-bean的作用域">一  bean的作用域</a><ul>
-<li><a href="#1-singleton——唯一-bean-实例">1. singleton——唯一 bean 实例</a></li>
-<li><a href="#2-prototype——每次请求都会创建一个新的-bean-实例">2. prototype——每次请求都会创建一个新的 bean 实例</a></li>
-<li><a href="#3-request——每一次http请求都会产生一个新的bean，该bean仅在当前http-request内有效">3. request——每一次HTTP请求都会产生一个新的bean，该bean仅在当前HTTP request内有效</a></li>
-<li><a href="#4-session——每一次http请求都会产生一个新的-bean，该bean仅在当前-http-session-内有效">4. session——每一次HTTP请求都会产生一个新的 bean，该bean仅在当前 HTTP session 内有效</a></li>
-<li><a href="#5-globalsession">5. globalSession</a></li>
-</ul>
-</li>
-<li><a href="#二-bean的生命周期">二  bean的生命周期</a><ul>
-<li><a href="#initialization-和-destroy">initialization 和 destroy</a></li>
-<li><a href="#实现aware接口-在bean中使用spring框架的一些对象">实现*Aware接口 在Bean中使用Spring框架的一些对象</a></li>
-<li><a href="#beanpostprocessor">BeanPostProcessor</a></li>
-<li><a href="#总结">总结</a></li>
-<li><a href="#单例管理的对象">单例管理的对象</a></li>
-<li><a href="#非单例管理的对象">非单例管理的对象</a></li>
-</ul>
-</li>
-<li><a href="#三-说明">三 说明</a></li>
-</ul>
-<!-- /MarkdownTOC -->
-
-<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在 Spring 中，那些组成应用程序的主体及由 Spring IOC 容器所管理的对象，被称之为 bean。简单地讲，bean 就是由 IOC 容器初始化、装配及管理的对象，除此之外，bean 就与应用程序中的其他对象没有什么区别了。而 bean 的定义以及 bean 相互间的依赖关系将通过配置元数据来描述。</p>
-<p><strong>Spring中的bean默认都是单例的，这些单例Bean在多线程程序下如何保证线程安全呢？</strong> 例如对于Web应用来说，Web容器对于每个用户请求都创建一个单独的Sevlet线程来处理请求，引入Spring框架之后，每个Action都是单例的，那么对于Spring托管的单例Service Bean，如何保证其安全呢？ <strong>Spring的单例是基于BeanFactory也就是Spring容器的，单例Bean在此容器内只有一个，Java的单例是基于 JVM，每个 JVM 内只有一个实例。</strong></p>
-<p>在大多数情况下。单例 bean 是很理想的方案。不过，有时候你可能会发现你所使用的类是易变的，它们会保持一些状态，因此重用是不安全的。在这种情况下，将 class 声明为单例的就不是那么明智了。因为对象会被污染，稍后重用的时候会出现意想不到的问题。所以 Spring 定义了多种作用域的bean。</p>
-<h1 id="一-bean的作用域"><a href="#一-bean的作用域" class="headerlink" title="一  bean的作用域"></a>一  bean的作用域</h1><p>创建一个bean定义，其实质是用该bean定义对应的类来创建真正实例的“配方”。把bean定义看成一个配方很有意义，它与class很类似，只根据一张“处方”就可以创建多个实例。不仅可以控制注入到对象中的各种依赖和配置值，还可以控制该对象的作用域。这样可以灵活选择所建对象的作用域，而不必在Java Class级定义作用域。Spring Framework支持五种作用域，分别阐述如下表。</p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-17/1188352.jpg" alt></p>
-<p>五种作用域中，<strong>request、session</strong> 和 <strong>global session</strong> 三种作用域仅在基于web的应用中使用（不必关心你所采用的是什么web应用框架），只能用在基于 web 的 Spring ApplicationContext 环境。</p>
-<h3 id="1-singleton——唯一-bean-实例"><a href="#1-singleton——唯一-bean-实例" class="headerlink" title="1. singleton——唯一 bean 实例"></a>1. singleton——唯一 bean 实例</h3><p><strong>当一个 bean 的作用域为 singleton，那么Spring IoC容器中只会存在一个共享的 bean 实例，并且所有对 bean 的请求，只要 id 与该 bean 定义相匹配，则只会返回bean的同一实例。</strong> singleton 是单例类型(对应于单例模式)，就是在创建起容器时就同时自动创建了一个bean的对象，不管你是否使用，但我们可以指定Bean节点的 <code>lazy-init=”true”</code> 来延迟初始化bean，这时候，只有在第一次获取bean时才会初始化bean，即第一次请求该bean时才初始化。 每次获取到的对象都是同一个对象。注意，singleton 作用域是Spring中的缺省作用域。要在XML中将 bean 定义成 singleton ，可以这样配置：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"ServiceImpl"</span> <span class="attr">class</span>=<span class="string">"cn.csdn.service.ServiceImpl"</span> <span class="attr">scope</span>=<span class="string">"singleton"</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>也可以通过 <code>@Scope</code> 注解（它可以显示指定bean的作用范围。）的方式</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Scope</span>(<span class="string">"singleton"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceImpl</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-prototype——每次请求都会创建一个新的-bean-实例"><a href="#2-prototype——每次请求都会创建一个新的-bean-实例" class="headerlink" title="2. prototype——每次请求都会创建一个新的 bean 实例"></a>2. prototype——每次请求都会创建一个新的 bean 实例</h3><p><strong>当一个bean的作用域为 prototype，表示一个 bean 定义对应多个对象实例。</strong> <strong>prototype 作用域的 bean 会导致在每次对该 bean 请求</strong>（将其注入到另一个 bean 中，或者以程序的方式调用容器的 getBean() 方法<strong>）时都会创建一个新的 bean 实例。prototype 是原型类型，它在我们创建容器的时候并没有实例化，而是当我们获取bean的时候才会去创建一个对象，而且我们每次获取到的对象都不是同一个对象。根据经验，对有状态的 bean 应该使用 prototype 作用域，而对无状态的 bean 则应该使用 singleton 作用域。</strong>  在 XML 中将 bean 定义成 prototype ，可以这样配置：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=<span class="string">"account"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"com.foo.DefaultAccount"</span> scope=<span class="string">"prototype"</span>/&gt;  </span><br><span class="line"> 或者</span><br><span class="line">&lt;bean id=<span class="string">"account"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"com.foo.DefaultAccount"</span> singleton=<span class="string">"false"</span>/&gt;</span><br></pre></td></tr></table></figure>
-
-<p>通过 <code>@Scope</code> 注解的方式实现就不做演示了。</p>
-<h3 id="3-request——每一次HTTP请求都会产生一个新的bean，该bean仅在当前HTTP-request内有效"><a href="#3-request——每一次HTTP请求都会产生一个新的bean，该bean仅在当前HTTP-request内有效" class="headerlink" title="3. request——每一次HTTP请求都会产生一个新的bean，该bean仅在当前HTTP request内有效"></a>3. request——每一次HTTP请求都会产生一个新的bean，该bean仅在当前HTTP request内有效</h3><p><strong>request只适用于Web程序，每一次 HTTP 请求都会产生一个新的bean，同时该bean仅在当前HTTP request内有效，当请求结束后，该对象的生命周期即告结束。</strong> 在 XML 中将 bean 定义成 request ，可以这样配置：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=<span class="string">"loginAction"</span> <span class="class"><span class="keyword">class</span></span>=cn.csdn.LoginAction<span class="string">" scope="</span>request<span class="string">"/&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="4-session——每一次HTTP请求都会产生一个新的-bean，该bean仅在当前-HTTP-session-内有效"><a href="#4-session——每一次HTTP请求都会产生一个新的-bean，该bean仅在当前-HTTP-session-内有效" class="headerlink" title="4. session——每一次HTTP请求都会产生一个新的 bean，该bean仅在当前 HTTP session 内有效"></a>4. session——每一次HTTP请求都会产生一个新的 bean，该bean仅在当前 HTTP session 内有效</h3><p><strong>session只适用于Web程序，session 作用域表示该针对每一次 HTTP 请求都会产生一个新的 bean，同时该 bean 仅在当前 HTTP session 内有效.与request作用域一样，可以根据需要放心的更改所创建实例的内部状态，而别的 HTTP session 中根据 userPreferences 创建的实例，将不会看到这些特定于某个 HTTP session 的状态变化。当HTTP session最终被废弃的时候，在该HTTP session作用域内的bean也会被废弃掉。</strong></p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"userPreferences"</span> <span class="attr">class</span>=<span class="string">"com.foo.UserPreferences"</span> <span class="attr">scope</span>=<span class="string">"session"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="5-globalSession"><a href="#5-globalSession" class="headerlink" title="5. globalSession"></a>5. globalSession</h3><p>global session 作用域类似于标准的 HTTP session 作用域，不过仅仅在基于 portlet 的 web 应用中才有意义。Portlet 规范定义了全局 Session 的概念，它被所有构成某个 portlet web 应用的各种不同的 portle t所共享。在global session 作用域中定义的 bean 被限定于全局portlet Session的生命周期范围内。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"user"</span> <span class="attr">class</span>=<span class="string">"com.foo.Preferences "</span><span class="attr">scope</span>=<span class="string">"globalSession"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="二-bean的生命周期"><a href="#二-bean的生命周期" class="headerlink" title="二  bean的生命周期"></a>二  bean的生命周期</h1><p>Spring Bean是Spring应用中最最重要的部分了。所以来看看Spring容器在初始化一个bean的时候会做那些事情，顺序是怎样的，在容器关闭的时候，又会做哪些事情。</p>
-<blockquote>
-<p>spring版本：4.2.3.RELEASE<br>鉴于Spring源码是用gradle构建的，我也决定舍弃我大maven，尝试下洪菊推荐过的gradle。运行beanLifeCycle模块下的junit test即可在控制台看到如下输出，可以清楚了解Spring容器在创建，初始化和销毁Bean的时候依次做了那些事情。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Spring容器初始化</span><br><span class="line">=====================================</span><br><span class="line">调用GiraffeService无参构造函数</span><br><span class="line">GiraffeService中利用set方法设置属性值</span><br><span class="line">调用setBeanName:: Bean Name defined in context=giraffeService</span><br><span class="line">调用setBeanClassLoader,ClassLoader Name = sun.misc.Launcher$AppClassLoader</span><br><span class="line">调用setBeanFactory,setBeanFactory:: giraffe bean singleton=true</span><br><span class="line">调用setEnvironment</span><br><span class="line">调用setResourceLoader:: Resource File Name=spring-beans.xml</span><br><span class="line">调用setApplicationEventPublisher</span><br><span class="line">调用setApplicationContext:: Bean Definition Names=[giraffeService, org.springframework.context.annotation.CommonAnnotationBeanPostProcessor#0, com.giraffe.spring.service.GiraffeServicePostProcessor#0]</span><br><span class="line">执行BeanPostProcessor的postProcessBeforeInitialization方法,beanName=giraffeService</span><br><span class="line">调用PostConstruct注解标注的方法</span><br><span class="line">执行InitializingBean接口的afterPropertiesSet方法</span><br><span class="line">执行配置的init-method</span><br><span class="line">执行BeanPostProcessor的postProcessAfterInitialization方法,beanName=giraffeService</span><br><span class="line">Spring容器初始化完毕</span><br><span class="line">=====================================</span><br><span class="line">从容器中获取Bean</span><br><span class="line">giraffe Name=李光洙</span><br><span class="line">=====================================</span><br><span class="line">调用preDestroy注解标注的方法</span><br><span class="line">执行DisposableBean接口的destroy方法</span><br><span class="line">执行配置的destroy-method</span><br><span class="line">Spring容器关闭</span><br></pre></td></tr></table></figure>
-
-<p>先来看看，Spring在Bean从创建到销毁的生命周期中可能做得事情。</p>
-<h3 id="initialization-和-destroy"><a href="#initialization-和-destroy" class="headerlink" title="initialization 和 destroy"></a>initialization 和 destroy</h3><p>有时我们需要在Bean属性值set好之后和Bean销毁之前做一些事情，比如检查Bean中某个属性是否被正常的设置好值了。Spring框架提供了多种方法让我们可以在Spring Bean的生命周期中执行initialization和pre-destroy方法。</p>
-<p><strong>1.实现InitializingBean和DisposableBean接口</strong></p>
-<p>这两个接口都只包含一个方法。通过实现InitializingBean接口的afterPropertiesSet()方法可以在Bean属性值设置好之后做一些操作，实现DisposableBean接口的destroy()方法可以在销毁Bean之前做一些操作。</p>
-<p>例子如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GiraffeService</span> <span class="keyword">implements</span> <span class="title">InitializingBean</span>,<span class="title">DisposableBean</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterPropertiesSet</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行InitializingBean接口的afterPropertiesSet方法"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行DisposableBean接口的destroy方法"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这种方法比较简单，但是不建议使用。因为这样会将Bean的实现和Spring框架耦合在一起。</p>
-<p><strong>2.在bean的配置文件中指定init-method和destroy-method方法</strong></p>
-<p>Spring允许我们创建自己的 init 方法和 destroy 方法，只要在 Bean 的配置文件中指定 init-method 和 destroy-method 的值就可以在 Bean 初始化时和销毁之前执行一些操作。</p>
-<p>例子如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GiraffeService</span> </span>&#123;</span><br><span class="line">    <span class="comment">//通过&lt;bean&gt;的destroy-method属性指定的销毁方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroyMethod</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行配置的destroy-method"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//通过&lt;bean&gt;的init-method属性指定的初始化方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initMethod</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行配置的init-method"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>配置文件中的配置：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean name=&quot;giraffeService&quot; class=&quot;com.giraffe.spring.service.GiraffeService&quot; init-method=&quot;initMethod&quot; destroy-method=&quot;destroyMethod&quot;&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
-
-<p>需要注意的是自定义的init-method和post-method方法可以抛异常但是不能有参数。</p>
-<p>这种方式比较推荐，因为可以自己创建方法，无需将Bean的实现直接依赖于spring的框架。</p>
-<p><strong>3.使用@PostConstruct和@PreDestroy注解</strong></p>
-<p>除了xml配置的方式，Spring 也支持用 <code>@PostConstruct</code>和 <code>@PreDestroy</code>注解来指定 <code>init</code> 和 <code>destroy</code> 方法。这两个注解均在<code>javax.annotation</code> 包中。为了注解可以生效，需要在配置文件中定义org.springframework.context.annotation.CommonAnnotationBeanPostProcessor或context:annotation-config</p>
-<p>例子如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GiraffeService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initPostConstruct</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行PostConstruct注解标注的方法"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@PreDestroy</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">preDestroy</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行preDestroy注解标注的方法"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>配置文件：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="实现-Aware接口-在Bean中使用Spring框架的一些对象"><a href="#实现-Aware接口-在Bean中使用Spring框架的一些对象" class="headerlink" title="实现*Aware接口 在Bean中使用Spring框架的一些对象"></a>实现*Aware接口 在Bean中使用Spring框架的一些对象</h3><p>有些时候我们需要在 Bean 的初始化中使用 Spring 框架自身的一些对象来执行一些操作，比如获取 ServletContext 的一些参数，获取 ApplicaitionContext 中的 BeanDefinition 的名字，获取 Bean 在容器中的名字等等。为了让 Bean 可以获取到框架自身的一些对象，Spring 提供了一组名为*Aware的接口。</p>
-<p>这些接口均继承于<code>org.springframework.beans.factory.Aware</code>标记接口，并提供一个将由 Bean 实现的set*方法,Spring通过基于setter的依赖注入方式使相应的对象可以被Bean使用。<br>网上说，这些接口是利用观察者模式实现的，类似于servlet listeners，目前还不明白，不过这也不在本文的讨论范围内。<br>介绍一些重要的Aware接口：</p>
-<ul>
-<li><strong>ApplicationContextAware</strong>: 获得ApplicationContext对象,可以用来获取所有Bean definition的名字。</li>
-<li><strong>BeanFactoryAware</strong>:获得BeanFactory对象，可以用来检测Bean的作用域。</li>
-<li><strong>BeanNameAware</strong>:获得Bean在配置文件中定义的名字。</li>
-<li><strong>ResourceLoaderAware</strong>:获得ResourceLoader对象，可以获得classpath中某个文件。</li>
-<li><strong>ServletContextAware</strong>:在一个MVC应用中可以获取ServletContext对象，可以读取context中的参数。</li>
-<li><strong>ServletConfigAware</strong>： 在一个MVC应用中可以获取ServletConfig对象，可以读取config中的参数。</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GiraffeService</span> <span class="keyword">implements</span>   <span class="title">ApplicationContextAware</span>,</span></span><br><span class="line"><span class="class">        <span class="title">ApplicationEventPublisherAware</span>, <span class="title">BeanClassLoaderAware</span>, <span class="title">BeanFactoryAware</span>,</span></span><br><span class="line"><span class="class">        <span class="title">BeanNameAware</span>, <span class="title">EnvironmentAware</span>, <span class="title">ImportAware</span>, <span class="title">ResourceLoaderAware</span></span>&#123;</span><br><span class="line">         <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBeanClassLoader</span><span class="params">(ClassLoader classLoader)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行setBeanClassLoader,ClassLoader Name = "</span> + classLoader.getClass().getName());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBeanFactory</span><span class="params">(BeanFactory beanFactory)</span> <span class="keyword">throws</span> BeansException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行setBeanFactory,setBeanFactory:: giraffe bean singleton="</span> +  beanFactory.isSingleton(<span class="string">"giraffeService"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBeanName</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行setBeanName:: Bean Name defined in context="</span></span><br><span class="line">                + s);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setApplicationContext</span><span class="params">(ApplicationContext applicationContext)</span> <span class="keyword">throws</span> BeansException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行setApplicationContext:: Bean Definition Names="</span></span><br><span class="line">                + Arrays.toString(applicationContext.getBeanDefinitionNames()));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setApplicationEventPublisher</span><span class="params">(ApplicationEventPublisher applicationEventPublisher)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行setApplicationEventPublisher"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEnvironment</span><span class="params">(Environment environment)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行setEnvironment"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setResourceLoader</span><span class="params">(ResourceLoader resourceLoader)</span> </span>&#123;</span><br><span class="line">        Resource resource = resourceLoader.getResource(<span class="string">"classpath:spring-beans.xml"</span>);</span><br><span class="line">        System.out.println(<span class="string">"执行setResourceLoader:: Resource File Name="</span></span><br><span class="line">                + resource.getFilename());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setImportMetadata</span><span class="params">(AnnotationMetadata annotationMetadata)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行setImportMetadata"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="BeanPostProcessor"><a href="#BeanPostProcessor" class="headerlink" title="BeanPostProcessor"></a>BeanPostProcessor</h3><p>上面的*Aware接口是针对某个实现这些接口的Bean定制初始化的过程，<br>Spring同样可以针对容器中的所有Bean，或者某些Bean定制初始化过程，只需提供一个实现BeanPostProcessor接口的类即可。 该接口中包含两个方法，postProcessBeforeInitialization和postProcessAfterInitialization。 postProcessBeforeInitialization方法会在容器中的Bean初始化之前执行， postProcessAfterInitialization方法在容器中的Bean初始化之后执行。</p>
-<p>例子如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomerBeanPostProcessor</span> <span class="keyword">implements</span> <span class="title">BeanPostProcessor</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">postProcessBeforeInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行BeanPostProcessor的postProcessBeforeInitialization方法,beanName="</span> + beanName);</span><br><span class="line">        <span class="keyword">return</span> bean;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">postProcessAfterInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行BeanPostProcessor的postProcessAfterInitialization方法,beanName="</span> + beanName);</span><br><span class="line">        <span class="keyword">return</span> bean;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>要将BeanPostProcessor的Bean像其他Bean一样定义在配置文件中</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"com.giraffe.spring.service.CustomerBeanPostProcessor"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>所以。。。结合第一节控制台输出的内容，Spring Bean的生命周期是这样纸的：</p>
-<ul>
-<li>Bean容器找到配置文件中 Spring Bean 的定义。</li>
-<li>Bean容器利用Java Reflection API创建一个Bean的实例。</li>
-<li>如果涉及到一些属性值 利用set方法设置一些属性值。</li>
-<li>如果Bean实现了BeanNameAware接口，调用setBeanName()方法，传入Bean的名字。</li>
-<li>如果Bean实现了BeanClassLoaderAware接口，调用setBeanClassLoader()方法，传入ClassLoader对象的实例。</li>
-<li>如果Bean实现了BeanFactoryAware接口，调用setBeanClassLoader()方法，传入ClassLoader对象的实例。</li>
-<li>与上面的类似，如果实现了其他*Aware接口，就调用相应的方法。</li>
-<li>如果有和加载这个Bean的Spring容器相关的BeanPostProcessor对象，执行postProcessBeforeInitialization()方法</li>
-<li>如果Bean实现了InitializingBean接口，执行afterPropertiesSet()方法。</li>
-<li>如果Bean在配置文件中的定义包含init-method属性，执行指定的方法。</li>
-<li>如果有和加载这个Bean的Spring容器相关的BeanPostProcessor对象，执行postProcessAfterInitialization()方法</li>
-<li>当要销毁Bean的时候，如果Bean实现了DisposableBean接口，执行destroy()方法。</li>
-<li>当要销毁Bean的时候，如果Bean在配置文件中的定义包含destroy-method属性，执行指定的方法。</li>
-</ul>
-<p>用图表示一下(图来源:<a href="http://www.jianshu.com/p/d00539babca5)：" target="_blank" rel="noopener">http://www.jianshu.com/p/d00539babca5)：</a></p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-17/48376272.jpg" alt></p>
-<p>与之比较类似的中文版本:</p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-17/5496407.jpg" alt></p>
-<p><strong>其实很多时候我们并不会真的去实现上面说描述的那些接口，那么下面我们就除去那些接口，针对bean的单例和非单例来描述下bean的生命周期：</strong></p>
-<h3 id="单例管理的对象"><a href="#单例管理的对象" class="headerlink" title="单例管理的对象"></a>单例管理的对象</h3><p>当scope=”singleton”，即默认情况下，会在启动容器时（即实例化容器时）时实例化。但我们可以指定Bean节点的lazy-init=”true”来延迟初始化bean，这时候，只有在第一次获取bean时才会初始化bean，即第一次请求该bean时才初始化。如下配置：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"ServiceImpl"</span> <span class="attr">class</span>=<span class="string">"cn.csdn.service.ServiceImpl"</span> <span class="attr">lazy-init</span>=<span class="string">"true"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>如果想对所有的默认单例bean都应用延迟初始化，可以在根节点beans设置default-lazy-init属性为true，如下所示：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">default-lazy-init</span>=<span class="string">"true"</span> …&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>默认情况下，Spring 在读取 xml 文件的时候，就会创建对象。在创建对象的时候先调用构造器，然后调用 init-method 属性值中所指定的方法。对象在被销毁的时候，会调用 destroy-method 属性值中所指定的方法（例如调用Container.destroy()方法的时候）。写一个测试类，代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LifeBean</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;  </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LifeBean</span><span class="params">()</span></span>&#123;  </span><br><span class="line">        System.out.println(<span class="string">"LifeBean()构造函数"</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">return</span> name;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;  </span><br><span class="line">        System.out.println(<span class="string">"setName()"</span>);  </span><br><span class="line">        <span class="keyword">this</span>.name = name;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;  </span><br><span class="line">        System.out.println(<span class="string">"this is init of lifeBean"</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destory</span><span class="params">()</span></span>&#123;  </span><br><span class="line">        System.out.println(<span class="string">"this is destory of lifeBean "</span> + <span class="keyword">this</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>　life.xml配置如下：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"life_singleton"</span> <span class="attr">class</span>=<span class="string">"com.bean.LifeBean"</span> <span class="attr">scope</span>=<span class="string">"singleton"</span> </span></span><br><span class="line"><span class="tag">            <span class="attr">init-method</span>=<span class="string">"init"</span> <span class="attr">destroy-method</span>=<span class="string">"destory"</span> <span class="attr">lazy-init</span>=<span class="string">"true"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>测试代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LifeTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        AbstractApplicationContext container = </span><br><span class="line">        <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"life.xml"</span>);</span><br><span class="line">        LifeBean life1 = (LifeBean)container.getBean(<span class="string">"life"</span>);</span><br><span class="line">        System.out.println(life1);</span><br><span class="line">        container.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>运行结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">LifeBean()构造函数</span><br><span class="line">this is init of lifeBean</span><br><span class="line">com.bean.LifeBean@573f2bb1</span><br><span class="line">……</span><br><span class="line">this is destory of lifeBean com.bean.LifeBean@573f2bb1</span><br></pre></td></tr></table></figure>
-
-<h3 id="非单例管理的对象"><a href="#非单例管理的对象" class="headerlink" title="非单例管理的对象"></a>非单例管理的对象</h3><p>当<code>scope=”prototype”</code>时，容器也会延迟初始化 bean，Spring 读取xml 文件的时候，并不会立刻创建对象，而是在第一次请求该 bean 时才初始化（如调用getBean方法时）。在第一次请求每一个 prototype 的bean 时，Spring容器都会调用其构造器创建这个对象，然后调用<code>init-method</code>属性值中所指定的方法。对象销毁的时候，Spring 容器不会帮我们调用任何方法，因为是非单例，这个类型的对象有很多个，Spring容器一旦把这个对象交给你之后，就不再管理这个对象了。</p>
-<p>为了测试prototype bean的生命周期life.xml配置如下：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"life_prototype"</span> <span class="attr">class</span>=<span class="string">"com.bean.LifeBean"</span> <span class="attr">scope</span>=<span class="string">"prototype"</span> <span class="attr">init-method</span>=<span class="string">"init"</span> <span class="attr">destroy-method</span>=<span class="string">"destory"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>测试程序：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LifeTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        AbstractApplicationContext container = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"life.xml"</span>);</span><br><span class="line">        LifeBean life1 = (LifeBean)container.getBean(<span class="string">"life_singleton"</span>);</span><br><span class="line">        System.out.println(life1);</span><br><span class="line"></span><br><span class="line">        LifeBean life3 = (LifeBean)container.getBean(<span class="string">"life_prototype"</span>);</span><br><span class="line">        System.out.println(life3);</span><br><span class="line">        container.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>运行结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">LifeBean()构造函数</span><br><span class="line">this is init of lifeBean</span><br><span class="line">com.bean.LifeBean@573f2bb1</span><br><span class="line">LifeBean()构造函数</span><br><span class="line">this is init of lifeBean</span><br><span class="line">com.bean.LifeBean@5ae9a829</span><br><span class="line">……</span><br><span class="line">this is destory of lifeBean com.bean.LifeBean@573f2bb1</span><br></pre></td></tr></table></figure>
-
-<p>可以发现，对于作用域为 prototype 的 bean ，其<code>destroy</code>方法并没有被调用。<strong>如果 bean 的 scope 设为prototype时，当容器关闭时，<code>destroy</code> 方法不会被调用。对于 prototype 作用域的 bean，有一点非常重要，那就是 Spring不能对一个 prototype bean 的整个生命周期负责：容器在初始化、配置、装饰或者是装配完一个prototype实例后，将它交给客户端，随后就对该prototype实例不闻不问了。</strong> 不管何种作用域，容器都会调用所有对象的初始化生命周期回调方法。但对prototype而言，任何配置好的析构生命周期回调方法都将不会被调用。<strong>清除prototype作用域的对象并释放任何prototype bean所持有的昂贵资源，都是客户端代码的职责</strong>（让Spring容器释放被prototype作用域bean占用资源的一种可行方式是，通过使用bean的后置处理器，该处理器持有要被清除的bean的引用）。谈及prototype作用域的bean时，在某些方面你可以将Spring容器的角色看作是Java new操作的替代者，任何迟于该时间点的生命周期事宜都得交由客户端来处理。</p>
-<p><strong>Spring 容器可以管理 singleton 作用域下 bean 的生命周期，在此作用域下，Spring 能够精确地知道bean何时被创建，何时初始化完成，以及何时被销毁。而对于 prototype 作用域的bean，Spring只负责创建，当容器创建了 bean 的实例后，bean 的实例就交给了客户端的代码管理，Spring容器将不再跟踪其生命周期，并且不会管理那些被配置成prototype作用域的bean的生命周期。</strong></p>
-<h1 id="三-说明"><a href="#三-说明" class="headerlink" title="三 说明"></a>三 说明</h1><p>本文的完成结合了下面两篇文章，并做了相应修改：</p>
-<ul>
-<li><a href="https://blog.csdn.net/fuzhongmin05/article/details/73389779" target="_blank" rel="noopener">https://blog.csdn.net/fuzhongmin05/article/details/73389779</a></li>
-<li><a href="https://yemengying.com/2016/07/14/spring-bean-life-cycle/" target="_blank" rel="noopener">https://yemengying.com/2016/07/14/spring-bean-life-cycle/</a></li>
-</ul>
-<p>由于本文非本人独立原创，所以未声明为原创！在此说明！</p>
 
           
         
@@ -2991,7 +3058,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">102</span>
+                    <span class="site-state-item-count">103</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

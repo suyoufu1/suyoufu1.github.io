@@ -279,6 +279,885 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/framework/spring/SpringBean/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="syf">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="苏有福的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/14/docs/system-design/framework/spring/SpringBean/" class="post-title-link" itemprop="url">Untitled</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
+            </span>
+          
+
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <!-- MarkdownTOC -->
+
+<ul>
+<li><a href="#前言">前言</a></li>
+<li><a href="#一-bean的作用域">一  bean的作用域</a><ul>
+<li><a href="#1-singleton——唯一-bean-实例">1. singleton——唯一 bean 实例</a></li>
+<li><a href="#2-prototype——每次请求都会创建一个新的-bean-实例">2. prototype——每次请求都会创建一个新的 bean 实例</a></li>
+<li><a href="#3-request——每一次http请求都会产生一个新的bean，该bean仅在当前http-request内有效">3. request——每一次HTTP请求都会产生一个新的bean，该bean仅在当前HTTP request内有效</a></li>
+<li><a href="#4-session——每一次http请求都会产生一个新的-bean，该bean仅在当前-http-session-内有效">4. session——每一次HTTP请求都会产生一个新的 bean，该bean仅在当前 HTTP session 内有效</a></li>
+<li><a href="#5-globalsession">5. globalSession</a></li>
+</ul>
+</li>
+<li><a href="#二-bean的生命周期">二  bean的生命周期</a><ul>
+<li><a href="#initialization-和-destroy">initialization 和 destroy</a></li>
+<li><a href="#实现aware接口-在bean中使用spring框架的一些对象">实现*Aware接口 在Bean中使用Spring框架的一些对象</a></li>
+<li><a href="#beanpostprocessor">BeanPostProcessor</a></li>
+<li><a href="#总结">总结</a></li>
+<li><a href="#单例管理的对象">单例管理的对象</a></li>
+<li><a href="#非单例管理的对象">非单例管理的对象</a></li>
+</ul>
+</li>
+<li><a href="#三-说明">三 说明</a></li>
+</ul>
+<!-- /MarkdownTOC -->
+
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在 Spring 中，那些组成应用程序的主体及由 Spring IOC 容器所管理的对象，被称之为 bean。简单地讲，bean 就是由 IOC 容器初始化、装配及管理的对象，除此之外，bean 就与应用程序中的其他对象没有什么区别了。而 bean 的定义以及 bean 相互间的依赖关系将通过配置元数据来描述。</p>
+<p><strong>Spring中的bean默认都是单例的，这些单例Bean在多线程程序下如何保证线程安全呢？</strong> 例如对于Web应用来说，Web容器对于每个用户请求都创建一个单独的Sevlet线程来处理请求，引入Spring框架之后，每个Action都是单例的，那么对于Spring托管的单例Service Bean，如何保证其安全呢？ <strong>Spring的单例是基于BeanFactory也就是Spring容器的，单例Bean在此容器内只有一个，Java的单例是基于 JVM，每个 JVM 内只有一个实例。</strong></p>
+<p>在大多数情况下。单例 bean 是很理想的方案。不过，有时候你可能会发现你所使用的类是易变的，它们会保持一些状态，因此重用是不安全的。在这种情况下，将 class 声明为单例的就不是那么明智了。因为对象会被污染，稍后重用的时候会出现意想不到的问题。所以 Spring 定义了多种作用域的bean。</p>
+<h1 id="一-bean的作用域"><a href="#一-bean的作用域" class="headerlink" title="一  bean的作用域"></a>一  bean的作用域</h1><p>创建一个bean定义，其实质是用该bean定义对应的类来创建真正实例的“配方”。把bean定义看成一个配方很有意义，它与class很类似，只根据一张“处方”就可以创建多个实例。不仅可以控制注入到对象中的各种依赖和配置值，还可以控制该对象的作用域。这样可以灵活选择所建对象的作用域，而不必在Java Class级定义作用域。Spring Framework支持五种作用域，分别阐述如下表。</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-17/1188352.jpg" alt></p>
+<p>五种作用域中，<strong>request、session</strong> 和 <strong>global session</strong> 三种作用域仅在基于web的应用中使用（不必关心你所采用的是什么web应用框架），只能用在基于 web 的 Spring ApplicationContext 环境。</p>
+<h3 id="1-singleton——唯一-bean-实例"><a href="#1-singleton——唯一-bean-实例" class="headerlink" title="1. singleton——唯一 bean 实例"></a>1. singleton——唯一 bean 实例</h3><p><strong>当一个 bean 的作用域为 singleton，那么Spring IoC容器中只会存在一个共享的 bean 实例，并且所有对 bean 的请求，只要 id 与该 bean 定义相匹配，则只会返回bean的同一实例。</strong> singleton 是单例类型(对应于单例模式)，就是在创建起容器时就同时自动创建了一个bean的对象，不管你是否使用，但我们可以指定Bean节点的 <code>lazy-init=”true”</code> 来延迟初始化bean，这时候，只有在第一次获取bean时才会初始化bean，即第一次请求该bean时才初始化。 每次获取到的对象都是同一个对象。注意，singleton 作用域是Spring中的缺省作用域。要在XML中将 bean 定义成 singleton ，可以这样配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"ServiceImpl"</span> <span class="attr">class</span>=<span class="string">"cn.csdn.service.ServiceImpl"</span> <span class="attr">scope</span>=<span class="string">"singleton"</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以通过 <code>@Scope</code> 注解（它可以显示指定bean的作用范围。）的方式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="meta">@Scope</span>(<span class="string">"singleton"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServiceImpl</span></span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-prototype——每次请求都会创建一个新的-bean-实例"><a href="#2-prototype——每次请求都会创建一个新的-bean-实例" class="headerlink" title="2. prototype——每次请求都会创建一个新的 bean 实例"></a>2. prototype——每次请求都会创建一个新的 bean 实例</h3><p><strong>当一个bean的作用域为 prototype，表示一个 bean 定义对应多个对象实例。</strong> <strong>prototype 作用域的 bean 会导致在每次对该 bean 请求</strong>（将其注入到另一个 bean 中，或者以程序的方式调用容器的 getBean() 方法<strong>）时都会创建一个新的 bean 实例。prototype 是原型类型，它在我们创建容器的时候并没有实例化，而是当我们获取bean的时候才会去创建一个对象，而且我们每次获取到的对象都不是同一个对象。根据经验，对有状态的 bean 应该使用 prototype 作用域，而对无状态的 bean 则应该使用 singleton 作用域。</strong>  在 XML 中将 bean 定义成 prototype ，可以这样配置：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=<span class="string">"account"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"com.foo.DefaultAccount"</span> scope=<span class="string">"prototype"</span>/&gt;  </span><br><span class="line"> 或者</span><br><span class="line">&lt;bean id=<span class="string">"account"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"com.foo.DefaultAccount"</span> singleton=<span class="string">"false"</span>/&gt;</span><br></pre></td></tr></table></figure>
+
+<p>通过 <code>@Scope</code> 注解的方式实现就不做演示了。</p>
+<h3 id="3-request——每一次HTTP请求都会产生一个新的bean，该bean仅在当前HTTP-request内有效"><a href="#3-request——每一次HTTP请求都会产生一个新的bean，该bean仅在当前HTTP-request内有效" class="headerlink" title="3. request——每一次HTTP请求都会产生一个新的bean，该bean仅在当前HTTP request内有效"></a>3. request——每一次HTTP请求都会产生一个新的bean，该bean仅在当前HTTP request内有效</h3><p><strong>request只适用于Web程序，每一次 HTTP 请求都会产生一个新的bean，同时该bean仅在当前HTTP request内有效，当请求结束后，该对象的生命周期即告结束。</strong> 在 XML 中将 bean 定义成 request ，可以这样配置：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=<span class="string">"loginAction"</span> <span class="class"><span class="keyword">class</span></span>=cn.csdn.LoginAction<span class="string">" scope="</span>request<span class="string">"/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-session——每一次HTTP请求都会产生一个新的-bean，该bean仅在当前-HTTP-session-内有效"><a href="#4-session——每一次HTTP请求都会产生一个新的-bean，该bean仅在当前-HTTP-session-内有效" class="headerlink" title="4. session——每一次HTTP请求都会产生一个新的 bean，该bean仅在当前 HTTP session 内有效"></a>4. session——每一次HTTP请求都会产生一个新的 bean，该bean仅在当前 HTTP session 内有效</h3><p><strong>session只适用于Web程序，session 作用域表示该针对每一次 HTTP 请求都会产生一个新的 bean，同时该 bean 仅在当前 HTTP session 内有效.与request作用域一样，可以根据需要放心的更改所创建实例的内部状态，而别的 HTTP session 中根据 userPreferences 创建的实例，将不会看到这些特定于某个 HTTP session 的状态变化。当HTTP session最终被废弃的时候，在该HTTP session作用域内的bean也会被废弃掉。</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"userPreferences"</span> <span class="attr">class</span>=<span class="string">"com.foo.UserPreferences"</span> <span class="attr">scope</span>=<span class="string">"session"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-globalSession"><a href="#5-globalSession" class="headerlink" title="5. globalSession"></a>5. globalSession</h3><p>global session 作用域类似于标准的 HTTP session 作用域，不过仅仅在基于 portlet 的 web 应用中才有意义。Portlet 规范定义了全局 Session 的概念，它被所有构成某个 portlet web 应用的各种不同的 portle t所共享。在global session 作用域中定义的 bean 被限定于全局portlet Session的生命周期范围内。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"user"</span> <span class="attr">class</span>=<span class="string">"com.foo.Preferences "</span><span class="attr">scope</span>=<span class="string">"globalSession"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="二-bean的生命周期"><a href="#二-bean的生命周期" class="headerlink" title="二  bean的生命周期"></a>二  bean的生命周期</h1><p>Spring Bean是Spring应用中最最重要的部分了。所以来看看Spring容器在初始化一个bean的时候会做那些事情，顺序是怎样的，在容器关闭的时候，又会做哪些事情。</p>
+<blockquote>
+<p>spring版本：4.2.3.RELEASE<br>鉴于Spring源码是用gradle构建的，我也决定舍弃我大maven，尝试下洪菊推荐过的gradle。运行beanLifeCycle模块下的junit test即可在控制台看到如下输出，可以清楚了解Spring容器在创建，初始化和销毁Bean的时候依次做了那些事情。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">Spring容器初始化</span><br><span class="line">=====================================</span><br><span class="line">调用GiraffeService无参构造函数</span><br><span class="line">GiraffeService中利用set方法设置属性值</span><br><span class="line">调用setBeanName:: Bean Name defined in context=giraffeService</span><br><span class="line">调用setBeanClassLoader,ClassLoader Name = sun.misc.Launcher$AppClassLoader</span><br><span class="line">调用setBeanFactory,setBeanFactory:: giraffe bean singleton=true</span><br><span class="line">调用setEnvironment</span><br><span class="line">调用setResourceLoader:: Resource File Name=spring-beans.xml</span><br><span class="line">调用setApplicationEventPublisher</span><br><span class="line">调用setApplicationContext:: Bean Definition Names=[giraffeService, org.springframework.context.annotation.CommonAnnotationBeanPostProcessor#0, com.giraffe.spring.service.GiraffeServicePostProcessor#0]</span><br><span class="line">执行BeanPostProcessor的postProcessBeforeInitialization方法,beanName=giraffeService</span><br><span class="line">调用PostConstruct注解标注的方法</span><br><span class="line">执行InitializingBean接口的afterPropertiesSet方法</span><br><span class="line">执行配置的init-method</span><br><span class="line">执行BeanPostProcessor的postProcessAfterInitialization方法,beanName=giraffeService</span><br><span class="line">Spring容器初始化完毕</span><br><span class="line">=====================================</span><br><span class="line">从容器中获取Bean</span><br><span class="line">giraffe Name=李光洙</span><br><span class="line">=====================================</span><br><span class="line">调用preDestroy注解标注的方法</span><br><span class="line">执行DisposableBean接口的destroy方法</span><br><span class="line">执行配置的destroy-method</span><br><span class="line">Spring容器关闭</span><br></pre></td></tr></table></figure>
+
+<p>先来看看，Spring在Bean从创建到销毁的生命周期中可能做得事情。</p>
+<h3 id="initialization-和-destroy"><a href="#initialization-和-destroy" class="headerlink" title="initialization 和 destroy"></a>initialization 和 destroy</h3><p>有时我们需要在Bean属性值set好之后和Bean销毁之前做一些事情，比如检查Bean中某个属性是否被正常的设置好值了。Spring框架提供了多种方法让我们可以在Spring Bean的生命周期中执行initialization和pre-destroy方法。</p>
+<p><strong>1.实现InitializingBean和DisposableBean接口</strong></p>
+<p>这两个接口都只包含一个方法。通过实现InitializingBean接口的afterPropertiesSet()方法可以在Bean属性值设置好之后做一些操作，实现DisposableBean接口的destroy()方法可以在销毁Bean之前做一些操作。</p>
+<p>例子如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GiraffeService</span> <span class="keyword">implements</span> <span class="title">InitializingBean</span>,<span class="title">DisposableBean</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterPropertiesSet</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行InitializingBean接口的afterPropertiesSet方法"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行DisposableBean接口的destroy方法"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这种方法比较简单，但是不建议使用。因为这样会将Bean的实现和Spring框架耦合在一起。</p>
+<p><strong>2.在bean的配置文件中指定init-method和destroy-method方法</strong></p>
+<p>Spring允许我们创建自己的 init 方法和 destroy 方法，只要在 Bean 的配置文件中指定 init-method 和 destroy-method 的值就可以在 Bean 初始化时和销毁之前执行一些操作。</p>
+<p>例子如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GiraffeService</span> </span>&#123;</span><br><span class="line">    <span class="comment">//通过&lt;bean&gt;的destroy-method属性指定的销毁方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroyMethod</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行配置的destroy-method"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//通过&lt;bean&gt;的init-method属性指定的初始化方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initMethod</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行配置的init-method"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>配置文件中的配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean name=&quot;giraffeService&quot; class=&quot;com.giraffe.spring.service.GiraffeService&quot; init-method=&quot;initMethod&quot; destroy-method=&quot;destroyMethod&quot;&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是自定义的init-method和post-method方法可以抛异常但是不能有参数。</p>
+<p>这种方式比较推荐，因为可以自己创建方法，无需将Bean的实现直接依赖于spring的框架。</p>
+<p><strong>3.使用@PostConstruct和@PreDestroy注解</strong></p>
+<p>除了xml配置的方式，Spring 也支持用 <code>@PostConstruct</code>和 <code>@PreDestroy</code>注解来指定 <code>init</code> 和 <code>destroy</code> 方法。这两个注解均在<code>javax.annotation</code> 包中。为了注解可以生效，需要在配置文件中定义org.springframework.context.annotation.CommonAnnotationBeanPostProcessor或context:annotation-config</p>
+<p>例子如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GiraffeService</span> </span>&#123;</span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initPostConstruct</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行PostConstruct注解标注的方法"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@PreDestroy</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">preDestroy</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行preDestroy注解标注的方法"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>配置文件：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">  </span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="实现-Aware接口-在Bean中使用Spring框架的一些对象"><a href="#实现-Aware接口-在Bean中使用Spring框架的一些对象" class="headerlink" title="实现*Aware接口 在Bean中使用Spring框架的一些对象"></a>实现*Aware接口 在Bean中使用Spring框架的一些对象</h3><p>有些时候我们需要在 Bean 的初始化中使用 Spring 框架自身的一些对象来执行一些操作，比如获取 ServletContext 的一些参数，获取 ApplicaitionContext 中的 BeanDefinition 的名字，获取 Bean 在容器中的名字等等。为了让 Bean 可以获取到框架自身的一些对象，Spring 提供了一组名为*Aware的接口。</p>
+<p>这些接口均继承于<code>org.springframework.beans.factory.Aware</code>标记接口，并提供一个将由 Bean 实现的set*方法,Spring通过基于setter的依赖注入方式使相应的对象可以被Bean使用。<br>网上说，这些接口是利用观察者模式实现的，类似于servlet listeners，目前还不明白，不过这也不在本文的讨论范围内。<br>介绍一些重要的Aware接口：</p>
+<ul>
+<li><strong>ApplicationContextAware</strong>: 获得ApplicationContext对象,可以用来获取所有Bean definition的名字。</li>
+<li><strong>BeanFactoryAware</strong>:获得BeanFactory对象，可以用来检测Bean的作用域。</li>
+<li><strong>BeanNameAware</strong>:获得Bean在配置文件中定义的名字。</li>
+<li><strong>ResourceLoaderAware</strong>:获得ResourceLoader对象，可以获得classpath中某个文件。</li>
+<li><strong>ServletContextAware</strong>:在一个MVC应用中可以获取ServletContext对象，可以读取context中的参数。</li>
+<li><strong>ServletConfigAware</strong>： 在一个MVC应用中可以获取ServletConfig对象，可以读取config中的参数。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GiraffeService</span> <span class="keyword">implements</span>   <span class="title">ApplicationContextAware</span>,</span></span><br><span class="line"><span class="class">        <span class="title">ApplicationEventPublisherAware</span>, <span class="title">BeanClassLoaderAware</span>, <span class="title">BeanFactoryAware</span>,</span></span><br><span class="line"><span class="class">        <span class="title">BeanNameAware</span>, <span class="title">EnvironmentAware</span>, <span class="title">ImportAware</span>, <span class="title">ResourceLoaderAware</span></span>&#123;</span><br><span class="line">         <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBeanClassLoader</span><span class="params">(ClassLoader classLoader)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行setBeanClassLoader,ClassLoader Name = "</span> + classLoader.getClass().getName());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBeanFactory</span><span class="params">(BeanFactory beanFactory)</span> <span class="keyword">throws</span> BeansException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行setBeanFactory,setBeanFactory:: giraffe bean singleton="</span> +  beanFactory.isSingleton(<span class="string">"giraffeService"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBeanName</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行setBeanName:: Bean Name defined in context="</span></span><br><span class="line">                + s);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setApplicationContext</span><span class="params">(ApplicationContext applicationContext)</span> <span class="keyword">throws</span> BeansException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行setApplicationContext:: Bean Definition Names="</span></span><br><span class="line">                + Arrays.toString(applicationContext.getBeanDefinitionNames()));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setApplicationEventPublisher</span><span class="params">(ApplicationEventPublisher applicationEventPublisher)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行setApplicationEventPublisher"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEnvironment</span><span class="params">(Environment environment)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行setEnvironment"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setResourceLoader</span><span class="params">(ResourceLoader resourceLoader)</span> </span>&#123;</span><br><span class="line">        Resource resource = resourceLoader.getResource(<span class="string">"classpath:spring-beans.xml"</span>);</span><br><span class="line">        System.out.println(<span class="string">"执行setResourceLoader:: Resource File Name="</span></span><br><span class="line">                + resource.getFilename());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setImportMetadata</span><span class="params">(AnnotationMetadata annotationMetadata)</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行setImportMetadata"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="BeanPostProcessor"><a href="#BeanPostProcessor" class="headerlink" title="BeanPostProcessor"></a>BeanPostProcessor</h3><p>上面的*Aware接口是针对某个实现这些接口的Bean定制初始化的过程，<br>Spring同样可以针对容器中的所有Bean，或者某些Bean定制初始化过程，只需提供一个实现BeanPostProcessor接口的类即可。 该接口中包含两个方法，postProcessBeforeInitialization和postProcessAfterInitialization。 postProcessBeforeInitialization方法会在容器中的Bean初始化之前执行， postProcessAfterInitialization方法在容器中的Bean初始化之后执行。</p>
+<p>例子如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomerBeanPostProcessor</span> <span class="keyword">implements</span> <span class="title">BeanPostProcessor</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">postProcessBeforeInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行BeanPostProcessor的postProcessBeforeInitialization方法,beanName="</span> + beanName);</span><br><span class="line">        <span class="keyword">return</span> bean;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">postProcessAfterInitialization</span><span class="params">(Object bean, String beanName)</span> <span class="keyword">throws</span> BeansException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"执行BeanPostProcessor的postProcessAfterInitialization方法,beanName="</span> + beanName);</span><br><span class="line">        <span class="keyword">return</span> bean;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要将BeanPostProcessor的Bean像其他Bean一样定义在配置文件中</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"com.giraffe.spring.service.CustomerBeanPostProcessor"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>所以。。。结合第一节控制台输出的内容，Spring Bean的生命周期是这样纸的：</p>
+<ul>
+<li>Bean容器找到配置文件中 Spring Bean 的定义。</li>
+<li>Bean容器利用Java Reflection API创建一个Bean的实例。</li>
+<li>如果涉及到一些属性值 利用set方法设置一些属性值。</li>
+<li>如果Bean实现了BeanNameAware接口，调用setBeanName()方法，传入Bean的名字。</li>
+<li>如果Bean实现了BeanClassLoaderAware接口，调用setBeanClassLoader()方法，传入ClassLoader对象的实例。</li>
+<li>如果Bean实现了BeanFactoryAware接口，调用setBeanClassLoader()方法，传入ClassLoader对象的实例。</li>
+<li>与上面的类似，如果实现了其他*Aware接口，就调用相应的方法。</li>
+<li>如果有和加载这个Bean的Spring容器相关的BeanPostProcessor对象，执行postProcessBeforeInitialization()方法</li>
+<li>如果Bean实现了InitializingBean接口，执行afterPropertiesSet()方法。</li>
+<li>如果Bean在配置文件中的定义包含init-method属性，执行指定的方法。</li>
+<li>如果有和加载这个Bean的Spring容器相关的BeanPostProcessor对象，执行postProcessAfterInitialization()方法</li>
+<li>当要销毁Bean的时候，如果Bean实现了DisposableBean接口，执行destroy()方法。</li>
+<li>当要销毁Bean的时候，如果Bean在配置文件中的定义包含destroy-method属性，执行指定的方法。</li>
+</ul>
+<p>用图表示一下(图来源:<a href="http://www.jianshu.com/p/d00539babca5)：" target="_blank" rel="noopener">http://www.jianshu.com/p/d00539babca5)：</a></p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-17/48376272.jpg" alt></p>
+<p>与之比较类似的中文版本:</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-17/5496407.jpg" alt></p>
+<p><strong>其实很多时候我们并不会真的去实现上面说描述的那些接口，那么下面我们就除去那些接口，针对bean的单例和非单例来描述下bean的生命周期：</strong></p>
+<h3 id="单例管理的对象"><a href="#单例管理的对象" class="headerlink" title="单例管理的对象"></a>单例管理的对象</h3><p>当scope=”singleton”，即默认情况下，会在启动容器时（即实例化容器时）时实例化。但我们可以指定Bean节点的lazy-init=”true”来延迟初始化bean，这时候，只有在第一次获取bean时才会初始化bean，即第一次请求该bean时才初始化。如下配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"ServiceImpl"</span> <span class="attr">class</span>=<span class="string">"cn.csdn.service.ServiceImpl"</span> <span class="attr">lazy-init</span>=<span class="string">"true"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果想对所有的默认单例bean都应用延迟初始化，可以在根节点beans设置default-lazy-init属性为true，如下所示：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">default-lazy-init</span>=<span class="string">"true"</span> …&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>默认情况下，Spring 在读取 xml 文件的时候，就会创建对象。在创建对象的时候先调用构造器，然后调用 init-method 属性值中所指定的方法。对象在被销毁的时候，会调用 destroy-method 属性值中所指定的方法（例如调用Container.destroy()方法的时候）。写一个测试类，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LifeBean</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;  </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">LifeBean</span><span class="params">()</span></span>&#123;  </span><br><span class="line">        System.out.println(<span class="string">"LifeBean()构造函数"</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">        <span class="keyword">return</span> name;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;  </span><br><span class="line">        System.out.println(<span class="string">"setName()"</span>);  </span><br><span class="line">        <span class="keyword">this</span>.name = name;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;  </span><br><span class="line">        System.out.println(<span class="string">"this is init of lifeBean"</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destory</span><span class="params">()</span></span>&#123;  </span><br><span class="line">        System.out.println(<span class="string">"this is destory of lifeBean "</span> + <span class="keyword">this</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>　life.xml配置如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"life_singleton"</span> <span class="attr">class</span>=<span class="string">"com.bean.LifeBean"</span> <span class="attr">scope</span>=<span class="string">"singleton"</span> </span></span><br><span class="line"><span class="tag">            <span class="attr">init-method</span>=<span class="string">"init"</span> <span class="attr">destroy-method</span>=<span class="string">"destory"</span> <span class="attr">lazy-init</span>=<span class="string">"true"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>测试代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LifeTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        AbstractApplicationContext container = </span><br><span class="line">        <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"life.xml"</span>);</span><br><span class="line">        LifeBean life1 = (LifeBean)container.getBean(<span class="string">"life"</span>);</span><br><span class="line">        System.out.println(life1);</span><br><span class="line">        container.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">LifeBean()构造函数</span><br><span class="line">this is init of lifeBean</span><br><span class="line">com.bean.LifeBean@573f2bb1</span><br><span class="line">……</span><br><span class="line">this is destory of lifeBean com.bean.LifeBean@573f2bb1</span><br></pre></td></tr></table></figure>
+
+<h3 id="非单例管理的对象"><a href="#非单例管理的对象" class="headerlink" title="非单例管理的对象"></a>非单例管理的对象</h3><p>当<code>scope=”prototype”</code>时，容器也会延迟初始化 bean，Spring 读取xml 文件的时候，并不会立刻创建对象，而是在第一次请求该 bean 时才初始化（如调用getBean方法时）。在第一次请求每一个 prototype 的bean 时，Spring容器都会调用其构造器创建这个对象，然后调用<code>init-method</code>属性值中所指定的方法。对象销毁的时候，Spring 容器不会帮我们调用任何方法，因为是非单例，这个类型的对象有很多个，Spring容器一旦把这个对象交给你之后，就不再管理这个对象了。</p>
+<p>为了测试prototype bean的生命周期life.xml配置如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"life_prototype"</span> <span class="attr">class</span>=<span class="string">"com.bean.LifeBean"</span> <span class="attr">scope</span>=<span class="string">"prototype"</span> <span class="attr">init-method</span>=<span class="string">"init"</span> <span class="attr">destroy-method</span>=<span class="string">"destory"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>测试程序：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LifeTest</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Test</span> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        AbstractApplicationContext container = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"life.xml"</span>);</span><br><span class="line">        LifeBean life1 = (LifeBean)container.getBean(<span class="string">"life_singleton"</span>);</span><br><span class="line">        System.out.println(life1);</span><br><span class="line"></span><br><span class="line">        LifeBean life3 = (LifeBean)container.getBean(<span class="string">"life_prototype"</span>);</span><br><span class="line">        System.out.println(life3);</span><br><span class="line">        container.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">LifeBean()构造函数</span><br><span class="line">this is init of lifeBean</span><br><span class="line">com.bean.LifeBean@573f2bb1</span><br><span class="line">LifeBean()构造函数</span><br><span class="line">this is init of lifeBean</span><br><span class="line">com.bean.LifeBean@5ae9a829</span><br><span class="line">……</span><br><span class="line">this is destory of lifeBean com.bean.LifeBean@573f2bb1</span><br></pre></td></tr></table></figure>
+
+<p>可以发现，对于作用域为 prototype 的 bean ，其<code>destroy</code>方法并没有被调用。<strong>如果 bean 的 scope 设为prototype时，当容器关闭时，<code>destroy</code> 方法不会被调用。对于 prototype 作用域的 bean，有一点非常重要，那就是 Spring不能对一个 prototype bean 的整个生命周期负责：容器在初始化、配置、装饰或者是装配完一个prototype实例后，将它交给客户端，随后就对该prototype实例不闻不问了。</strong> 不管何种作用域，容器都会调用所有对象的初始化生命周期回调方法。但对prototype而言，任何配置好的析构生命周期回调方法都将不会被调用。<strong>清除prototype作用域的对象并释放任何prototype bean所持有的昂贵资源，都是客户端代码的职责</strong>（让Spring容器释放被prototype作用域bean占用资源的一种可行方式是，通过使用bean的后置处理器，该处理器持有要被清除的bean的引用）。谈及prototype作用域的bean时，在某些方面你可以将Spring容器的角色看作是Java new操作的替代者，任何迟于该时间点的生命周期事宜都得交由客户端来处理。</p>
+<p><strong>Spring 容器可以管理 singleton 作用域下 bean 的生命周期，在此作用域下，Spring 能够精确地知道bean何时被创建，何时初始化完成，以及何时被销毁。而对于 prototype 作用域的bean，Spring只负责创建，当容器创建了 bean 的实例后，bean 的实例就交给了客户端的代码管理，Spring容器将不再跟踪其生命周期，并且不会管理那些被配置成prototype作用域的bean的生命周期。</strong></p>
+<h1 id="三-说明"><a href="#三-说明" class="headerlink" title="三 说明"></a>三 说明</h1><p>本文的完成结合了下面两篇文章，并做了相应修改：</p>
+<ul>
+<li><a href="https://blog.csdn.net/fuzhongmin05/article/details/73389779" target="_blank" rel="noopener">https://blog.csdn.net/fuzhongmin05/article/details/73389779</a></li>
+<li><a href="https://yemengying.com/2016/07/14/spring-bean-life-cycle/" target="_blank" rel="noopener">https://yemengying.com/2016/07/14/spring-bean-life-cycle/</a></li>
+</ul>
+<p>由于本文非本人独立原创，所以未声明为原创！在此说明！</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/framework/spring/SpringInterviewQuestions/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="syf">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="苏有福的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/14/docs/system-design/framework/spring/SpringInterviewQuestions/" class="post-title-link" itemprop="url">Untitled</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
+            </span>
+          
+
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <!-- TOC -->
+
+<ul>
+<li><a href="#什么是-spring-框架">什么是 Spring 框架?</a></li>
+<li><a href="#列举一些重要的spring模块">列举一些重要的Spring模块？</a></li>
+<li><a href="#谈谈自己对于-spring-ioc-和-aop-的理解">谈谈自己对于 Spring IoC 和 AOP 的理解</a></li>
+<li><a href="#spring-aop-和-aspectj-aop-有什么区别">Spring AOP 和 AspectJ AOP 有什么区别？</a></li>
+<li><a href="#spring-中的-bean-的作用域有哪些">Spring 中的 bean 的作用域有哪些?</a></li>
+<li><a href="#spring-中的单例-bean-的线程安全问题了解吗">Spring 中的单例 bean 的线程安全问题了解吗？</a></li>
+<li><a href="#spring-中的-bean-生命周期">Spring 中的 bean 生命周期?</a></li>
+<li><a href="#说说自己对于-spring-mvc-了解">说说自己对于 Spring MVC 了解?</a></li>
+<li><a href="#springmvc-工作原理了解吗">SpringMVC 工作原理了解吗?</a></li>
+<li><a href="#spring-框架中用到了哪些设计模式">Spring 框架中用到了哪些设计模式？</a></li>
+<li><a href="#component-和-bean-的区别是什么">@Component 和 @Bean 的区别是什么？</a></li>
+<li><a href="#将一个类声明为spring的-bean-的注解有哪些">将一个类声明为Spring的 bean 的注解有哪些?</a></li>
+<li><a href="#spring-管理事务的方式有几种">Spring 管理事务的方式有几种？</a></li>
+<li><a href="#spring-事务中的隔离级别有哪几种">Spring 事务中的隔离级别有哪几种?</a></li>
+<li><a href="#spring-事务中哪几种事务传播行为">Spring 事务中哪几种事务传播行为?</a></li>
+<li><a href="#参考">参考</a></li>
+</ul>
+<!-- /TOC -->
+
+<p>这篇文章主要是想通过一些问题，加深大家对于 Spring 的理解，所以不会涉及太多的代码！这篇文章整理了挺长时间，下面的很多问题我自己在使用 Spring 的过程中也并没有注意，自己也是临时查阅了很多资料和书籍补上的。网上也有一些很多关于 Spring 常见问题/面试题整理的文章，我感觉大部分都是互相 copy，而且很多问题也不是很汗，有些回答也存在问题。所以，自己花了一周的业余时间整理了一下，希望对大家有帮助。</p>
+<h2 id="什么是-Spring-框架"><a href="#什么是-Spring-框架" class="headerlink" title="什么是 Spring 框架?"></a>什么是 Spring 框架?</h2><p>Spring 是一种轻量级开发框架，旨在提高开发人员的开发效率以及系统的可维护性。Spring 官网：<a href="https://spring.io/" target="_blank" rel="noopener">https://spring.io/</a>。</p>
+<p>我们一般说 Spring 框架指的都是 Spring Framework，它是很多模块的集合，使用这些模块可以很方便地协助我们进行开发。这些模块是：核心容器、数据访问/集成,、Web、AOP（面向切面编程）、工具、消息和测试模块。比如：Core Container 中的 Core 组件是Spring 所有组件的核心，Beans 组件和 Context 组件是实现IOC和依赖注入的基础，AOP组件用来实现面向切面编程。</p>
+<p>Spring 官网列出的 Spring 的 6 个特征:</p>
+<ul>
+<li><strong>核心技术</strong> ：依赖注入(DI)，AOP，事件(events)，资源，i18n，验证，数据绑定，类型转换，SpEL。</li>
+<li><strong>测试</strong> ：模拟对象，TestContext框架，Spring MVC 测试，WebTestClient。</li>
+<li><strong>数据访问</strong> ：事务，DAO支持，JDBC，ORM，编组XML。</li>
+<li><strong>Web支持</strong> : Spring MVC和Spring WebFlux Web框架。</li>
+<li><strong>集成</strong> ：远程处理，JMS，JCA，JMX，电子邮件，任务，调度，缓存。</li>
+<li><strong>语言</strong> ：Kotlin，Groovy，动态语言。</li>
+</ul>
+<h2 id="列举一些重要的Spring模块？"><a href="#列举一些重要的Spring模块？" class="headerlink" title="列举一些重要的Spring模块？"></a>列举一些重要的Spring模块？</h2><p>下图对应的是 Spring4.x 版本。目前最新的5.x版本中 Web 模块的 Portlet 组件已经被废弃掉，同时增加了用于异步响应式处理的 WebFlux 组件。</p>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/Spring%E4%B8%BB%E8%A6%81%E6%A8%A1%E5%9D%97.png" alt="Spring主要模块"></p>
+<ul>
+<li><strong>Spring Core：</strong> 基础,可以说 Spring 其他所有的功能都需要依赖于该类库。主要提供 IoC 依赖注入功能。</li>
+<li>*<em>Spring  Aspects *</em> ： 该模块为与AspectJ的集成提供支持。</li>
+<li><strong>Spring AOP</strong> ：提供了面向方面的编程实现。</li>
+<li><strong>Spring JDBC</strong> : Java数据库连接。</li>
+<li><strong>Spring JMS</strong> ：Java消息服务。</li>
+<li><strong>Spring ORM</strong> : 用于支持Hibernate等ORM工具。</li>
+<li><strong>Spring Web</strong> : 为创建Web应用程序提供支持。</li>
+<li><strong>Spring Test</strong> : 提供了对 JUnit 和 TestNG 测试的支持。</li>
+</ul>
+<h2 id="谈谈自己对于-Spring-IoC-和-AOP-的理解"><a href="#谈谈自己对于-Spring-IoC-和-AOP-的理解" class="headerlink" title="谈谈自己对于 Spring IoC 和 AOP 的理解"></a>谈谈自己对于 Spring IoC 和 AOP 的理解</h2><h3 id="IoC"><a href="#IoC" class="headerlink" title="IoC"></a>IoC</h3><p>IoC（Inverse of Control:控制反转）是一种<strong>设计思想</strong>，就是 <strong>将原本在程序中手动创建对象的控制权，交由Spring框架来管理。</strong>  IoC 在其他语言中也有应用，并非 Spirng 特有。 <strong>IoC 容器是 Spring 用来实现 IoC 的载体，  IoC 容器实际上就是个Map（key，value）,Map 中存放的是各种对象。</strong></p>
+<p>将对象之间的相互依赖关系交给 IoC 容器来管理，并由 IoC 容器完成对象的注入。这样可以很大程度上简化应用的开发，把应用从复杂的依赖关系中解放出来。  <strong>IoC 容器就像是一个工厂一样，当我们需要创建一个对象的时候，只需要配置好配置文件/注解即可，完全不用考虑对象是如何被创建出来的。</strong> 在实际项目中一个 Service 类可能有几百甚至上千个类作为它的底层，假如我们需要实例化这个 Service，你可能要每次都要搞清这个 Service 所有底层类的构造函数，这可能会把人逼疯。如果利用 IoC 的话，你只需要配置好，然后在需要的地方引用就行了，这大大增加了项目的可维护性且降低了开发难度。</p>
+<p>Spring 时代我们一般通过 XML 文件来配置 Bean，后来开发人员觉得 XML 文件来配置不太好，于是 SpringBoot 注解配置就慢慢开始流行起来。</p>
+<p>推荐阅读：<a href="https://www.zhihu.com/question/23277575/answer/169698662" target="_blank" rel="noopener">https://www.zhihu.com/question/23277575/answer/169698662</a></p>
+<p><strong>Spring IoC的初始化过程：</strong><br><img src="https://user-gold-cdn.xitu.io/2018/9/22/165fea36b569d4f4?w=709&h=56&f=png&s=4673" alt="Spring IoC的初始化过程"></p>
+<p>IoC源码阅读</p>
+<ul>
+<li><a href="https://javadoop.com/post/spring-ioc" target="_blank" rel="noopener">https://javadoop.com/post/spring-ioc</a></li>
+</ul>
+<h3 id="AOP"><a href="#AOP" class="headerlink" title="AOP"></a>AOP</h3><p>AOP(Aspect-Oriented Programming:面向切面编程)能够将那些与业务无关，<strong>却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来</strong>，便于<strong>减少系统的重复代码</strong>，<strong>降低模块间的耦合度</strong>，并<strong>有利于未来的可拓展性和可维护性</strong>。</p>
+<p><strong>Spring AOP就是基于动态代理的</strong>，如果要代理的对象，实现了某个接口，那么Spring AOP会使用<strong>JDK Proxy</strong>，去创建代理对象，而对于没有实现接口的对象，就无法使用 JDK Proxy 去进行代理了，这时候Spring AOP会使用<strong>Cglib</strong> ，这时候Spring AOP会使用 <strong>Cglib</strong> 生成一个被代理对象的子类来作为代理，如下图所示：</p>
+<p><img src="https://my-blog-to-use.oss-cn-beijing.aliyuncs.com/2019-6/SpringAOPProcess.jpg" alt="SpringAOPProcess"></p>
+<p>当然你也可以使用 AspectJ ,Spring AOP 已经集成了AspectJ  ，AspectJ  应该算的上是 Java 生态系统中最完整的 AOP 框架了。</p>
+<p>使用 AOP 之后我们可以把一些通用功能抽象出来，在需要用到的地方直接使用即可，这样大大简化了代码量。我们需要增加新功能时也方便，这样也提高了系统扩展性。日志功能、事务管理等等场景都用到了 AOP 。</p>
+<h2 id="Spring-AOP-和-AspectJ-AOP-有什么区别？"><a href="#Spring-AOP-和-AspectJ-AOP-有什么区别？" class="headerlink" title="Spring AOP 和 AspectJ AOP 有什么区别？"></a>Spring AOP 和 AspectJ AOP 有什么区别？</h2><p><strong>Spring AOP 属于运行时增强，而 AspectJ 是编译时增强。</strong> Spring AOP 基于代理(Proxying)，而 AspectJ 基于字节码操作(Bytecode Manipulation)。</p>
+<p> Spring AOP 已经集成了 AspectJ  ，AspectJ  应该算的上是 Java 生态系统中最完整的 AOP 框架了。AspectJ  相比于 Spring AOP 功能更加强大，但是 Spring AOP 相对来说更简单，</p>
+<p>如果我们的切面比较少，那么两者性能差异不大。但是，当切面太多的话，最好选择 AspectJ ，它比Spring AOP 快很多。</p>
+<h2 id="Spring-中的-bean-的作用域有哪些"><a href="#Spring-中的-bean-的作用域有哪些" class="headerlink" title="Spring 中的 bean 的作用域有哪些?"></a>Spring 中的 bean 的作用域有哪些?</h2><ul>
+<li>singleton : 唯一 bean 实例，Spring 中的 bean 默认都是单例的。</li>
+<li>prototype : 每次请求都会创建一个新的 bean 实例。</li>
+<li>request : 每一次HTTP请求都会产生一个新的bean，该bean仅在当前HTTP request内有效。</li>
+<li>session : 每一次HTTP请求都会产生一个新的 bean，该bean仅在当前 HTTP session 内有效。</li>
+<li>global-session： 全局session作用域，仅仅在基于portlet的web应用中才有意义，Spring5已经没有了。Portlet是能够生成语义代码(例如：HTML)片段的小型Java Web插件。它们基于portlet容器，可以像servlet一样处理HTTP请求。但是，与 servlet 不同，每个 portlet 都有不同的会话</li>
+</ul>
+<h2 id="Spring-中的单例-bean-的线程安全问题了解吗？"><a href="#Spring-中的单例-bean-的线程安全问题了解吗？" class="headerlink" title="Spring 中的单例 bean 的线程安全问题了解吗？"></a>Spring 中的单例 bean 的线程安全问题了解吗？</h2><p>大部分时候我们并没有在系统中使用多线程，所以很少有人会关注这个问题。单例 bean 存在线程问题，主要是因为当多个线程操作同一个对象的时候，对这个对象的非静态成员变量的写操作会存在线程安全问题。</p>
+<p>常见的有两种解决办法：</p>
+<ol>
+<li><p>在Bean对象中尽量避免定义可变的成员变量（不太现实）。</p>
+</li>
+<li><p>在类中定义一个ThreadLocal成员变量，将需要的可变成员变量保存在 ThreadLocal 中（推荐的一种方式）。</p>
+</li>
+</ol>
+<h2 id="Spring-中的-bean-生命周期"><a href="#Spring-中的-bean-生命周期" class="headerlink" title="Spring 中的 bean 生命周期?"></a>Spring 中的 bean 生命周期?</h2><p>这部分网上有很多文章都讲到了，下面的内容整理自：<a href="https://yemengying.com/2016/07/14/spring-bean-life-cycle/" target="_blank" rel="noopener">https://yemengying.com/2016/07/14/spring-bean-life-cycle/</a> ，除了这篇文章，再推荐一篇很不错的文章 ：<a href="https://www.cnblogs.com/zrtqsk/p/3735273.html" target="_blank" rel="noopener">https://www.cnblogs.com/zrtqsk/p/3735273.html</a> 。</p>
+<ul>
+<li>Bean 容器找到配置文件中 Spring Bean 的定义。</li>
+<li>Bean 容器利用 Java Reflection API 创建一个Bean的实例。</li>
+<li>如果涉及到一些属性值 利用 <code>set()</code>方法设置一些属性值。</li>
+<li>如果 Bean 实现了 <code>BeanNameAware</code> 接口，调用 <code>setBeanName()</code>方法，传入Bean的名字。</li>
+<li>如果 Bean 实现了 <code>BeanClassLoaderAware</code> 接口，调用 <code>setBeanClassLoader()</code>方法，传入 <code>ClassLoader</code>对象的实例。</li>
+<li>如果Bean实现了 <code>BeanFactoryAware</code> 接口，调用 <code>setBeanClassLoader()</code>方法，传入 <code>ClassLoade</code> r对象的实例。</li>
+<li>与上面的类似，如果实现了其他 <code>*.Aware</code>接口，就调用相应的方法。</li>
+<li>如果有和加载这个 Bean 的 Spring 容器相关的 <code>BeanPostProcessor</code> 对象，执行<code>postProcessBeforeInitialization()</code> 方法</li>
+<li>如果Bean实现了<code>InitializingBean</code>接口，执行<code>afterPropertiesSet()</code>方法。</li>
+<li>如果 Bean 在配置文件中的定义包含  init-method 属性，执行指定的方法。</li>
+<li>如果有和加载这个 Bean的 Spring 容器相关的 <code>BeanPostProcessor</code> 对象，执行<code>postProcessAfterInitialization()</code> 方法</li>
+<li>当要销毁 Bean 的时候，如果 Bean 实现了 <code>DisposableBean</code> 接口，执行 <code>destroy()</code> 方法。</li>
+<li>当要销毁 Bean 的时候，如果 Bean 在配置文件中的定义包含 destroy-method 属性，执行指定的方法。</li>
+</ul>
+<p>图示：</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-17/48376272.jpg" alt="Spring Bean 生命周期"></p>
+<p>与之比较类似的中文版本:</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-17/5496407.jpg" alt="Spring Bean 生命周期"></p>
+<h2 id="说说自己对于-Spring-MVC-了解"><a href="#说说自己对于-Spring-MVC-了解" class="headerlink" title="说说自己对于 Spring MVC 了解?"></a>说说自己对于 Spring MVC 了解?</h2><p>谈到这个问题，我们不得不提提之前 Model1 和 Model2 这两个没有 Spring MVC 的时代。</p>
+<ul>
+<li><strong>Model1 时代</strong> : 很多学 Java 后端比较晚的朋友可能并没有接触过  Model1 模式下的 JavaWeb 应用开发。在 Model1 模式下，整个 Web 应用几乎全部用 JSP 页面组成，只用少量的 JavaBean 来处理数据库连接、访问等操作。这个模式下 JSP 即是控制层又是表现层。显而易见，这种模式存在很多问题。比如①将控制逻辑和表现逻辑混杂在一起，导致代码重用率极低；②前端和后端相互依赖，难以进行测试并且开发效率极低；</li>
+<li><strong>Model2 时代</strong> ：学过 Servlet 并做过相关 Demo 的朋友应该了解“Java Bean(Model)+ JSP（View,）+Servlet（Controller）  ”这种开发模式,这就是早期的 JavaWeb MVC 开发模式。Model:系统涉及的数据，也就是 dao 和 bean。View：展示模型中的数据，只是用来展示。Controller：处理用户请求都发送给 ，返回数据给 JSP 并展示给用户。</li>
+</ul>
+<p>Model2 模式下还存在很多问题，Model2的抽象和封装程度还远远不够，使用Model2进行开发时不可避免地会重复造轮子，这就大大降低了程序的可维护性和复用性。于是很多JavaWeb开发相关的 MVC 框架营运而生比如Struts2，但是 Struts2 比较笨重。随着 Spring 轻量级开发框架的流行，Spring 生态圈出现了 Spring MVC 框架， Spring MVC 是当前最优秀的 MVC 框架。相比于 Struts2 ， Spring MVC 使用更加简单和方便，开发效率更高，并且 Spring MVC 运行速度更快。</p>
+<p>MVC 是一种设计模式,Spring MVC 是一款很优秀的 MVC 框架。Spring MVC 可以帮助我们进行更简洁的Web层的开发，并且它天生与 Spring 框架集成。Spring MVC 下我们一般把后端项目分为 Service层（处理业务）、Dao层（数据库操作）、Entity层（实体类）、Controller层(控制层，返回数据给前台页面)。</p>
+<p><strong>Spring MVC 的简单原理图如下：</strong></p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-11/60679444.jpg" alt></p>
+<h2 id="SpringMVC-工作原理了解吗"><a href="#SpringMVC-工作原理了解吗" class="headerlink" title="SpringMVC 工作原理了解吗?"></a>SpringMVC 工作原理了解吗?</h2><p><strong>原理如下图所示：</strong><br><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-10-11/49790288.jpg" alt="SpringMVC运行原理"></p>
+<p>上图的一个笔误的小问题：Spring MVC 的入口函数也就是前端控制器 <code>DispatcherServlet</code> 的作用是接收请求，响应结果。</p>
+<p><strong>流程说明（重要）：</strong></p>
+<ol>
+<li>客户端（浏览器）发送请求，直接请求到 <code>DispatcherServlet</code>。</li>
+<li><code>DispatcherServlet</code> 根据请求信息调用 <code>HandlerMapping</code>，解析请求对应的 <code>Handler</code>。</li>
+<li>解析到对应的 <code>Handler</code>（也就是我们平常说的 <code>Controller</code> 控制器）后，开始由 <code>HandlerAdapter</code> 适配器处理。</li>
+<li><code>HandlerAdapter</code> 会根据 <code>Handler</code>来调用真正的处理器开处理请求，并处理相应的业务逻辑。</li>
+<li>处理器处理完业务后，会返回一个 <code>ModelAndView</code> 对象，<code>Model</code> 是返回的数据对象，<code>View</code> 是个逻辑上的 <code>View</code>。</li>
+<li><code>ViewResolver</code> 会根据逻辑 <code>View</code> 查找实际的 <code>View</code>。</li>
+<li><code>DispaterServlet</code> 把返回的 <code>Model</code> 传给 <code>View</code>（视图渲染）。</li>
+<li>把 <code>View</code> 返回给请求者（浏览器）</li>
+</ol>
+<h2 id="Spring-框架中用到了哪些设计模式？"><a href="#Spring-框架中用到了哪些设计模式？" class="headerlink" title="Spring 框架中用到了哪些设计模式？"></a>Spring 框架中用到了哪些设计模式？</h2><p>关于下面一些设计模式的详细介绍，可以看笔主前段时间的原创文章<a href="https://mp.weixin.qq.com/s?__biz=Mzg2OTA0Njk0OA==&mid=2247485303&idx=1&sn=9e4626a1e3f001f9b0d84a6fa0cff04a&chksm=cea248bcf9d5c1aaf48b67cc52bac74eb29d6037848d6cf213b0e5466f2d1fda970db700ba41&token=255050878&lang=zh_CN#rd" target="_blank" rel="noopener">《面试官:“谈谈Spring中都用到了那些设计模式?”。》</a> 。</p>
+<ul>
+<li><strong>工厂设计模式</strong> : Spring使用工厂模式通过 <code>BeanFactory</code>、<code>ApplicationContext</code> 创建 bean 对象。</li>
+<li><strong>代理设计模式</strong> : Spring AOP 功能的实现。</li>
+<li><strong>单例设计模式</strong> : Spring 中的 Bean 默认都是单例的。</li>
+<li><strong>模板方法模式</strong> : Spring 中 <code>jdbcTemplate</code>、<code>hibernateTemplate</code> 等以 Template 结尾的对数据库操作的类，它们就使用到了模板模式。</li>
+<li><strong>包装器设计模式</strong> : 我们的项目需要连接多个数据库，而且不同的客户在每次访问中根据需要会去访问不同的数据库。这种模式让我们可以根据客户的需求能够动态切换不同的数据源。</li>
+<li><strong>观察者模式:</strong> Spring 事件驱动模型就是观察者模式很经典的一个应用。</li>
+<li><strong>适配器模式</strong> :Spring AOP 的增强或通知(Advice)使用到了适配器模式、spring MVC 中也是用到了适配器模式适配<code>Controller</code>。</li>
+<li>……</li>
+</ul>
+<h2 id="Component-和-Bean-的区别是什么？"><a href="#Component-和-Bean-的区别是什么？" class="headerlink" title="@Component 和 @Bean 的区别是什么？"></a>@Component 和 @Bean 的区别是什么？</h2><ol>
+<li>作用对象不同: <code>@Component</code> 注解作用于类，而<code>@Bean</code>注解作用于方法。</li>
+<li><code>@Component</code>通常是通过类路径扫描来自动侦测以及自动装配到Spring容器中（我们可以使用 <code>@ComponentScan</code> 注解定义要扫描的路径从中找出标识了需要装配的类自动装配到 Spring 的 bean 容器中）。<code>@Bean</code> 注解通常是我们在标有该注解的方法中定义产生这个 bean,<code>@Bean</code>告诉了Spring这是某个类的示例，当我需要用它的时候还给我。</li>
+<li><code>@Bean</code> 注解比 <code>Component</code> 注解的自定义性更强，而且很多地方我们只能通过 <code>@Bean</code> 注解来注册bean。比如当我们引用第三方库中的类需要装配到 <code>Spring</code>容器时，则只能通过 <code>@Bean</code>来实现。</li>
+</ol>
+<p><code>@Bean</code>注解使用示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> TransferService <span class="title">transferService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> TransferServiceImpl();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p> 上面的代码相当于下面的 xml 配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"transferService"</span> <span class="attr">class</span>=<span class="string">"com.acme.TransferServiceImpl"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>下面这个例子是通过 <code>@Component</code> 无法实现的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> OneService <span class="title">getService</span><span class="params">(status)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">case</span> (status)  &#123;</span><br><span class="line">        when <span class="number">1</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> serviceImpl1();</span><br><span class="line">        when <span class="number">2</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> serviceImpl2();</span><br><span class="line">        when <span class="number">3</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> serviceImpl3();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="将一个类声明为Spring的-bean-的注解有哪些"><a href="#将一个类声明为Spring的-bean-的注解有哪些" class="headerlink" title="将一个类声明为Spring的 bean 的注解有哪些?"></a>将一个类声明为Spring的 bean 的注解有哪些?</h2><p>我们一般使用 <code>@Autowired</code> 注解自动装配 bean，要想把类标识成可用于 <code>@Autowired</code> 注解自动装配的 bean 的类,采用以下注解可实现：</p>
+<ul>
+<li><code>@Component</code> ：通用的注解，可标注任意类为 <code>Spring</code> 组件。如果一个Bean不知道属于拿个层，可以使用<code>@Component</code> 注解标注。</li>
+<li><code>@Repository</code> : 对应持久层即 Dao 层，主要用于数据库相关操作。</li>
+<li><code>@Service</code> : 对应服务层，主要涉及一些复杂的逻辑，需要用到 Dao层。</li>
+<li><code>@Controller</code> : 对应 Spring MVC 控制层，主要用户接受用户请求并调用 Service 层返回数据给前端页面。</li>
+</ul>
+<h2 id="Spring-管理事务的方式有几种？"><a href="#Spring-管理事务的方式有几种？" class="headerlink" title="Spring 管理事务的方式有几种？"></a>Spring 管理事务的方式有几种？</h2><ol>
+<li>编程式事务，在代码中硬编码。(不推荐使用)</li>
+<li>声明式事务，在配置文件中配置（推荐使用）</li>
+</ol>
+<p><strong>声明式事务又分为两种：</strong></p>
+<ol>
+<li>基于XML的声明式事务</li>
+<li>基于注解的声明式事务</li>
+</ol>
+<h2 id="Spring-事务中的隔离级别有哪几种"><a href="#Spring-事务中的隔离级别有哪几种" class="headerlink" title="Spring 事务中的隔离级别有哪几种?"></a>Spring 事务中的隔离级别有哪几种?</h2><p><strong>TransactionDefinition 接口中定义了五个表示隔离级别的常量：</strong></p>
+<ul>
+<li><strong>TransactionDefinition.ISOLATION_DEFAULT:</strong>  使用后端数据库默认的隔离级别，Mysql 默认采用的 REPEATABLE_READ隔离级别 Oracle 默认采用的 READ_COMMITTED隔离级别.</li>
+<li><strong>TransactionDefinition.ISOLATION_READ_UNCOMMITTED:</strong> 最低的隔离级别，允许读取尚未提交的数据变更，<strong>可能会导致脏读、幻读或不可重复读</strong></li>
+<li><strong>TransactionDefinition.ISOLATION_READ_COMMITTED:</strong>   允许读取并发事务已经提交的数据，<strong>可以阻止脏读，但是幻读或不可重复读仍有可能发生</strong></li>
+<li><strong>TransactionDefinition.ISOLATION_REPEATABLE_READ:</strong>  对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，<strong>可以阻止脏读和不可重复读，但幻读仍有可能发生。</strong></li>
+<li><strong>TransactionDefinition.ISOLATION_SERIALIZABLE:</strong>   最高的隔离级别，完全服从ACID的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，<strong>该级别可以防止脏读、不可重复读以及幻读</strong>。但是这将严重影响程序的性能。通常情况下也不会用到该级别。</li>
+</ul>
+<h2 id="Spring-事务中哪几种事务传播行为"><a href="#Spring-事务中哪几种事务传播行为" class="headerlink" title="Spring 事务中哪几种事务传播行为?"></a>Spring 事务中哪几种事务传播行为?</h2><p><strong>支持当前事务的情况：</strong></p>
+<ul>
+<li><strong>TransactionDefinition.PROPAGATION_REQUIRED：</strong> 如果当前存在事务，则加入该事务；如果当前没有事务，则创建一个新的事务。</li>
+<li><strong>TransactionDefinition.PROPAGATION_SUPPORTS：</strong> 如果当前存在事务，则加入该事务；如果当前没有事务，则以非事务的方式继续运行。</li>
+<li><strong>TransactionDefinition.PROPAGATION_MANDATORY：</strong> 如果当前存在事务，则加入该事务；如果当前没有事务，则抛出异常。（mandatory：强制性）</li>
+</ul>
+<p><strong>不支持当前事务的情况：</strong></p>
+<ul>
+<li><strong>TransactionDefinition.PROPAGATION_REQUIRES_NEW：</strong> 创建一个新的事务，如果当前存在事务，则把当前事务挂起。</li>
+<li><strong>TransactionDefinition.PROPAGATION_NOT_SUPPORTED：</strong> 以非事务方式运行，如果当前存在事务，则把当前事务挂起。</li>
+<li><strong>TransactionDefinition.PROPAGATION_NEVER：</strong> 以非事务方式运行，如果当前存在事务，则抛出异常。</li>
+</ul>
+<p><strong>其他情况：</strong></p>
+<ul>
+<li><strong>TransactionDefinition.PROPAGATION_NESTED：</strong> 如果当前存在事务，则创建一个事务作为当前事务的嵌套事务来运行；如果当前没有事务，则该取值等价于TransactionDefinition.PROPAGATION_REQUIRED。</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>《Spring 技术内幕》</li>
+<li><a href="http://www.cnblogs.com/wmyskxz/p/8820371.html" target="_blank" rel="noopener">http://www.cnblogs.com/wmyskxz/p/8820371.html</a></li>
+<li><a href="https://www.journaldev.com/2696/spring-interview-questions-and-answers" target="_blank" rel="noopener">https://www.journaldev.com/2696/spring-interview-questions-and-answers</a></li>
+<li><a href="https://www.edureka.co/blog/interview-questions/spring-interview-questions/" target="_blank" rel="noopener">https://www.edureka.co/blog/interview-questions/spring-interview-questions/</a></li>
+<li><a href="https://howtodoinjava.com/interview-questions/top-spring-interview-questions-with-answers/" target="_blank" rel="noopener">https://howtodoinjava.com/interview-questions/top-spring-interview-questions-with-answers/</a></li>
+<li><a href="http://www.tomaszezula.com/2014/02/09/spring-series-part-5-component-vs-bean/" target="_blank" rel="noopener">http://www.tomaszezula.com/2014/02/09/spring-series-part-5-component-vs-bean/</a></li>
+<li><a href="https://stackoverflow.com/questions/34172888/difference-between-bean-and-autowired" target="_blank" rel="noopener">https://stackoverflow.com/questions/34172888/difference-between-bean-and-autowired</a></li>
+</ul>
+<h3 id="公众号"><a href="#公众号" class="headerlink" title="公众号"></a>公众号</h3><p>如果大家想要实时关注我更新的文章以及分享的干货的话，可以关注我的公众号。</p>
+<p><strong>《Java面试突击》:</strong> 由本文档衍生的专为面试而生的《Java面试突击》V2.0 PDF 版本<a href="#公众号">公众号</a>后台回复 <strong>“Java面试突击”</strong> 即可免费领取！</p>
+<p><strong>Java工程师必备学习资源:</strong> 一些Java工程师常用学习资源公众号后台回复关键字 <strong>“1”</strong> 即可免费无套路获取。 </p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/11/28/167598cd2e17b8ec?w=258&h=258&f=jpeg&s=27334" alt="我的公众号"></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/framework/ZooKeeper/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="syf">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="苏有福的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/14/docs/system-design/framework/ZooKeeper/" class="post-title-link" itemprop="url">Untitled</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
+            </span>
+          
+
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/56385654.jpg" alt></p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>相信大家对 ZooKeeper 应该不算陌生。但是你真的了解 ZooKeeper 是个什么东西吗？如果别人/面试官让你给他讲讲  ZooKeeper 是个什么东西，你能回答到什么地步呢？</p>
+<p>我本人曾经使用过 ZooKeeper 作为 Dubbo 的注册中心，另外在搭建 solr 集群的时候，我使用到了  ZooKeeper 作为 solr 集群的管理工具。前几天，总结项目经验的时候，我突然问自己 ZooKeeper 到底是个什么东西？想了半天，脑海中只是简单的能浮现出几句话：“①Zookeeper 可以被用作注册中心。 ②Zookeeper 是 Hadoop 生态系统的一员；③构建 Zookeeper 集群的时候，使用的服务器最好是奇数台。” 可见，我对于 Zookeeper 的理解仅仅是停留在了表面。</p>
+<p>所以，<strong>通过本文，希望带大家稍微详细的了解一下 ZooKeeper 。如果没有学过 ZooKeeper ，那么本文将会是你进入 ZooKeeper 大门的垫脚砖。如果你已经接触过 ZooKeeper ，那么本文将带你回顾一下 ZooKeeper 的一些基础概念。</strong></p>
+<p>最后，<strong>本文只涉及 ZooKeeper 的一些概念，并不涉及 ZooKeeper 的使用以及 ZooKeeper 集群的搭建。</strong> 网上有介绍 ZooKeeper 的使用以及搭建 ZooKeeper 集群的文章，大家有需要可以自行查阅。</p>
+<h2 id="一-什么是-ZooKeeper"><a href="#一-什么是-ZooKeeper" class="headerlink" title="一 什么是 ZooKeeper"></a>一 什么是 ZooKeeper</h2><h3 id="ZooKeeper-的由来"><a href="#ZooKeeper-的由来" class="headerlink" title="ZooKeeper 的由来"></a>ZooKeeper 的由来</h3><p><strong>下面这段内容摘自《从Paxos到Zookeeper 》第四章第一节的某段内容，推荐大家阅读以下：</strong></p>
+<blockquote>
+<p>Zookeeper最早起源于雅虎研究院的一个研究小组。在当时，研究人员发现，在雅虎内部很多大型系统基本都需要依赖一个类似的系统来进行分布式协调，但是这些系统往往都存在分布式单点问题。所以，<strong>雅虎的开发人员就试图开发一个通用的无单点问题的分布式协调框架，以便让开发人员将精力集中在处理业务逻辑上。</strong></p>
+<p>关于“ZooKeeper”这个项目的名字，其实也有一段趣闻。在立项初期，考虑到之前内部很多项目都是使用动物的名字来命名的（例如著名的Pig项目),雅虎的工程师希望给这个项目也取一个动物的名字。时任研究院的首席科学家RaghuRamakrishnan开玩笑地说：“在这样下去，我们这儿就变成动物园了！”此话一出，大家纷纷表示就叫动物园管理员吧一一一因为各个以动物命名的分布式组件放在一起，<strong>雅虎的整个分布式系统看上去就像一个大型的动物园了，而Zookeeper正好要用来进行分布式环境的协调一一于是，Zookeeper的名字也就由此诞生了。</strong></p>
+</blockquote>
+<h3 id="1-1-ZooKeeper-概览"><a href="#1-1-ZooKeeper-概览" class="headerlink" title="1.1 ZooKeeper 概览"></a>1.1 ZooKeeper 概览</h3><p>ZooKeeper 是一个开源的分布式协调服务，ZooKeeper框架最初是在“Yahoo!”上构建的，用于以简单而稳健的方式访问他们的应用程序。 后来，Apache ZooKeeper成为Hadoop，HBase和其他分布式框架使用的有组织服务的标准。 例如，Apache HBase使用ZooKeeper跟踪分布式数据的状态。<strong>ZooKeeper 的设计目标是将那些复杂且容易出错的分布式一致性服务封装起来，构成一个高效可靠的原语集，并以一系列简单易用的接口提供给用户使用。</strong></p>
+<blockquote>
+<p><strong>原语：</strong> 操作系统或计算机网络用语范畴。是由若干条指令组成的，用于完成一定功能的一个过程。具有不可分割性·即原语的执行必须是连续的，在执行过程中不允许被中断。</p>
+</blockquote>
+<p><strong>ZooKeeper 是一个典型的分布式数据一致性解决方案，分布式应用程序可以基于 ZooKeeper 实现诸如数据发布/订阅、负载均衡、命名服务、分布式协调/通知、集群管理、Master 选举、分布式锁和分布式队列等功能。</strong></p>
+<p><strong>Zookeeper 一个最常用的使用场景就是用于担任服务生产者和服务消费者的注册中心(提供发布订阅服务)。</strong> 服务生产者将自己提供的服务注册到Zookeeper中心，服务的消费者在进行服务调用的时候先到Zookeeper中查找服务，获取到服务生产者的详细信息之后，再去调用服务生产者的内容与数据。如下图所示，在 Dubbo架构中 Zookeeper 就担任了注册中心这一角色。</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/35571782.jpg" alt="Dubbo"></p>
+<h3 id="1-2-结合个人使用情况的讲一下-ZooKeeper"><a href="#1-2-结合个人使用情况的讲一下-ZooKeeper" class="headerlink" title="1.2 结合个人使用情况的讲一下 ZooKeeper"></a>1.2 结合个人使用情况的讲一下 ZooKeeper</h3><p>在我自己做过的项目中，主要使用到了 ZooKeeper 作为 Dubbo 的注册中心(Dubbo 官方推荐使用 ZooKeeper注册中心)。另外在搭建 solr 集群的时候，我使用  ZooKeeper 作为 solr 集群的管理工具。这时，ZooKeeper 主要提供下面几个功能：1、集群管理：容错、负载均衡。2、配置文件的集中管理3、集群的入口。</p>
+<p>我个人觉得在使用 ZooKeeper 的时候，最好是使用 集群版的 ZooKeeper 而不是单机版的。官网给出的架构图就描述的是一个集群版的 ZooKeeper 。通常 3 台服务器就可以构成一个  ZooKeeper  集群了。</p>
+<p><strong>为什么最好使用奇数台服务器构成 ZooKeeper 集群？</strong></p>
+<p>所谓的zookeeper容错是指，当宕掉几个zookeeper服务器之后，剩下的个数必须大于宕掉的个数的话整个zookeeper才依然可用。假如我们的集群中有n台zookeeper服务器，那么也就是剩下的服务数必须大于n/2。先说一下结论，2n和2n-1的容忍度是一样的，都是n-1，大家可以先自己仔细想一想，这应该是一个很简单的数学问题了。<br>比如假如我们有3台，那么最大允许宕掉1台zookeeper服务器，如果我们有4台的的时候也同样只允许宕掉1台。<br>假如我们有5台，那么最大允许宕掉2台zookeeper服务器，如果我们有6台的的时候也同样只允许宕掉2台。</p>
+<p>综上，何必增加那一个不必要的zookeeper呢？</p>
+<h2 id="二-关于-ZooKeeper-的一些重要概念"><a href="#二-关于-ZooKeeper-的一些重要概念" class="headerlink" title="二 关于 ZooKeeper  的一些重要概念"></a>二 关于 ZooKeeper  的一些重要概念</h2><h3 id="2-1-重要概念总结"><a href="#2-1-重要概念总结" class="headerlink" title="2.1 重要概念总结"></a>2.1 重要概念总结</h3><ul>
+<li><strong>ZooKeeper  本身就是一个分布式程序（只要半数以上节点存活，ZooKeeper  就能正常服务）。</strong></li>
+<li><strong>为了保证高可用，最好是以集群形态来部署 ZooKeeper，这样只要集群中大部分机器是可用的（能够容忍一定的机器故障），那么 ZooKeeper 本身仍然是可用的。</strong></li>
+<li><strong>ZooKeeper  将数据保存在内存中，这也就保证了 高吞吐量和低延迟</strong>（但是内存限制了能够存储的容量不太大，此限制也是保持znode中存储的数据量较小的进一步原因）。</li>
+<li><strong>ZooKeeper 是高性能的。 在“读”多于“写”的应用程序中尤其地高性能，因为“写”会导致所有的服务器间同步状态。</strong>（“读”多于“写”是协调服务的典型场景。）</li>
+<li><strong>ZooKeeper有临时节点的概念。 当创建临时节点的客户端会话一直保持活动，瞬时节点就一直存在。而当会话终结时，瞬时节点被删除。持久节点是指一旦这个ZNode被创建了，除非主动进行ZNode的移除操作，否则这个ZNode将一直保存在Zookeeper上。</strong></li>
+<li>ZooKeeper 底层其实只提供了两个功能：①管理（存储、读取）用户程序提交的数据；②为用户程序提供数据节点监听服务。</li>
+</ul>
+<p><strong>下面关于会话（Session）、 Znode、版本、Watcher、ACL概念的总结都在《从Paxos到Zookeeper 》第四章第一节以及第七章第八节有提到，感兴趣的可以看看！</strong></p>
+<h3 id="2-2-会话（Session）"><a href="#2-2-会话（Session）" class="headerlink" title="2.2 会话（Session）"></a>2.2 会话（Session）</h3><p>Session 指的是 ZooKeeper  服务器与客户端会话。<strong>在 ZooKeeper 中，一个客户端连接是指客户端和服务器之间的一个 TCP 长连接</strong>。客户端启动的时候，首先会与服务器建立一个 TCP 连接，从第一次连接建立开始，客户端会话的生命周期也开始了。<strong>通过这个连接，客户端能够通过心跳检测与服务器保持有效的会话，也能够向Zookeeper服务器发送请求并接受响应，同时还能够通过该连接接收来自服务器的Watch事件通知。</strong> Session的<code>sessionTimeout</code>值用来设置一个客户端会话的超时时间。当由于服务器压力太大、网络故障或是客户端主动断开连接等各种原因导致客户端连接断开时，<strong>只要在<code>sessionTimeout</code>规定的时间内能够重新连接上集群中任意一台服务器，那么之前创建的会话仍然有效。</strong></p>
+<p><strong>在为客户端创建会话之前，服务端首先会为每个客户端都分配一个sessionID。由于 sessionID 是 Zookeeper 会话的一个重要标识，许多与会话相关的运行机制都是基于这个 sessionID 的，因此，无论是哪台服务器为客户端分配的 sessionID，都务必保证全局唯一。</strong></p>
+<h3 id="2-3-Znode"><a href="#2-3-Znode" class="headerlink" title="2.3 Znode"></a>2.3 Znode</h3><p><strong>在谈到分布式的时候，我们通常说的“节点”是指组成集群的每一台机器。然而，在Zookeeper中，“节点”分为两类，第一类同样是指构成集群的机器，我们称之为机器节点；第二类则是指数据模型中的数据单元，我们称之为数据节点一一ZNode。</strong></p>
+<p>Zookeeper将所有数据存储在内存中，数据模型是一棵树（Znode Tree)，由斜杠（/）的进行分割的路径，就是一个Znode，例如/foo/path1。每个上都会保存自己的数据内容，同时还会保存一系列属性信息。</p>
+<p><strong>在Zookeeper中，node可以分为持久节点和临时节点两类。所谓持久节点是指一旦这个ZNode被创建了，除非主动进行ZNode的移除操作，否则这个ZNode将一直保存在Zookeeper上。而临时节点就不一样了，它的生命周期和客户端会话绑定，一旦客户端会话失效，那么这个客户端创建的所有临时节点都会被移除。</strong> 另外，ZooKeeper还允许用户为每个节点添加一个特殊的属性：<strong>SEQUENTIAL</strong>.一旦节点被标记上这个属性，那么在这个节点被创建的时候，Zookeeper会自动在其节点名后面追加上一个整型数字，这个整型数字是一个由父节点维护的自增数字。</p>
+<h3 id="2-4-版本"><a href="#2-4-版本" class="headerlink" title="2.4 版本"></a>2.4 版本</h3><p>在前面我们已经提到，Zookeeper 的每个 ZNode 上都会存储数据，对应于每个ZNode，Zookeeper 都会为其维护一个叫作 <strong>Stat</strong> 的数据结构，Stat 中记录了这个 ZNode 的三个数据版本，分别是version（当前ZNode的版本）、cversion（当前ZNode子节点的版本）和 aversion（当前ZNode的ACL版本）。</p>
+<h3 id="2-5-Watcher"><a href="#2-5-Watcher" class="headerlink" title="2.5 Watcher"></a>2.5 Watcher</h3><p><strong>Watcher（事件监听器），是Zookeeper中的一个很重要的特性。Zookeeper允许用户在指定节点上注册一些Watcher，并且在一些特定事件触发的时候，ZooKeeper服务端会将事件通知到感兴趣的客户端上去，该机制是Zookeeper实现分布式协调服务的重要特性。</strong></p>
+<h3 id="2-6-ACL"><a href="#2-6-ACL" class="headerlink" title="2.6 ACL"></a>2.6 ACL</h3><p>Zookeeper采用ACL（AccessControlLists）策略来进行权限控制，类似于 UNIX 文件系统的权限控制。Zookeeper 定义了如下5种权限。</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/27473480.jpg" alt></p>
+<p>其中尤其需要注意的是，CREATE和DELETE这两种权限都是针对子节点的权限控制。</p>
+<h2 id="三-ZooKeeper-特点"><a href="#三-ZooKeeper-特点" class="headerlink" title="三 ZooKeeper 特点"></a>三 ZooKeeper 特点</h2><ul>
+<li><strong>顺序一致性：</strong> 从同一客户端发起的事务请求，最终将会严格地按照顺序被应用到 ZooKeeper 中去。</li>
+<li><strong>原子性：</strong> 所有事务请求的处理结果在整个集群中所有机器上的应用情况是一致的，也就是说，要么整个集群中所有的机器都成功应用了某一个事务，要么都没有应用。</li>
+<li><strong>单一系统映像 ：</strong> 无论客户端连到哪一个 ZooKeeper 服务器上，其看到的服务端数据模型都是一致的。</li>
+<li><strong>可靠性：</strong> 一旦一次更改请求被应用，更改的结果就会被持久化，直到被下一次更改覆盖。</li>
+</ul>
+<h2 id="四-ZooKeeper-设计目标"><a href="#四-ZooKeeper-设计目标" class="headerlink" title="四 ZooKeeper 设计目标"></a>四 ZooKeeper 设计目标</h2><h3 id="4-1-简单的数据模型"><a href="#4-1-简单的数据模型" class="headerlink" title="4.1 简单的数据模型"></a>4.1 简单的数据模型</h3><p>ZooKeeper 允许分布式进程通过共享的层次结构命名空间进行相互协调，这与标准文件系统类似。 名称空间由 ZooKeeper 中的数据寄存器组成 - 称为znode，这些类似于文件和目录。 与为存储设计的典型文件系统不同，ZooKeeper数据保存在内存中，这意味着ZooKeeper可以实现高吞吐量和低延迟。</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/94251757.jpg" alt></p>
+<h3 id="4-2-可构建集群"><a href="#4-2-可构建集群" class="headerlink" title="4.2 可构建集群"></a>4.2 可构建集群</h3><p><strong>为了保证高可用，最好是以集群形态来部署 ZooKeeper，这样只要集群中大部分机器是可用的（能够容忍一定的机器故障），那么zookeeper本身仍然是可用的。</strong> 客户端在使用 ZooKeeper 时，需要知道集群机器列表，通过与集群中的某一台机器建立 TCP 连接来使用服务，客户端使用这个TCP链接来发送请求、获取结果、获取监听事件以及发送心跳包。如果这个连接异常断开了，客户端可以连接到另外的机器上。</p>
+<p><strong>ZooKeeper 官方提供的架构图：</strong></p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/68900686.jpg" alt></p>
+<p>上图中每一个Server代表一个安装Zookeeper服务的服务器。组成 ZooKeeper 服务的服务器都会在内存中维护当前的服务器状态，并且每台服务器之间都互相保持着通信。集群间通过 Zab 协议（Zookeeper Atomic Broadcast）来保持数据的一致性。</p>
+<h3 id="4-3-顺序访问"><a href="#4-3-顺序访问" class="headerlink" title="4.3 顺序访问"></a>4.3 顺序访问</h3><p><strong>对于来自客户端的每个更新请求，ZooKeeper 都会分配一个全局唯一的递增编号，这个编号反应了所有事务操作的先后顺序，应用程序可以使用 ZooKeeper 这个特性来实现更高层次的同步原语。</strong> <strong>这个编号也叫做时间戳——zxid（Zookeeper Transaction Id）</strong></p>
+<h3 id="4-4-高性能"><a href="#4-4-高性能" class="headerlink" title="4.4 高性能"></a>4.4 高性能</h3><p><strong>ZooKeeper 是高性能的。 在“读”多于“写”的应用程序中尤其地高性能，因为“写”会导致所有的服务器间同步状态。（“读”多于“写”是协调服务的典型场景。）</strong></p>
+<h2 id="五-ZooKeeper-集群角色介绍"><a href="#五-ZooKeeper-集群角色介绍" class="headerlink" title="五 ZooKeeper 集群角色介绍"></a>五 ZooKeeper 集群角色介绍</h2><p><strong>最典型集群模式： Master/Slave 模式（主备模式）</strong>。在这种模式中，通常 Master服务器作为主服务器提供写服务，其他的 Slave 服务器从服务器通过异步复制的方式获取 Master 服务器最新的数据提供读服务。</p>
+<p>但是，<strong>在 ZooKeeper 中没有选择传统的  Master/Slave 概念，而是引入了Leader、Follower 和 Observer 三种角色</strong>。如下图所示</p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/89602762.jpg" alt></p>
+<p> <strong>ZooKeeper 集群中的所有机器通过一个 Leader 选举过程来选定一台称为 “Leader” 的机器，Leader 既可以为客户端提供写服务又能提供读服务。除了 Leader 外，Follower 和  Observer 都只能提供读服务。Follower 和  Observer 唯一的区别在于 Observer 机器不参与 Leader 的选举过程，也不参与写操作的“过半写成功”策略，因此 Observer 机器可以在不影响写性能的情况下提升集群的读性能。</strong></p>
+<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-13/91622395.jpg" alt></p>
+<p><strong>当 Leader 服务器出现网络中断、崩溃退出与重启等异常情况时，ZAB 协议就会进人恢复模式并选举产生新的Leader服务器。这个过程大致是这样的：</strong></p>
+<ol>
+<li>Leader election（选举阶段）：节点在一开始都处于选举阶段，只要有一个节点得到超半数节点的票数，它就可以当选准 leader。</li>
+<li>Discovery（发现阶段）：在这个阶段，followers 跟准 leader 进行通信，同步 followers 最近接收的事务提议。</li>
+<li>Synchronization（同步阶段）:同步阶段主要是利用 leader 前一阶段获得的最新提议历史，同步集群中所有的副本。同步完成之后<br>准 leader 才会成为真正的 leader。</li>
+<li>Broadcast（广播阶段）<br>到了这个阶段，Zookeeper 集群才能正式对外提供事务服务，并且 leader 可以进行消息广播。同时如果有新的节点加入，还需要对新节点进行同步。</li>
+</ol>
+<h2 id="六-ZooKeeper-amp-ZAB-协议-amp-Paxos算法"><a href="#六-ZooKeeper-amp-ZAB-协议-amp-Paxos算法" class="headerlink" title="六 ZooKeeper &amp;ZAB 协议&amp;Paxos算法"></a>六 ZooKeeper &amp;ZAB 协议&amp;Paxos算法</h2><h3 id="6-1-ZAB-协议-amp-Paxos算法"><a href="#6-1-ZAB-协议-amp-Paxos算法" class="headerlink" title="6.1 ZAB 协议&amp;Paxos算法"></a>6.1 ZAB 协议&amp;Paxos算法</h3><p>Paxos 算法应该可以说是  ZooKeeper 的灵魂了。但是，ZooKeeper 并没有完全采用 Paxos算法 ，而是使用 ZAB 协议作为其保证数据一致性的核心算法。另外，在ZooKeeper的官方文档中也指出，ZAB协议并不像 Paxos 算法那样，是一种通用的分布式一致性算法，它是一种特别为Zookeeper设计的崩溃可恢复的原子消息广播算法。</p>
+<h3 id="6-2-ZAB-协议介绍"><a href="#6-2-ZAB-协议介绍" class="headerlink" title="6.2 ZAB 协议介绍"></a>6.2 ZAB 协议介绍</h3><p><strong>ZAB（ZooKeeper Atomic Broadcast 原子广播） 协议是为分布式协调服务 ZooKeeper 专门设计的一种支持崩溃恢复的原子广播协议。 在 ZooKeeper 中，主要依赖 ZAB 协议来实现分布式数据一致性，基于该协议，ZooKeeper 实现了一种主备模式的系统架构来保持集群中各个副本之间的数据一致性。</strong></p>
+<h3 id="6-3-ZAB-协议两种基本的模式：崩溃恢复和消息广播"><a href="#6-3-ZAB-协议两种基本的模式：崩溃恢复和消息广播" class="headerlink" title="6.3 ZAB 协议两种基本的模式：崩溃恢复和消息广播"></a>6.3 ZAB 协议两种基本的模式：崩溃恢复和消息广播</h3><p>ZAB协议包括两种基本的模式，分别是 <strong>崩溃恢复和消息广播</strong>。当整个服务框架在启动过程中，或是当 Leader 服务器出现网络中断、崩溃退出与重启等异常情况时，ZAB 协议就会进人恢复模式并选举产生新的Leader服务器。当选举产生了新的 Leader 服务器，同时集群中已经有过半的机器与该Leader服务器完成了状态同步之后，ZAB协议就会退出恢复模式。其中，<strong>所谓的状态同步是指数据同步，用来保证集群中存在过半的机器能够和Leader服务器的数据状态保持一致</strong>。</p>
+<p><strong>当集群中已经有过半的Follower服务器完成了和Leader服务器的状态同步，那么整个服务框架就可以进人消息广播模式了。</strong> 当一台同样遵守ZAB协议的服务器启动后加人到集群中时，如果此时集群中已经存在一个Leader服务器在负责进行消息广播，那么新加人的服务器就会自觉地进人数据恢复模式：找到Leader所在的服务器，并与其进行数据同步，然后一起参与到消息广播流程中去。正如上文介绍中所说的，ZooKeeper设计成只允许唯一的一个Leader服务器来进行事务请求的处理。Leader服务器在接收到客户端的事务请求后，会生成对应的事务提案并发起一轮广播协议；而如果集群中的其他机器接收到客户端的事务请求，那么这些非Leader服务器会首先将这个事务请求转发给Leader服务器。</p>
+<p>关于 <strong>ZAB 协议&amp;Paxos算法</strong> 需要讲和理解的东西太多了，说实话，笔主到现在不太清楚这俩兄弟的具体原理和实现过程。推荐阅读下面两篇文章：</p>
+<ul>
+<li><a href="http://codemacro.com/2014/10/15/explain-poxos/" target="_blank" rel="noopener">图解 Paxos 一致性协议</a></li>
+<li><a href="https://dbaplus.cn/news-141-1875-1.html" target="_blank" rel="noopener">Zookeeper ZAB 协议分析</a></li>
+</ul>
+<p>关于如何使用 zookeeper 实现分布式锁，可以查看下面这篇文章：</p>
+<ul>
+<li><a href="https://blog.csdn.net/qiangcuo6087/article/details/79067136" target="_blank" rel="noopener">10分钟看懂！基于Zookeeper的分布式锁</a></li>
+</ul>
+<h2 id="六-总结"><a href="#六-总结" class="headerlink" title="六 总结"></a>六 总结</h2><p>通过阅读本文，想必大家已从 <strong>①ZooKeeper的由来。</strong> -&gt; <strong>②ZooKeeper 到底是什么 。</strong>-&gt; <strong>③ ZooKeeper 的一些重要概念</strong>（会话（Session）、 Znode、版本、Watcher、ACL）-&gt; <strong>④ZooKeeper 的特点。</strong> -&gt; <strong>⑤ZooKeeper 的设计目标。</strong>-&gt; <strong>⑥ ZooKeeper 集群角色介绍</strong> （Leader、Follower 和 Observer 三种角色）-&gt; <strong>⑦ZooKeeper &amp;ZAB 协议&amp;Paxos算法。</strong> 这七点了解了 ZooKeeper 。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li>《从Paxos到Zookeeper 》</li>
+<li><a href="https://cwiki.apache.org/confluence/display/ZOOKEEPER/ProjectDescription" target="_blank" rel="noopener">https://cwiki.apache.org/confluence/display/ZOOKEEPER/ProjectDescription</a></li>
+<li><a href="https://cwiki.apache.org/confluence/display/ZOOKEEPER/Index" target="_blank" rel="noopener">https://cwiki.apache.org/confluence/display/ZOOKEEPER/Index</a></li>
+<li><a href="https://www.cnblogs.com/raphael5200/p/5285583.html" target="_blank" rel="noopener">https://www.cnblogs.com/raphael5200/p/5285583.html</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/30024403" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/30024403</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/framework/ZooKeeper数据模型和常见命令/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -735,239 +1614,6 @@
 <li><a href="https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/observer.html" target="_blank" rel="noopener">https://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/observer.html</a></li>
 <li><a href="https://juejin.im/post/5a8eb261f265da4e9e307230" target="_blank" rel="noopener">https://juejin.im/post/5a8eb261f265da4e9e307230</a></li>
 <li><a href="https://juejin.im/post/5ba28986f265da0abc2b6084" target="_blank" rel="noopener">https://juejin.im/post/5ba28986f265da0abc2b6084</a></li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/framework/ZooKeeper/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/14/docs/system-design/framework/ZooKeeper/" class="post-title-link" itemprop="url">Untitled</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
-            </span>
-          
-
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/56385654.jpg" alt></p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>相信大家对 ZooKeeper 应该不算陌生。但是你真的了解 ZooKeeper 是个什么东西吗？如果别人/面试官让你给他讲讲  ZooKeeper 是个什么东西，你能回答到什么地步呢？</p>
-<p>我本人曾经使用过 ZooKeeper 作为 Dubbo 的注册中心，另外在搭建 solr 集群的时候，我使用到了  ZooKeeper 作为 solr 集群的管理工具。前几天，总结项目经验的时候，我突然问自己 ZooKeeper 到底是个什么东西？想了半天，脑海中只是简单的能浮现出几句话：“①Zookeeper 可以被用作注册中心。 ②Zookeeper 是 Hadoop 生态系统的一员；③构建 Zookeeper 集群的时候，使用的服务器最好是奇数台。” 可见，我对于 Zookeeper 的理解仅仅是停留在了表面。</p>
-<p>所以，<strong>通过本文，希望带大家稍微详细的了解一下 ZooKeeper 。如果没有学过 ZooKeeper ，那么本文将会是你进入 ZooKeeper 大门的垫脚砖。如果你已经接触过 ZooKeeper ，那么本文将带你回顾一下 ZooKeeper 的一些基础概念。</strong></p>
-<p>最后，<strong>本文只涉及 ZooKeeper 的一些概念，并不涉及 ZooKeeper 的使用以及 ZooKeeper 集群的搭建。</strong> 网上有介绍 ZooKeeper 的使用以及搭建 ZooKeeper 集群的文章，大家有需要可以自行查阅。</p>
-<h2 id="一-什么是-ZooKeeper"><a href="#一-什么是-ZooKeeper" class="headerlink" title="一 什么是 ZooKeeper"></a>一 什么是 ZooKeeper</h2><h3 id="ZooKeeper-的由来"><a href="#ZooKeeper-的由来" class="headerlink" title="ZooKeeper 的由来"></a>ZooKeeper 的由来</h3><p><strong>下面这段内容摘自《从Paxos到Zookeeper 》第四章第一节的某段内容，推荐大家阅读以下：</strong></p>
-<blockquote>
-<p>Zookeeper最早起源于雅虎研究院的一个研究小组。在当时，研究人员发现，在雅虎内部很多大型系统基本都需要依赖一个类似的系统来进行分布式协调，但是这些系统往往都存在分布式单点问题。所以，<strong>雅虎的开发人员就试图开发一个通用的无单点问题的分布式协调框架，以便让开发人员将精力集中在处理业务逻辑上。</strong></p>
-<p>关于“ZooKeeper”这个项目的名字，其实也有一段趣闻。在立项初期，考虑到之前内部很多项目都是使用动物的名字来命名的（例如著名的Pig项目),雅虎的工程师希望给这个项目也取一个动物的名字。时任研究院的首席科学家RaghuRamakrishnan开玩笑地说：“在这样下去，我们这儿就变成动物园了！”此话一出，大家纷纷表示就叫动物园管理员吧一一一因为各个以动物命名的分布式组件放在一起，<strong>雅虎的整个分布式系统看上去就像一个大型的动物园了，而Zookeeper正好要用来进行分布式环境的协调一一于是，Zookeeper的名字也就由此诞生了。</strong></p>
-</blockquote>
-<h3 id="1-1-ZooKeeper-概览"><a href="#1-1-ZooKeeper-概览" class="headerlink" title="1.1 ZooKeeper 概览"></a>1.1 ZooKeeper 概览</h3><p>ZooKeeper 是一个开源的分布式协调服务，ZooKeeper框架最初是在“Yahoo!”上构建的，用于以简单而稳健的方式访问他们的应用程序。 后来，Apache ZooKeeper成为Hadoop，HBase和其他分布式框架使用的有组织服务的标准。 例如，Apache HBase使用ZooKeeper跟踪分布式数据的状态。<strong>ZooKeeper 的设计目标是将那些复杂且容易出错的分布式一致性服务封装起来，构成一个高效可靠的原语集，并以一系列简单易用的接口提供给用户使用。</strong></p>
-<blockquote>
-<p><strong>原语：</strong> 操作系统或计算机网络用语范畴。是由若干条指令组成的，用于完成一定功能的一个过程。具有不可分割性·即原语的执行必须是连续的，在执行过程中不允许被中断。</p>
-</blockquote>
-<p><strong>ZooKeeper 是一个典型的分布式数据一致性解决方案，分布式应用程序可以基于 ZooKeeper 实现诸如数据发布/订阅、负载均衡、命名服务、分布式协调/通知、集群管理、Master 选举、分布式锁和分布式队列等功能。</strong></p>
-<p><strong>Zookeeper 一个最常用的使用场景就是用于担任服务生产者和服务消费者的注册中心(提供发布订阅服务)。</strong> 服务生产者将自己提供的服务注册到Zookeeper中心，服务的消费者在进行服务调用的时候先到Zookeeper中查找服务，获取到服务生产者的详细信息之后，再去调用服务生产者的内容与数据。如下图所示，在 Dubbo架构中 Zookeeper 就担任了注册中心这一角色。</p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/35571782.jpg" alt="Dubbo"></p>
-<h3 id="1-2-结合个人使用情况的讲一下-ZooKeeper"><a href="#1-2-结合个人使用情况的讲一下-ZooKeeper" class="headerlink" title="1.2 结合个人使用情况的讲一下 ZooKeeper"></a>1.2 结合个人使用情况的讲一下 ZooKeeper</h3><p>在我自己做过的项目中，主要使用到了 ZooKeeper 作为 Dubbo 的注册中心(Dubbo 官方推荐使用 ZooKeeper注册中心)。另外在搭建 solr 集群的时候，我使用  ZooKeeper 作为 solr 集群的管理工具。这时，ZooKeeper 主要提供下面几个功能：1、集群管理：容错、负载均衡。2、配置文件的集中管理3、集群的入口。</p>
-<p>我个人觉得在使用 ZooKeeper 的时候，最好是使用 集群版的 ZooKeeper 而不是单机版的。官网给出的架构图就描述的是一个集群版的 ZooKeeper 。通常 3 台服务器就可以构成一个  ZooKeeper  集群了。</p>
-<p><strong>为什么最好使用奇数台服务器构成 ZooKeeper 集群？</strong></p>
-<p>所谓的zookeeper容错是指，当宕掉几个zookeeper服务器之后，剩下的个数必须大于宕掉的个数的话整个zookeeper才依然可用。假如我们的集群中有n台zookeeper服务器，那么也就是剩下的服务数必须大于n/2。先说一下结论，2n和2n-1的容忍度是一样的，都是n-1，大家可以先自己仔细想一想，这应该是一个很简单的数学问题了。<br>比如假如我们有3台，那么最大允许宕掉1台zookeeper服务器，如果我们有4台的的时候也同样只允许宕掉1台。<br>假如我们有5台，那么最大允许宕掉2台zookeeper服务器，如果我们有6台的的时候也同样只允许宕掉2台。</p>
-<p>综上，何必增加那一个不必要的zookeeper呢？</p>
-<h2 id="二-关于-ZooKeeper-的一些重要概念"><a href="#二-关于-ZooKeeper-的一些重要概念" class="headerlink" title="二 关于 ZooKeeper  的一些重要概念"></a>二 关于 ZooKeeper  的一些重要概念</h2><h3 id="2-1-重要概念总结"><a href="#2-1-重要概念总结" class="headerlink" title="2.1 重要概念总结"></a>2.1 重要概念总结</h3><ul>
-<li><strong>ZooKeeper  本身就是一个分布式程序（只要半数以上节点存活，ZooKeeper  就能正常服务）。</strong></li>
-<li><strong>为了保证高可用，最好是以集群形态来部署 ZooKeeper，这样只要集群中大部分机器是可用的（能够容忍一定的机器故障），那么 ZooKeeper 本身仍然是可用的。</strong></li>
-<li><strong>ZooKeeper  将数据保存在内存中，这也就保证了 高吞吐量和低延迟</strong>（但是内存限制了能够存储的容量不太大，此限制也是保持znode中存储的数据量较小的进一步原因）。</li>
-<li><strong>ZooKeeper 是高性能的。 在“读”多于“写”的应用程序中尤其地高性能，因为“写”会导致所有的服务器间同步状态。</strong>（“读”多于“写”是协调服务的典型场景。）</li>
-<li><strong>ZooKeeper有临时节点的概念。 当创建临时节点的客户端会话一直保持活动，瞬时节点就一直存在。而当会话终结时，瞬时节点被删除。持久节点是指一旦这个ZNode被创建了，除非主动进行ZNode的移除操作，否则这个ZNode将一直保存在Zookeeper上。</strong></li>
-<li>ZooKeeper 底层其实只提供了两个功能：①管理（存储、读取）用户程序提交的数据；②为用户程序提供数据节点监听服务。</li>
-</ul>
-<p><strong>下面关于会话（Session）、 Znode、版本、Watcher、ACL概念的总结都在《从Paxos到Zookeeper 》第四章第一节以及第七章第八节有提到，感兴趣的可以看看！</strong></p>
-<h3 id="2-2-会话（Session）"><a href="#2-2-会话（Session）" class="headerlink" title="2.2 会话（Session）"></a>2.2 会话（Session）</h3><p>Session 指的是 ZooKeeper  服务器与客户端会话。<strong>在 ZooKeeper 中，一个客户端连接是指客户端和服务器之间的一个 TCP 长连接</strong>。客户端启动的时候，首先会与服务器建立一个 TCP 连接，从第一次连接建立开始，客户端会话的生命周期也开始了。<strong>通过这个连接，客户端能够通过心跳检测与服务器保持有效的会话，也能够向Zookeeper服务器发送请求并接受响应，同时还能够通过该连接接收来自服务器的Watch事件通知。</strong> Session的<code>sessionTimeout</code>值用来设置一个客户端会话的超时时间。当由于服务器压力太大、网络故障或是客户端主动断开连接等各种原因导致客户端连接断开时，<strong>只要在<code>sessionTimeout</code>规定的时间内能够重新连接上集群中任意一台服务器，那么之前创建的会话仍然有效。</strong></p>
-<p><strong>在为客户端创建会话之前，服务端首先会为每个客户端都分配一个sessionID。由于 sessionID 是 Zookeeper 会话的一个重要标识，许多与会话相关的运行机制都是基于这个 sessionID 的，因此，无论是哪台服务器为客户端分配的 sessionID，都务必保证全局唯一。</strong></p>
-<h3 id="2-3-Znode"><a href="#2-3-Znode" class="headerlink" title="2.3 Znode"></a>2.3 Znode</h3><p><strong>在谈到分布式的时候，我们通常说的“节点”是指组成集群的每一台机器。然而，在Zookeeper中，“节点”分为两类，第一类同样是指构成集群的机器，我们称之为机器节点；第二类则是指数据模型中的数据单元，我们称之为数据节点一一ZNode。</strong></p>
-<p>Zookeeper将所有数据存储在内存中，数据模型是一棵树（Znode Tree)，由斜杠（/）的进行分割的路径，就是一个Znode，例如/foo/path1。每个上都会保存自己的数据内容，同时还会保存一系列属性信息。</p>
-<p><strong>在Zookeeper中，node可以分为持久节点和临时节点两类。所谓持久节点是指一旦这个ZNode被创建了，除非主动进行ZNode的移除操作，否则这个ZNode将一直保存在Zookeeper上。而临时节点就不一样了，它的生命周期和客户端会话绑定，一旦客户端会话失效，那么这个客户端创建的所有临时节点都会被移除。</strong> 另外，ZooKeeper还允许用户为每个节点添加一个特殊的属性：<strong>SEQUENTIAL</strong>.一旦节点被标记上这个属性，那么在这个节点被创建的时候，Zookeeper会自动在其节点名后面追加上一个整型数字，这个整型数字是一个由父节点维护的自增数字。</p>
-<h3 id="2-4-版本"><a href="#2-4-版本" class="headerlink" title="2.4 版本"></a>2.4 版本</h3><p>在前面我们已经提到，Zookeeper 的每个 ZNode 上都会存储数据，对应于每个ZNode，Zookeeper 都会为其维护一个叫作 <strong>Stat</strong> 的数据结构，Stat 中记录了这个 ZNode 的三个数据版本，分别是version（当前ZNode的版本）、cversion（当前ZNode子节点的版本）和 aversion（当前ZNode的ACL版本）。</p>
-<h3 id="2-5-Watcher"><a href="#2-5-Watcher" class="headerlink" title="2.5 Watcher"></a>2.5 Watcher</h3><p><strong>Watcher（事件监听器），是Zookeeper中的一个很重要的特性。Zookeeper允许用户在指定节点上注册一些Watcher，并且在一些特定事件触发的时候，ZooKeeper服务端会将事件通知到感兴趣的客户端上去，该机制是Zookeeper实现分布式协调服务的重要特性。</strong></p>
-<h3 id="2-6-ACL"><a href="#2-6-ACL" class="headerlink" title="2.6 ACL"></a>2.6 ACL</h3><p>Zookeeper采用ACL（AccessControlLists）策略来进行权限控制，类似于 UNIX 文件系统的权限控制。Zookeeper 定义了如下5种权限。</p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/27473480.jpg" alt></p>
-<p>其中尤其需要注意的是，CREATE和DELETE这两种权限都是针对子节点的权限控制。</p>
-<h2 id="三-ZooKeeper-特点"><a href="#三-ZooKeeper-特点" class="headerlink" title="三 ZooKeeper 特点"></a>三 ZooKeeper 特点</h2><ul>
-<li><strong>顺序一致性：</strong> 从同一客户端发起的事务请求，最终将会严格地按照顺序被应用到 ZooKeeper 中去。</li>
-<li><strong>原子性：</strong> 所有事务请求的处理结果在整个集群中所有机器上的应用情况是一致的，也就是说，要么整个集群中所有的机器都成功应用了某一个事务，要么都没有应用。</li>
-<li><strong>单一系统映像 ：</strong> 无论客户端连到哪一个 ZooKeeper 服务器上，其看到的服务端数据模型都是一致的。</li>
-<li><strong>可靠性：</strong> 一旦一次更改请求被应用，更改的结果就会被持久化，直到被下一次更改覆盖。</li>
-</ul>
-<h2 id="四-ZooKeeper-设计目标"><a href="#四-ZooKeeper-设计目标" class="headerlink" title="四 ZooKeeper 设计目标"></a>四 ZooKeeper 设计目标</h2><h3 id="4-1-简单的数据模型"><a href="#4-1-简单的数据模型" class="headerlink" title="4.1 简单的数据模型"></a>4.1 简单的数据模型</h3><p>ZooKeeper 允许分布式进程通过共享的层次结构命名空间进行相互协调，这与标准文件系统类似。 名称空间由 ZooKeeper 中的数据寄存器组成 - 称为znode，这些类似于文件和目录。 与为存储设计的典型文件系统不同，ZooKeeper数据保存在内存中，这意味着ZooKeeper可以实现高吞吐量和低延迟。</p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/94251757.jpg" alt></p>
-<h3 id="4-2-可构建集群"><a href="#4-2-可构建集群" class="headerlink" title="4.2 可构建集群"></a>4.2 可构建集群</h3><p><strong>为了保证高可用，最好是以集群形态来部署 ZooKeeper，这样只要集群中大部分机器是可用的（能够容忍一定的机器故障），那么zookeeper本身仍然是可用的。</strong> 客户端在使用 ZooKeeper 时，需要知道集群机器列表，通过与集群中的某一台机器建立 TCP 连接来使用服务，客户端使用这个TCP链接来发送请求、获取结果、获取监听事件以及发送心跳包。如果这个连接异常断开了，客户端可以连接到另外的机器上。</p>
-<p><strong>ZooKeeper 官方提供的架构图：</strong></p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/68900686.jpg" alt></p>
-<p>上图中每一个Server代表一个安装Zookeeper服务的服务器。组成 ZooKeeper 服务的服务器都会在内存中维护当前的服务器状态，并且每台服务器之间都互相保持着通信。集群间通过 Zab 协议（Zookeeper Atomic Broadcast）来保持数据的一致性。</p>
-<h3 id="4-3-顺序访问"><a href="#4-3-顺序访问" class="headerlink" title="4.3 顺序访问"></a>4.3 顺序访问</h3><p><strong>对于来自客户端的每个更新请求，ZooKeeper 都会分配一个全局唯一的递增编号，这个编号反应了所有事务操作的先后顺序，应用程序可以使用 ZooKeeper 这个特性来实现更高层次的同步原语。</strong> <strong>这个编号也叫做时间戳——zxid（Zookeeper Transaction Id）</strong></p>
-<h3 id="4-4-高性能"><a href="#4-4-高性能" class="headerlink" title="4.4 高性能"></a>4.4 高性能</h3><p><strong>ZooKeeper 是高性能的。 在“读”多于“写”的应用程序中尤其地高性能，因为“写”会导致所有的服务器间同步状态。（“读”多于“写”是协调服务的典型场景。）</strong></p>
-<h2 id="五-ZooKeeper-集群角色介绍"><a href="#五-ZooKeeper-集群角色介绍" class="headerlink" title="五 ZooKeeper 集群角色介绍"></a>五 ZooKeeper 集群角色介绍</h2><p><strong>最典型集群模式： Master/Slave 模式（主备模式）</strong>。在这种模式中，通常 Master服务器作为主服务器提供写服务，其他的 Slave 服务器从服务器通过异步复制的方式获取 Master 服务器最新的数据提供读服务。</p>
-<p>但是，<strong>在 ZooKeeper 中没有选择传统的  Master/Slave 概念，而是引入了Leader、Follower 和 Observer 三种角色</strong>。如下图所示</p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/89602762.jpg" alt></p>
-<p> <strong>ZooKeeper 集群中的所有机器通过一个 Leader 选举过程来选定一台称为 “Leader” 的机器，Leader 既可以为客户端提供写服务又能提供读服务。除了 Leader 外，Follower 和  Observer 都只能提供读服务。Follower 和  Observer 唯一的区别在于 Observer 机器不参与 Leader 的选举过程，也不参与写操作的“过半写成功”策略，因此 Observer 机器可以在不影响写性能的情况下提升集群的读性能。</strong></p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-13/91622395.jpg" alt></p>
-<p><strong>当 Leader 服务器出现网络中断、崩溃退出与重启等异常情况时，ZAB 协议就会进人恢复模式并选举产生新的Leader服务器。这个过程大致是这样的：</strong></p>
-<ol>
-<li>Leader election（选举阶段）：节点在一开始都处于选举阶段，只要有一个节点得到超半数节点的票数，它就可以当选准 leader。</li>
-<li>Discovery（发现阶段）：在这个阶段，followers 跟准 leader 进行通信，同步 followers 最近接收的事务提议。</li>
-<li>Synchronization（同步阶段）:同步阶段主要是利用 leader 前一阶段获得的最新提议历史，同步集群中所有的副本。同步完成之后<br>准 leader 才会成为真正的 leader。</li>
-<li>Broadcast（广播阶段）<br>到了这个阶段，Zookeeper 集群才能正式对外提供事务服务，并且 leader 可以进行消息广播。同时如果有新的节点加入，还需要对新节点进行同步。</li>
-</ol>
-<h2 id="六-ZooKeeper-amp-ZAB-协议-amp-Paxos算法"><a href="#六-ZooKeeper-amp-ZAB-协议-amp-Paxos算法" class="headerlink" title="六 ZooKeeper &amp;ZAB 协议&amp;Paxos算法"></a>六 ZooKeeper &amp;ZAB 协议&amp;Paxos算法</h2><h3 id="6-1-ZAB-协议-amp-Paxos算法"><a href="#6-1-ZAB-协议-amp-Paxos算法" class="headerlink" title="6.1 ZAB 协议&amp;Paxos算法"></a>6.1 ZAB 协议&amp;Paxos算法</h3><p>Paxos 算法应该可以说是  ZooKeeper 的灵魂了。但是，ZooKeeper 并没有完全采用 Paxos算法 ，而是使用 ZAB 协议作为其保证数据一致性的核心算法。另外，在ZooKeeper的官方文档中也指出，ZAB协议并不像 Paxos 算法那样，是一种通用的分布式一致性算法，它是一种特别为Zookeeper设计的崩溃可恢复的原子消息广播算法。</p>
-<h3 id="6-2-ZAB-协议介绍"><a href="#6-2-ZAB-协议介绍" class="headerlink" title="6.2 ZAB 协议介绍"></a>6.2 ZAB 协议介绍</h3><p><strong>ZAB（ZooKeeper Atomic Broadcast 原子广播） 协议是为分布式协调服务 ZooKeeper 专门设计的一种支持崩溃恢复的原子广播协议。 在 ZooKeeper 中，主要依赖 ZAB 协议来实现分布式数据一致性，基于该协议，ZooKeeper 实现了一种主备模式的系统架构来保持集群中各个副本之间的数据一致性。</strong></p>
-<h3 id="6-3-ZAB-协议两种基本的模式：崩溃恢复和消息广播"><a href="#6-3-ZAB-协议两种基本的模式：崩溃恢复和消息广播" class="headerlink" title="6.3 ZAB 协议两种基本的模式：崩溃恢复和消息广播"></a>6.3 ZAB 协议两种基本的模式：崩溃恢复和消息广播</h3><p>ZAB协议包括两种基本的模式，分别是 <strong>崩溃恢复和消息广播</strong>。当整个服务框架在启动过程中，或是当 Leader 服务器出现网络中断、崩溃退出与重启等异常情况时，ZAB 协议就会进人恢复模式并选举产生新的Leader服务器。当选举产生了新的 Leader 服务器，同时集群中已经有过半的机器与该Leader服务器完成了状态同步之后，ZAB协议就会退出恢复模式。其中，<strong>所谓的状态同步是指数据同步，用来保证集群中存在过半的机器能够和Leader服务器的数据状态保持一致</strong>。</p>
-<p><strong>当集群中已经有过半的Follower服务器完成了和Leader服务器的状态同步，那么整个服务框架就可以进人消息广播模式了。</strong> 当一台同样遵守ZAB协议的服务器启动后加人到集群中时，如果此时集群中已经存在一个Leader服务器在负责进行消息广播，那么新加人的服务器就会自觉地进人数据恢复模式：找到Leader所在的服务器，并与其进行数据同步，然后一起参与到消息广播流程中去。正如上文介绍中所说的，ZooKeeper设计成只允许唯一的一个Leader服务器来进行事务请求的处理。Leader服务器在接收到客户端的事务请求后，会生成对应的事务提案并发起一轮广播协议；而如果集群中的其他机器接收到客户端的事务请求，那么这些非Leader服务器会首先将这个事务请求转发给Leader服务器。</p>
-<p>关于 <strong>ZAB 协议&amp;Paxos算法</strong> 需要讲和理解的东西太多了，说实话，笔主到现在不太清楚这俩兄弟的具体原理和实现过程。推荐阅读下面两篇文章：</p>
-<ul>
-<li><a href="http://codemacro.com/2014/10/15/explain-poxos/" target="_blank" rel="noopener">图解 Paxos 一致性协议</a></li>
-<li><a href="https://dbaplus.cn/news-141-1875-1.html" target="_blank" rel="noopener">Zookeeper ZAB 协议分析</a></li>
-</ul>
-<p>关于如何使用 zookeeper 实现分布式锁，可以查看下面这篇文章：</p>
-<ul>
-<li><a href="https://blog.csdn.net/qiangcuo6087/article/details/79067136" target="_blank" rel="noopener">10分钟看懂！基于Zookeeper的分布式锁</a></li>
-</ul>
-<h2 id="六-总结"><a href="#六-总结" class="headerlink" title="六 总结"></a>六 总结</h2><p>通过阅读本文，想必大家已从 <strong>①ZooKeeper的由来。</strong> -&gt; <strong>②ZooKeeper 到底是什么 。</strong>-&gt; <strong>③ ZooKeeper 的一些重要概念</strong>（会话（Session）、 Znode、版本、Watcher、ACL）-&gt; <strong>④ZooKeeper 的特点。</strong> -&gt; <strong>⑤ZooKeeper 的设计目标。</strong>-&gt; <strong>⑥ ZooKeeper 集群角色介绍</strong> （Leader、Follower 和 Observer 三种角色）-&gt; <strong>⑦ZooKeeper &amp;ZAB 协议&amp;Paxos算法。</strong> 这七点了解了 ZooKeeper 。</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li>《从Paxos到Zookeeper 》</li>
-<li><a href="https://cwiki.apache.org/confluence/display/ZOOKEEPER/ProjectDescription" target="_blank" rel="noopener">https://cwiki.apache.org/confluence/display/ZOOKEEPER/ProjectDescription</a></li>
-<li><a href="https://cwiki.apache.org/confluence/display/ZOOKEEPER/Index" target="_blank" rel="noopener">https://cwiki.apache.org/confluence/display/ZOOKEEPER/Index</a></li>
-<li><a href="https://www.cnblogs.com/raphael5200/p/5285583.html" target="_blank" rel="noopener">https://www.cnblogs.com/raphael5200/p/5285583.html</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/30024403" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/30024403</a></li>
 </ul>
 
           
@@ -1508,903 +2154,6 @@
 
 <p>再次访问:http://你的ip地址:15672/ ,输入用户名和密码：root root</p>
 <p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-12/45835332.jpg" alt="RabbitMQ控制台"></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/data-communication/message-queue/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/14/docs/system-design/data-communication/message-queue/" class="post-title-link" itemprop="url">Untitled</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
-            </span>
-          
-
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <!-- MarkdownTOC -->
-
-<ul>
-<li><a href="#消息队列其实很简单">消息队列其实很简单</a><ul>
-<li><a href="#一-什么是消息队列">一 什么是消息队列</a></li>
-<li><a href="#二-为什么要用消息队列">二 为什么要用消息队列</a><ul>
-<li><a href="#1-通过异步处理提高系统性能削峰减少响应所需时间">(1) 通过异步处理提高系统性能（削峰、减少响应所需时间）</a></li>
-<li><a href="#2-降低系统耦合性">(2) 降低系统耦合性</a></li>
-</ul>
-</li>
-<li><a href="#三-使用消息队列带来的一些问题">三 使用消息队列带来的一些问题</a></li>
-<li><a href="#四-jms-vs-amqp">四 JMS VS AMQP</a><ul>
-<li><a href="#41-jms">4.1 JMS</a><ul>
-<li><a href="#411-jms-简介">4.1.1 JMS 简介</a></li>
-<li><a href="#412-jms两种消息模型">4.1.2 JMS两种消息模型</a></li>
-<li><a href="#413-jms-五种不同的消息正文格式">4.1.3 JMS 五种不同的消息正文格式</a></li>
-</ul>
-</li>
-<li><a href="#42-amqp">4.2 AMQP</a></li>
-<li><a href="#43-jms-vs-amqp">4.3 JMS vs AMQP</a></li>
-</ul>
-</li>
-<li><a href="#五-常见的消息队列对比">五 常见的消息队列对比</a></li>
-</ul>
-</li>
-</ul>
-<!-- /MarkdownTOC -->
-
-
-<h1 id="消息队列其实很简单"><a href="#消息队列其实很简单" class="headerlink" title="消息队列其实很简单"></a>消息队列其实很简单</h1><p>　　“RabbitMQ？”“Kafka？”“RocketMQ？”…在日常学习与开发过程中，我们常常听到消息队列这个关键词。我也在我的多篇文章中提到了这个概念。可能你是熟练使用消息队列的老手，又或者你是不懂消息队列的新手，不论你了不了解消息队列，本文都将带你搞懂消息队列的一些基本理论。如果你是老手，你可能从本文学到你之前不曾注意的一些关于消息队列的重要概念，如果你是新手，相信本文将是你打开消息队列大门的一板砖。</p>
-<h2 id="一-什么是消息队列"><a href="#一-什么是消息队列" class="headerlink" title="一 什么是消息队列"></a>一 什么是消息队列</h2><p>　　我们可以把消息队列比作是一个存放消息的容器，当我们需要使用消息的时候可以取出消息供自己使用。消息队列是分布式系统中重要的组件，使用消息队列主要是为了通过异步处理提高系统性能和削峰、降低系统耦合性。目前使用较多的消息队列有ActiveMQ，RabbitMQ，Kafka，RocketMQ，我们后面会一一对比这些消息队列。</p>
-<p>　　另外，我们知道队列 Queue 是一种先进先出的数据结构，所以消费消息时也是按照顺序来消费的。比如生产者发送消息1,2,3…对于消费者就会按照1,2,3…的顺序来消费。但是偶尔也会出现消息被消费的顺序不对的情况，比如某个消息消费失败又或者一个 queue 多个consumer 也会导致消息被消费的顺序不对，我们一定要保证消息被消费的顺序正确。</p>
-<p>　　除了上面说的消息消费顺序的问题，使用消息队列，我们还要考虑如何保证消息不被重复消费？如何保证消息的可靠性传输（如何处理消息丢失的问题）？……等等问题。所以说使用消息队列也不是十全十美的，使用它也会让系统可用性降低、复杂度提高，另外需要我们保障一致性等问题。</p>
-<h2 id="二-为什么要用消息队列"><a href="#二-为什么要用消息队列" class="headerlink" title="二 为什么要用消息队列"></a>二 为什么要用消息队列</h2><p>　　我觉得使用消息队列主要有两点好处：1.通过异步处理提高系统性能（削峰、减少响应所需时间）;2.降低系统耦合性。如果在面试的时候你被面试官问到这个问题的话，一般情况是你在你的简历上涉及到消息队列这方面的内容，这个时候推荐你结合你自己的项目来回答。</p>
-<p>　　《大型网站技术架构》第四章和第七章均有提到消息队列对应用性能及扩展性的提升。</p>
-<h3 id="1-通过异步处理提高系统性能（削峰、减少响应所需时间）"><a href="#1-通过异步处理提高系统性能（削峰、减少响应所需时间）" class="headerlink" title="(1) 通过异步处理提高系统性能（削峰、减少响应所需时间）"></a>(1) 通过异步处理提高系统性能（削峰、减少响应所需时间）</h3><p><img src="https://user-gold-cdn.xitu.io/2018/4/21/162e63a8e34ba534?w=910&h=350&f=jpeg&s=29123" alt="通过异步处理提高系统性能"><br>　　如上图，<strong>在不使用消息队列服务器的时候，用户的请求数据直接写入数据库，在高并发的情况下数据库压力剧增，使得响应速度变慢。但是在使用消息队列之后，用户的请求数据发送给消息队列之后立即 返回，再由消息队列的消费者进程从消息队列中获取数据，异步写入数据库。由于消息队列服务器处理速度快于数据库（消息队列也比数据库有更好的伸缩性），因此响应速度得到大幅改善。</strong></p>
-<p>　　通过以上分析我们可以得出<strong>消息队列具有很好的削峰作用的功能</strong>——即<strong>通过异步处理，将短时间高并发产生的事务消息存储在消息队列中，从而削平高峰期的并发事务。</strong> 举例：在电子商务一些秒杀、促销活动中，合理使用消息队列可以有效抵御促销活动刚开始大量订单涌入对系统的冲击。如下图所示：<br><img src="https://user-gold-cdn.xitu.io/2018/4/21/162e64583dd3ed01?w=780&h=384&f=jpeg&s=13550" alt="合理使用消息队列可以有效抵御促销活动刚开始大量订单涌入对系统的冲击"></p>
-<p>　　因为<strong>用户请求数据写入消息队列之后就立即返回给用户了，但是请求数据在后续的业务校验、写数据库等操作中可能失败</strong>。因此使用消息队列进行异步处理之后，需要<strong>适当修改业务流程进行配合</strong>，比如<strong>用户在提交订单之后，订单数据写入消息队列，不能立即返回用户订单提交成功，需要在消息队列的订单消费者进程真正处理完该订单之后，甚至出库后，再通过电子邮件或短信通知用户订单成功</strong>，以免交易纠纷。这就类似我们平时手机订火车票和电影票。</p>
-<h3 id="2-降低系统耦合性"><a href="#2-降低系统耦合性" class="headerlink" title="(2) 降低系统耦合性"></a>(2) 降低系统耦合性</h3><p>　　我们知道如果模块之间不存在直接调用，那么新增模块或者修改模块就对其他模块影响较小，这样系统的可扩展性无疑更好一些。</p>
-<p>　　我们最常见的<strong>事件驱动架构</strong>类似生产者消费者模式，在大型网站中通常用利用消息队列实现事件驱动结构。如下图所示：</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/4/21/162e6665fa394b3b?w=790&h=290&f=jpeg&s=14946" alt="利用消息队列实现事件驱动结构"></p>
-<p>　　<strong>消息队列使利用发布-订阅模式工作，消息发送者（生产者）发布消息，一个或多个消息接受者（消费者）订阅消息。</strong> 从上图可以看到<strong>消息发送者（生产者）和消息接受者（消费者）之间没有直接耦合</strong>，消息发送者将消息发送至分布式消息队列即结束对消息的处理，消息接受者从分布式消息队列获取该消息后进行后续处理，并不需要知道该消息从何而来。<strong>对新增业务，只要对该类消息感兴趣，即可订阅该消息，对原有系统和业务没有任何影响，从而实现网站业务的可扩展性设计</strong>。</p>
-<p>　　消息接受者对消息进行过滤、处理、包装后，构造成一个新的消息类型，将消息继续发送出去，等待其他消息接受者订阅该消息。因此基于事件（消息对象）驱动的业务架构可以是一系列流程。</p>
-<p>　　<strong>另外为了避免消息队列服务器宕机造成消息丢失，会将成功发送到消息队列的消息存储在消息生产者服务器上，等消息真正被消费者服务器处理后才删除消息。在消息队列服务器宕机后，生产者服务器会选择分布式消息队列服务器集群中的其他服务器发布消息。</strong>   </p>
-<p><strong>备注：</strong> 不要认为消息队列只能利用发布-订阅模式工作，只不过在解耦这个特定业务环境下是使用发布-订阅模式的。<strong>除了发布-订阅模式，还有点对点订阅模式（一个消息只有一个消费者），我们比较常用的是发布-订阅模式。</strong> 另外，这两种消息模型是 JMS 提供的，AMQP 协议还提供了 5 种消息模型。</p>
-<h2 id="三-使用消息队列带来的一些问题"><a href="#三-使用消息队列带来的一些问题" class="headerlink" title="三 使用消息队列带来的一些问题"></a>三 使用消息队列带来的一些问题</h2><ul>
-<li><strong>系统可用性降低：</strong> 系统可用性在某种程度上降低，为什么这样说呢？在加入MQ之前，你不用考虑消息丢失或者说MQ挂掉等等的情况，但是，引入MQ之后你就需要去考虑了！</li>
-<li><strong>系统复杂性提高：</strong> 加入MQ之后，你需要保证消息没有被重复消费、处理消息丢失的情况、保证消息传递的顺序性等等问题！</li>
-<li><strong>一致性问题：</strong> 我上面讲了消息队列可以实现异步，消息队列带来的异步确实可以提高系统响应速度。但是，万一消息的真正消费者并没有正确消费消息怎么办？这样就会导致数据不一致的情况了!</li>
-</ul>
-<h2 id="四-JMS-VS-AMQP"><a href="#四-JMS-VS-AMQP" class="headerlink" title="四 JMS VS AMQP"></a>四 JMS VS AMQP</h2><h3 id="4-1-JMS"><a href="#4-1-JMS" class="headerlink" title="4.1 JMS"></a>4.1 JMS</h3><h4 id="4-1-1-JMS-简介"><a href="#4-1-1-JMS-简介" class="headerlink" title="4.1.1 JMS 简介"></a>4.1.1 JMS 简介</h4><p>　　JMS（JAVA Message Service,java消息服务）是java的消息服务，JMS的客户端之间可以通过JMS服务进行异步的消息传输。<strong>JMS（JAVA Message Service，Java消息服务）API是一个消息服务的标准或者说是规范</strong>，允许应用程序组件基于JavaEE平台创建、发送、接收和读取消息。它使分布式通信耦合度更低，消息服务更加可靠以及异步性。</p>
-<p><strong>ActiveMQ 就是基于 JMS 规范实现的。</strong></p>
-<h4 id="4-1-2-JMS两种消息模型"><a href="#4-1-2-JMS两种消息模型" class="headerlink" title="4.1.2 JMS两种消息模型"></a>4.1.2 JMS两种消息模型</h4><p>①点到点（P2P）模型</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/4/21/162e7185572ca37d?w=575&h=135&f=gif&s=8530" alt="点到点（P2P）模型">
-　　</p>
-<p>使用<strong>队列（Queue）</strong>作为消息通信载体；满足<strong>生产者与消费者模式</strong>，一条消息只能被一个消费者使用，未被消费的消息在队列中保留直到被消费或超时。比如：我们生产者发送100条消息的话，两个消费者来消费一般情况下两个消费者会按照消息发送的顺序各自消费一半（也就是你一个我一个的消费。）</p>
-<p>② 发布/订阅（Pub/Sub）模型</p>
-<p>  <img src="https://user-gold-cdn.xitu.io/2018/4/21/162e7187c268eaa5?w=402&h=164&f=gif&s=15492" alt="发布/订阅（Pub/Sub）模型">
-　　</p>
-<p>发布订阅模型（Pub/Sub） 使用<strong>主题（Topic）</strong>作为消息通信载体，类似于<strong>广播模式</strong>；发布者发布一条消息，该消息通过主题传递给所有的订阅者，<strong>在一条消息广播之后才订阅的用户则是收不到该条消息的</strong>。</p>
-<h4 id="4-1-3-JMS-五种不同的消息正文格式"><a href="#4-1-3-JMS-五种不同的消息正文格式" class="headerlink" title="4.1.3 JMS 五种不同的消息正文格式"></a>4.1.3 JMS 五种不同的消息正文格式</h4><p>　　JMS定义了五种不同的消息正文格式，以及调用的消息类型，允许你发送并接收以一些不同形式的数据，提供现有消息格式的一些级别的兼容性。</p>
-<ul>
-<li>StreamMessage – Java原始值的数据流</li>
-<li>MapMessage–一套名称-值对</li>
-<li>TextMessage–一个字符串对象</li>
-<li>ObjectMessage–一个序列化的 Java对象</li>
-<li>BytesMessage–一个字节的数据流</li>
-</ul>
-<h3 id="4-2-AMQP"><a href="#4-2-AMQP" class="headerlink" title="4.2 AMQP"></a>4.2 AMQP</h3><p>　　​ AMQP，即Advanced Message Queuing Protocol，一个提供统一消息服务的应用层标准 <strong>高级消息队列协议</strong>（二进制应用层协议），是应用层协议的一个开放标准,为面向消息的中间件设计，兼容 JMS。基于此协议的客户端与消息中间件可传递消息，并不受客户端/中间件同产品，不同的开发语言等条件的限制。</p>
-<p><strong>RabbitMQ 就是基于 AMQP 协议实现的。</strong></p>
-<h3 id="4-3-JMS-vs-AMQP"><a href="#4-3-JMS-vs-AMQP" class="headerlink" title="4.3 JMS vs AMQP"></a>4.3 JMS vs AMQP</h3><table>
-<thead>
-<tr>
-<th align="left">对比方向</th>
-<th align="right">JMS</th>
-<th align="center">AMQP</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">定义</td>
-<td align="right">Java API</td>
-<td align="center">协议</td>
-</tr>
-<tr>
-<td align="left">跨语言</td>
-<td align="right">否</td>
-<td align="center">是</td>
-</tr>
-<tr>
-<td align="left">跨平台</td>
-<td align="right">否</td>
-<td align="center">是</td>
-</tr>
-<tr>
-<td align="left">支持消息类型</td>
-<td align="right">提供两种消息模型：①Peer-2-Peer;②Pub/sub</td>
-<td align="center">提供了五种消息模型：①direct exchange；②fanout exchange；③topic change；④headers exchange；⑤system exchange。本质来讲，后四种和JMS的pub/sub模型没有太大差别，仅是在路由机制上做了更详细的划分；</td>
-</tr>
-<tr>
-<td align="left">支持消息类型</td>
-<td align="right">支持多种消息类型 ，我们在上面提到过</td>
-<td align="center">byte[]（二进制）</td>
-</tr>
-</tbody></table>
-<p><strong>总结：</strong></p>
-<ul>
-<li>AMQP 为消息定义了线路层（wire-level protocol）的协议，而JMS所定义的是API规范。在 Java 体系中，多个client均可以通过JMS进行交互，不需要应用修改代码，但是其对跨平台的支持较差。而AMQP天然具有跨平台、跨语言特性。</li>
-<li>JMS 支持TextMessage、MapMessage 等复杂的消息类型；而 AMQP 仅支持 byte[] 消息类型（复杂的类型可序列化后发送）。</li>
-<li>由于Exchange 提供的路由算法，AMQP可以提供多样化的路由方式来传递消息到消息队列，而 JMS 仅支持 队列 和 主题/订阅 方式两种。 </li>
-</ul>
-<h2 id="五-常见的消息队列对比"><a href="#五-常见的消息队列对比" class="headerlink" title="五 常见的消息队列对比"></a>五 常见的消息队列对比</h2><table>
-<thead>
-<tr>
-<th>对比方向</th>
-<th>概要</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>吞吐量</td>
-<td>万级的 ActiveMQ 和 RabbitMQ 的吞吐量（ActiveMQ 的性能最差）要比 十万级甚至是百万级的 RocketMQ 和 Kafka 低一个数量级。</td>
-</tr>
-<tr>
-<td>可用性</td>
-<td>都可以实现高可用。ActiveMQ 和 RabbitMQ 都是基于主从架构实现高可用性。RocketMQ 基于分布式架构。 kafka 也是分布式的，一个数据多个副本，少数机器宕机，不会丢失数据，不会导致不可用</td>
-</tr>
-<tr>
-<td>时效性</td>
-<td>RabbitMQ 基于erlang开发，所以并发能力很强，性能极其好，延时很低，达到微秒级。其他三个都是 ms 级。</td>
-</tr>
-<tr>
-<td>功能支持</td>
-<td>除了 Kafka，其他三个功能都较为完备。 Kafka 功能较为简单，主要支持简单的MQ功能，在大数据领域的实时计算以及日志采集被大规模使用，是事实上的标准</td>
-</tr>
-<tr>
-<td>消息丢失</td>
-<td>ActiveMQ 和 RabbitMQ 丢失的可能性非常低， RocketMQ 和 Kafka 理论上不会丢失。</td>
-</tr>
-</tbody></table>
-<p><strong>总结：</strong></p>
-<ul>
-<li>ActiveMQ 的社区算是比较成熟，但是较目前来说，ActiveMQ 的性能比较差，而且版本迭代很慢，不推荐使用。</li>
-<li>RabbitMQ 在吞吐量方面虽然稍逊于 Kafka 和 RocketMQ ，但是由于它基于 erlang 开发，所以并发能力很强，性能极其好，延时很低，达到微秒级。但是也因为 RabbitMQ 基于 erlang 开发，所以国内很少有公司有实力做erlang源码级别的研究和定制。如果业务场景对并发量要求不是太高（十万级、百万级），那这四种消息队列中，RabbitMQ 一定是你的首选。如果是大数据领域的实时计算、日志采集等场景，用 Kafka 是业内标准的，绝对没问题，社区活跃度很高，绝对不会黄，何况几乎是全世界这个领域的事实性规范。</li>
-<li>RocketMQ 阿里出品，Java 系开源项目，源代码我们可以直接阅读，然后可以定制自己公司的MQ，并且 RocketMQ 有阿里巴巴的实际业务场景的实战考验。RocketMQ 社区活跃度相对较为一般，不过也还可以，文档相对来说简单一些，然后接口这块不是按照标准 JMS 规范走的有些系统要迁移需要修改大量代码。还有就是阿里出台的技术，你得做好这个技术万一被抛弃，社区黄掉的风险，那如果你们公司有技术实力我觉得用RocketMQ 挺好的</li>
-<li>kafka 的特点其实很明显，就是仅仅提供较少的核心功能，但是提供超高的吞吐量，ms 级的延迟，极高的可用性以及可靠性，而且分布式可以任意扩展。同时 kafka 最好是支撑较少的 topic 数量即可，保证其超高吞吐量。kafka 唯一的一点劣势是有可能消息重复消费，那么对数据准确性会造成极其轻微的影响，在大数据领域中以及日志采集中，这点轻微影响可以忽略这个特性天然适合大数据实时计算以及日志收集。</li>
-</ul>
-<p>参考：《Java工程师面试突击第1季-中华石杉老师》</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/operating-system/Shell/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/14/docs/operating-system/Shell/" class="post-title-link" itemprop="url">Untitled</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
-            </span>
-          
-
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <!-- MarkdownTOC -->
-
-<ul>
-<li><a href="#shell-编程入门">Shell 编程入门</a><ul>
-<li><a href="#走进-shell-编程的大门">走进 Shell 编程的大门</a><ul>
-<li><a href="#为什么要学shell">为什么要学Shell？</a></li>
-<li><a href="#什么是-shell">什么是 Shell？</a></li>
-<li><a href="#shell-编程的-hello-world">Shell 编程的 Hello World</a></li>
-</ul>
-</li>
-<li><a href="#shell-变量">Shell 变量</a><ul>
-<li><a href="#shell-编程中的变量介绍">Shell 编程中的变量介绍</a></li>
-<li><a href="#shell-字符串入门">Shell 字符串入门</a></li>
-<li><a href="#shell-字符串常见操作">Shell 字符串常见操作</a></li>
-<li><a href="#shell-数组">Shell 数组</a></li>
-</ul>
-</li>
-<li><a href="#shell-基本运算符">Shell 基本运算符</a><ul>
-<li><a href="#算数运算符">算数运算符</a></li>
-<li><a href="#关系运算符">关系运算符</a></li>
-<li><a href="#逻辑运算符">逻辑运算符</a></li>
-<li><a href="#布尔运算符">布尔运算符</a></li>
-<li><a href="#字符串运算符">字符串运算符</a></li>
-<li><a href="#文件相关运算符">文件相关运算符</a></li>
-</ul>
-</li>
-<li><a href="#shell流程控制">shell流程控制</a><ul>
-<li><a href="#if-条件语句">if 条件语句</a></li>
-<li><a href="#for-循环语句">for 循环语句</a></li>
-<li><a href="#while-语句">while 语句</a></li>
-</ul>
-</li>
-<li><a href="#shell-函数">shell 函数</a><ul>
-<li><a href="#不带参数没有返回值的函数">不带参数没有返回值的函数</a></li>
-<li><a href="#有返回值的函数">有返回值的函数</a></li>
-<li><a href="#带参数的函数">带参数的函数</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- /MarkdownTOC -->
-
-<h1 id="Shell-编程入门"><a href="#Shell-编程入门" class="headerlink" title="Shell 编程入门"></a>Shell 编程入门</h1><h2 id="走进-Shell-编程的大门"><a href="#走进-Shell-编程的大门" class="headerlink" title="走进 Shell 编程的大门"></a>走进 Shell 编程的大门</h2><h3 id="为什么要学Shell？"><a href="#为什么要学Shell？" class="headerlink" title="为什么要学Shell？"></a>为什么要学Shell？</h3><p>学一个东西，我们大部分情况都是往实用性方向着想。从工作角度来讲，学习 Shell 是为了提高我们自己工作效率，提高产出，让我们在更少的时间完成更多的事情。</p>
-<p>很多人会说 Shell 编程属于运维方面的知识了，应该是运维人员来做，我们做后端开发的没必要学。我觉得这种说法大错特错，相比于专门做Linux运维的人员来说，我们对 Shell 编程掌握程度的要求要比他们低，但是shell编程也是我们必须要掌握的！</p>
-<p>目前Linux系统下最流行的运维自动化语言就是Shell和Python了。</p>
-<p>两者之间，Shell几乎是IT企业必须使用的运维自动化编程语言，特别是在运维工作中的服务监控、业务快速部署、服务启动停止、数据备份及处理、日志分析等环节里，shell是不可缺的。Python 更适合处理复杂的业务逻辑，以及开发复杂的运维软件工具，实现通过web访问等。Shell是一个命令解释器，解释执行用户所输入的命令和程序。一输入命令，就立即回应的交互的对话方式。</p>
-<p>另外，了解 shell 编程也是大部分互联网公司招聘后端开发人员的要求。下图是我截取的一些知名互联网公司对于 Shell 编程的要求。</p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-11-16/60190220.jpg" alt="大型互联网公司对于shell编程技能的要求"></p>
-<h3 id="什么是-Shell？"><a href="#什么是-Shell？" class="headerlink" title="什么是 Shell？"></a>什么是 Shell？</h3><p>简单来说“Shell编程就是对一堆Linux命令的逻辑化处理”。</p>
-<p>W3Cschool 上的一篇文章是这样介绍 Shell的，如下图所示。<br><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-11-26/19456505.jpg" alt="什么是 Shell？"></p>
-<h3 id="Shell-编程的-Hello-World"><a href="#Shell-编程的-Hello-World" class="headerlink" title="Shell 编程的 Hello World"></a>Shell 编程的 Hello World</h3><p>学习任何一门编程语言第一件事就是输出HelloWord了！下面我会从新建文件到shell代码编写来说下Shell 编程如何输出Hello World。</p>
-<p>(1)新建一个文件 helloworld.sh :<code>touch helloworld.sh</code>，扩展名为 sh（sh代表Shell）（扩展名并不影响脚本执行，见名知意就好，如果你用 php 写 shell 脚本，扩展名就用 php 好了）</p>
-<p>(2) 使脚本具有执行权限：<code>chmod +x helloworld.sh</code></p>
-<p>(3) 使用 vim 命令修改helloworld.sh文件：<code>vim helloworld.sh</code>(vim 文件——&gt;进入文件—–&gt;命令模式——&gt;按i进入编辑模式—–&gt;编辑文件 ——-&gt;按Esc进入底行模式—–&gt;输入:wq/q! （输入wq代表写入内容并退出，即保存；输入q!代表强制退出不保存。）)</p>
-<p>helloworld.sh 内容如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">第一个shell小程序,<span class="built_in">echo</span> 是linux中的输出命令。</span></span><br><span class="line">echo  "helloworld!"</span><br></pre></td></tr></table></figure>
-
-<p>shell中 # 符号表示注释。<strong>shell 的第一行比较特殊，一般都会以#!开始来指定使用的 shell 类型。在linux中，除了bash shell以外，还有很多版本的shell， 例如zsh、dash等等…不过bash shell还是我们使用最多的。</strong></p>
-<p>(4) 运行脚本:<code>./helloworld.sh</code> 。（注意，一定要写成 <code>./helloworld.sh</code> ，而不是 <code>helloworld.sh</code> ，运行其它二进制的程序也一样，直接写 <code>helloworld.sh</code> ，linux 系统会去 PATH 里寻找有没有叫 test.sh 的，而只有 /bin, /sbin, /usr/bin，/usr/sbin 等在 PATH 里，你的当前目录通常不在 PATH 里，所以写成 <code>helloworld.sh</code> 是会找不到命令的，要用<code>./helloworld.sh</code> 告诉系统说，就在当前目录找。）</p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-11-16/55296212.jpg" alt="shell 编程Hello World"></p>
-<h2 id="Shell-变量"><a href="#Shell-变量" class="headerlink" title="Shell 变量"></a>Shell 变量</h2><h3 id="Shell-编程中的变量介绍"><a href="#Shell-编程中的变量介绍" class="headerlink" title="Shell 编程中的变量介绍"></a>Shell 编程中的变量介绍</h3><p><strong>Shell编程中一般分为三种变量：</strong></p>
-<ol>
-<li><strong>我们自己定义的变量（自定义变量）:</strong> 仅在当前 Shell 实例中有效，其他 Shell 启动的程序不能访问局部变量。</li>
-<li><strong>Linux已定义的环境变量</strong>（环境变量， 例如：$PATH, $HOME 等…, 这类变量我们可以直接使用），使用 <code>env</code> 命令可以查看所有的环境变量，而set命令既可以查看环境变量也可以查看自定义变量。</li>
-<li><strong>Shell变量</strong> ：Shell变量是由 Shell 程序设置的特殊变量。Shell 变量中有一部分是环境变量，有一部分是局部变量，这些变量保证了 Shell 的正常运行</li>
-</ol>
-<p><strong>常用的环境变量:</strong></p>
-<blockquote>
-<p>PATH 决定了shell将到哪些目录中寻找命令或程序<br>HOME 当前用户主目录<br>HISTSIZE　历史记录数<br>LOGNAME 当前用户的登录名<br>HOSTNAME　指主机的名称<br>SHELL 当前用户Shell类型<br>LANGUGE 　语言相关的环境变量，多语言可以修改此环境变量<br>MAIL　当前用户的邮件存放目录<br>PS1　基本提示符，对于root用户是#，对于普通用户是$</p>
-</blockquote>
-<p><strong>使用 Linux 已定义的环境变量：</strong></p>
-<p>比如我们要看当前用户目录可以使用：<code>echo $HOME</code>命令；如果我们要看当前用户Shell类型 可以使用<code>echo $SHELL</code>命令。可以看出，使用方法非常简单。</p>
-<p><strong>使用自己定义的变量：</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">自定义变量hello</span></span><br><span class="line">hello="hello world"</span><br><span class="line">echo $hello</span><br><span class="line">echo  "helloworld!"</span><br></pre></td></tr></table></figure>
-
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-11-17/19835037.jpg" alt="使用自己定义的变量"></p>
-<p><strong>Shell 编程中的变量名的命名的注意事项：</strong></p>
-<ul>
-<li>命名只能使用英文字母，数字和下划线，首个字符不能以数字开头，但是可以使用下划线（_）开头。</li>
-<li>中间不能有空格，可以使用下划线（_）。</li>
-<li>不能使用标点符号。</li>
-<li>不能使用bash里的关键字（可用help命令查看保留关键字）。</li>
-</ul>
-<h3 id="Shell-字符串入门"><a href="#Shell-字符串入门" class="headerlink" title="Shell 字符串入门"></a>Shell 字符串入门</h3><p>字符串是shell编程中最常用最有用的数据类型（除了数字和字符串，也没啥其它类型好用了），字符串可以用单引号，也可以用双引号。这点和Java中有所不同。</p>
-<p><strong>单引号字符串：</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">name='SnailClimb'</span><br><span class="line">hello='Hello, I  am '$name'!'</span><br><span class="line">echo $hello</span><br></pre></td></tr></table></figure>
-
-<p>输出内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello, I am SnailClimb!</span><br></pre></td></tr></table></figure>
-
-<p><strong>双引号字符串：</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">name='SnailClimb'</span><br><span class="line">hello="Hello, I  am "$name"!"</span><br><span class="line">echo $hello</span><br></pre></td></tr></table></figure>
-
-<p>输出内容：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello, I am SnailClimb!</span><br></pre></td></tr></table></figure>
-
-<h3 id="Shell-字符串常见操作"><a href="#Shell-字符串常见操作" class="headerlink" title="Shell 字符串常见操作"></a>Shell 字符串常见操作</h3><p><strong>拼接字符串：</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">name="SnailClimb"</span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用双引号拼接</span></span><br><span class="line">greeting="hello, "$name" !"</span><br><span class="line">greeting_1="hello, $&#123;name&#125; !"</span><br><span class="line">echo $greeting  $greeting_1</span><br><span class="line"><span class="meta">#</span><span class="bash"> 使用单引号拼接</span></span><br><span class="line">greeting_2='hello, '$name' !'</span><br><span class="line">greeting_3='hello, $&#123;name&#125; !'</span><br><span class="line">echo $greeting_2  $greeting_3</span><br></pre></td></tr></table></figure>
-
-<p>输出结果：</p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-11-17/51148933.jpg" alt="输出结果"></p>
-<p><strong>获取字符串长度：</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">获取字符串长度</span></span><br><span class="line">name="SnailClimb"</span><br><span class="line"><span class="meta">#</span><span class="bash"> 第一种方式</span></span><br><span class="line">echo $&#123;#name&#125; #输出 10</span><br><span class="line"><span class="meta">#</span><span class="bash"> 第二种方式</span></span><br><span class="line">expr length "$name";</span><br></pre></td></tr></table></figure>
-
-<p>输出结果:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">10</span><br><span class="line">10</span><br></pre></td></tr></table></figure>
-
-<p>使用 expr 命令时，表达式中的运算符左右必须包含空格，如果不包含空格，将会输出表达式本身:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">expr 5+6    // 直接输出 5+6</span><br><span class="line">expr 5 + 6       // 输出 11</span><br></pre></td></tr></table></figure>
-
-<p>对于某些运算符，还需要我们使用符号<code>\</code>进行转义，否则就会提示语法错误。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">expr 5 * 6       // 输出错误</span><br><span class="line">expr 5 \* 6      // 输出30</span><br></pre></td></tr></table></figure>
-
-<p><strong>截取子字符串:</strong></p>
-<p>简单的字符串截取：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">从字符串第 1 个字符开始往后截取 10 个字符</span></span><br><span class="line">str="SnailClimb is a great man"</span><br><span class="line">echo $&#123;str:0:10&#125; #输出:SnailClimb</span><br></pre></td></tr></table></figure>
-
-<p>根据表达式截取：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">author:amau</span></span><br><span class="line"></span><br><span class="line">var="http://www.runoob.com/linux/linux-shell-variable.html"</span><br><span class="line"></span><br><span class="line">s1=$&#123;var%%t*&#125;#h</span><br><span class="line">s2=$&#123;var%t*&#125;#http://www.runoob.com/linux/linux-shell-variable.h</span><br><span class="line">s3=$&#123;var%%.*&#125;#http://www</span><br><span class="line">s4=$&#123;var#*/&#125;#/www.runoob.com/linux/linux-shell-variable.html</span><br><span class="line">s5=$&#123;var##*/&#125;#linux-shell-variable.html</span><br></pre></td></tr></table></figure>
-
-<h3 id="Shell-数组"><a href="#Shell-数组" class="headerlink" title="Shell 数组"></a>Shell 数组</h3><p>bash支持一维数组（不支持多维数组），并且没有限定数组的大小。我下面给了大家一个关于数组操作的 Shell 代码示例，通过该示例大家可以知道如何创建数组、获取数组长度、获取/删除特定位置的数组元素、删除整个数组以及遍历数组。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">array=(1 2 3 4 5);</span><br><span class="line"><span class="meta">#</span><span class="bash"> 获取数组长度</span></span><br><span class="line">length=$&#123;#array[@]&#125;</span><br><span class="line"><span class="meta">#</span><span class="bash"> 或者</span></span><br><span class="line">length2=$&#123;#array[*]&#125;</span><br><span class="line"><span class="meta">#</span><span class="bash">输出数组长度</span></span><br><span class="line">echo $length #输出：5</span><br><span class="line">echo $length2 #输出：5</span><br><span class="line"><span class="meta">#</span><span class="bash"> 输出数组第三个元素</span></span><br><span class="line">echo $&#123;array[2]&#125; #输出：3</span><br><span class="line">unset array[1]# 删除下表为1的元素也就是删除第二个元素</span><br><span class="line">for i in $&#123;array[@]&#125;;do echo $i ;done # 遍历数组，输出： 1 3 4 5 </span><br><span class="line">unset arr_number; # 删除数组中的所有元素</span><br><span class="line">for i in $&#123;array[@]&#125;;do echo $i ;done # 遍历数组，数组元素为空，没有任何输出内容</span><br></pre></td></tr></table></figure>
-
-<h2 id="Shell-基本运算符"><a href="#Shell-基本运算符" class="headerlink" title="Shell 基本运算符"></a>Shell 基本运算符</h2><blockquote>
-<p>说明：图片来自《菜鸟教程》</p>
-</blockquote>
-<p> Shell 编程支持下面几种运算符</p>
-<ul>
-<li>算数运算符</li>
-<li>关系运算符</li>
-<li>布尔运算符</li>
-<li>字符串运算符</li>
-<li>文件测试运算符</li>
-</ul>
-<h3 id="算数运算符"><a href="#算数运算符" class="headerlink" title="算数运算符"></a>算数运算符</h3><p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-11-22/4937342.jpg" alt="算数运算符"></p>
-<p>我以加法运算符做一个简单的示例：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">a=3;b=3;</span><br><span class="line">val=`expr $a + $b`</span><br><span class="line"><span class="meta">#</span><span class="bash">输出：Total value : 6</span></span><br><span class="line">echo "Total value : $val</span><br></pre></td></tr></table></figure>
-
-<h3 id="关系运算符"><a href="#关系运算符" class="headerlink" title="关系运算符"></a>关系运算符</h3><p>关系运算符只支持数字，不支持字符串，除非字符串的值是数字。</p>
-<p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-11-22/64391380.jpg" alt="shell关系运算符"></p>
-<p>通过一个简单的示例演示关系运算符的使用，下面shell程序的作用是当score=100的时候输出A否则输出B。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">score=90;</span><br><span class="line">maxscore=100;</span><br><span class="line">if [ $score -eq $maxscore ]</span><br><span class="line">then</span><br><span class="line">   echo "A"</span><br><span class="line">else</span><br><span class="line">   echo "B"</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-
-<p>输出结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">B</span><br></pre></td></tr></table></figure>
-
-<h3 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h3><p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-11-22/60545848.jpg" alt="逻辑运算符"></p>
-<p>示例：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">a=$(( 1 &amp;&amp; 0))</span><br><span class="line"><span class="meta">#</span><span class="bash"> 输出：0；逻辑与运算只有相与的两边都是1，与的结果才是1；否则与的结果是0</span></span><br><span class="line">echo $a;</span><br></pre></td></tr></table></figure>
-
-<h3 id="布尔运算符"><a href="#布尔运算符" class="headerlink" title="布尔运算符"></a>布尔运算符</h3><p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-11-22/93961425.jpg" alt="布尔运算符"></p>
-<p>这里就不做演示了，应该挺简单的。</p>
-<h3 id="字符串运算符"><a href="#字符串运算符" class="headerlink" title="字符串运算符"></a>字符串运算符</h3><p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-11-22/309094.jpg" alt=" 字符串运算符"></p>
-<p>简单示例：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">a="abc";</span><br><span class="line">b="efg";</span><br><span class="line">if [ $a = $b ]</span><br><span class="line">then</span><br><span class="line">   echo "a 等于 b"</span><br><span class="line">else</span><br><span class="line">   echo "a 不等于 b"</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-
-<p>输出：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a 不等于 b</span><br></pre></td></tr></table></figure>
-
-<h3 id="文件相关运算符"><a href="#文件相关运算符" class="headerlink" title="文件相关运算符"></a>文件相关运算符</h3><p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-11-22/60359774.jpg" alt="文件相关运算符"></p>
-<p>使用方式很简单，比如我们定义好了一个文件路径<code>file=&quot;/usr/learnshell/test.sh&quot;</code> 如果我们想判断这个文件是否可读，可以这样<code>if [ -r $file ]</code> 如果想判断这个文件是否可写，可以这样<code>-w $file</code>，是不是很简单。</p>
-<h2 id="shell流程控制"><a href="#shell流程控制" class="headerlink" title="shell流程控制"></a>shell流程控制</h2><h3 id="if-条件语句"><a href="#if-条件语句" class="headerlink" title="if 条件语句"></a>if 条件语句</h3><p>简单的 if else-if else 的条件语句示例</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">a=3;</span><br><span class="line">b=9;</span><br><span class="line">if [ $a -eq $b ]</span><br><span class="line">then</span><br><span class="line">   echo "a 等于 b"</span><br><span class="line">elif [ $a -gt $b ]</span><br><span class="line">then</span><br><span class="line">   echo "a 大于 b"</span><br><span class="line">else</span><br><span class="line">   echo "a 小于 b"</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
-
-<p>输出结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a 小于 b</span><br></pre></td></tr></table></figure>
-
-<p>相信大家通过上面的示例就已经掌握了 shell 编程中的 if 条件语句。不过，还要提到的一点是，不同于我们常见的 Java 以及 PHP 中的 if 条件语句，shell  if 条件语句中不能包含空语句也就是什么都不做的语句。</p>
-<h3 id="for-循环语句"><a href="#for-循环语句" class="headerlink" title="for 循环语句"></a>for 循环语句</h3><p>通过下面三个简单的示例认识 for 循环语句最基本的使用，实际上 for 循环语句的功能比下面你看到的示例展现的要大得多。</p>
-<p><strong>输出当前列表中的数据：</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for loop in 1 2 3 4 5</span><br><span class="line">do</span><br><span class="line">    echo "The value is: $loop"</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-
-<p><strong>产生 10 个随机数：</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">for i in &#123;0..9&#125;;</span><br><span class="line">do </span><br><span class="line">   echo $RANDOM;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-
-<p><strong>输出1到5:</strong></p>
-<p>通常情况下 shell 变量调用需要加 $,但是 for 的 (()) 中不需要,下面来看一个例子：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">for((i=1;i&lt;=5;i++));do</span><br><span class="line">    echo $i;</span><br><span class="line">done;</span><br></pre></td></tr></table></figure>
-
-<h3 id="while-语句"><a href="#while-语句" class="headerlink" title="while 语句"></a>while 语句</h3><p><strong>基本的 while 循环语句：</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">int=1</span><br><span class="line">while(( $int&lt;=5 ))</span><br><span class="line">do</span><br><span class="line">    echo $int</span><br><span class="line">    let "int++"</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-
-<p><strong>while循环可用于读取键盘信息：</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">echo '按下 &lt;CTRL-D&gt; 退出'</span><br><span class="line">echo -n '输入你最喜欢的电影: '</span><br><span class="line">while read FILM</span><br><span class="line">do</span><br><span class="line">    echo "是的！$FILM 是一个好电影"</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-
-<p>输出内容:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">按下 &lt;CTRL-D&gt; 退出</span><br><span class="line">输入你最喜欢的电影: 变形金刚</span><br><span class="line">是的！变形金刚 是一个好电影</span><br></pre></td></tr></table></figure>
-
-<p><strong>无线循环：</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">while true</span><br><span class="line">do</span><br><span class="line">    command</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-
-<h2 id="shell-函数"><a href="#shell-函数" class="headerlink" title="shell 函数"></a>shell 函数</h2><h3 id="不带参数没有返回值的函数"><a href="#不带参数没有返回值的函数" class="headerlink" title="不带参数没有返回值的函数"></a>不带参数没有返回值的函数</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">hello()&#123;</span><br><span class="line">    echo "这是我的第一个 shell 函数!"</span><br><span class="line">&#125;</span><br><span class="line">echo "-----函数开始执行-----"</span><br><span class="line">hello</span><br><span class="line">echo "-----函数执行完毕-----"</span><br></pre></td></tr></table></figure>
-
-<p>输出结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">-----函数开始执行-----</span><br><span class="line">这是我的第一个 shell 函数!</span><br><span class="line">-----函数执行完毕-----</span><br></pre></td></tr></table></figure>
-
-<h3 id="有返回值的函数"><a href="#有返回值的函数" class="headerlink" title="有返回值的函数"></a>有返回值的函数</h3><p><strong>输入两个数字之后相加并返回结果：</strong></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">funWithReturn()&#123;</span><br><span class="line">    echo "输入第一个数字: "</span><br><span class="line">    read aNum</span><br><span class="line">    echo "输入第二个数字: "</span><br><span class="line">    read anotherNum</span><br><span class="line">    echo "两个数字分别为 $aNum 和 $anotherNum !"</span><br><span class="line">    return $(($aNum+$anotherNum))</span><br><span class="line">&#125;</span><br><span class="line">funWithReturn</span><br><span class="line">echo "输入的两个数字之和为 $?"</span><br></pre></td></tr></table></figure>
-
-<p>输出结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">输入第一个数字: </span><br><span class="line">1</span><br><span class="line">输入第二个数字: </span><br><span class="line">2</span><br><span class="line">两个数字分别为 1 和 2 !</span><br><span class="line">输入的两个数字之和为 3</span><br></pre></td></tr></table></figure>
-
-<h3 id="带参数的函数"><a href="#带参数的函数" class="headerlink" title="带参数的函数"></a>带参数的函数</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">funWithParam()&#123;</span><br><span class="line">    echo "第一个参数为 $1 !"</span><br><span class="line">    echo "第二个参数为 $2 !"</span><br><span class="line">    echo "第十个参数为 $10 !"</span><br><span class="line">    echo "第十个参数为 $&#123;10&#125; !"</span><br><span class="line">    echo "第十一个参数为 $&#123;11&#125; !"</span><br><span class="line">    echo "参数总数有 $# 个!"</span><br><span class="line">    echo "作为一个字符串输出所有参数 $* !"</span><br><span class="line">&#125;</span><br><span class="line">funWithParam 1 2 3 4 5 6 7 8 9 34 73</span><br></pre></td></tr></table></figure>
-
-<p>输出结果：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">第一个参数为 1 !</span><br><span class="line">第二个参数为 2 !</span><br><span class="line">第十个参数为 10 !</span><br><span class="line">第十个参数为 34 !</span><br><span class="line">第十一个参数为 73 !</span><br><span class="line">参数总数有 11 个!</span><br><span class="line">作为一个字符串输出所有参数 1 2 3 4 5 6 7 8 9 34 73 !</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/data-communication/RocketMQ-Questions/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="syf">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="苏有福的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/14/docs/system-design/data-communication/RocketMQ-Questions/" class="post-title-link" itemprop="url">Untitled</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
-            </span>
-          
-
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>本文来自读者 <a href="https://github.com/Snailclimb/JavaGuide/pull/291" target="_blank" rel="noopener">PR</a>。</p>
-<!-- TOC -->
-
-<ul>
-<li><a href="#1-%E5%8D%95%E6%9C%BA%E7%89%88%E6%B6%88%E6%81%AF%E4%B8%AD%E5%BF%83">1 单机版消息中心</a></li>
-<li><a href="#2-%E5%88%86%E5%B8%83%E5%BC%8F%E6%B6%88%E6%81%AF%E4%B8%AD%E5%BF%83">2 分布式消息中心</a><ul>
-<li><a href="#21-%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3">2.1 问题与解决</a><ul>
-<li><a href="#211-%E6%B6%88%E6%81%AF%E4%B8%A2%E5%A4%B1%E7%9A%84%E9%97%AE%E9%A2%98">2.1.1 消息丢失的问题</a></li>
-<li><a href="#212-%E5%90%8C%E6%AD%A5%E8%90%BD%E7%9B%98%E6%80%8E%E4%B9%88%E6%89%8D%E8%83%BD%E5%BF%AB">2.1.2 同步落盘怎么才能快</a></li>
-<li><a href="#213-%E6%B6%88%E6%81%AF%E5%A0%86%E7%A7%AF%E7%9A%84%E9%97%AE%E9%A2%98">2.1.3 消息堆积的问题</a></li>
-<li><a href="#214-%E5%AE%9A%E6%97%B6%E6%B6%88%E6%81%AF%E7%9A%84%E5%AE%9E%E7%8E%B0">2.1.4 定时消息的实现</a></li>
-<li><a href="#215-%E9%A1%BA%E5%BA%8F%E6%B6%88%E6%81%AF%E7%9A%84%E5%AE%9E%E7%8E%B0">2.1.5 顺序消息的实现</a></li>
-<li><a href="#216-%E5%88%86%E5%B8%83%E5%BC%8F%E6%B6%88%E6%81%AF%E7%9A%84%E5%AE%9E%E7%8E%B0">2.1.6 分布式消息的实现</a></li>
-<li><a href="#217-%E6%B6%88%E6%81%AF%E7%9A%84-push-%E5%AE%9E%E7%8E%B0">2.1.7 消息的 push 实现</a></li>
-<li><a href="#218-%E6%B6%88%E6%81%AF%E9%87%8D%E5%A4%8D%E5%8F%91%E9%80%81%E7%9A%84%E9%81%BF%E5%85%8D">2.1.8 消息重复发送的避免</a></li>
-<li><a href="#219-%E5%B9%BF%E6%92%AD%E6%B6%88%E8%B4%B9%E4%B8%8E%E9%9B%86%E7%BE%A4%E6%B6%88%E8%B4%B9">2.1.9 广播消费与集群消费</a></li>
-<li><a href="#2110-rocketmq-%E4%B8%8D%E4%BD%BF%E7%94%A8-zookeeper-%E4%BD%9C%E4%B8%BA%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E7%9A%84%E5%8E%9F%E5%9B%A0%E4%BB%A5%E5%8F%8A%E8%87%AA%E5%88%B6%E7%9A%84-nameserver-%E4%BC%98%E7%BC%BA%E7%82%B9">2.1.10 RocketMQ 不使用 ZooKeeper 作为注册中心的原因，以及自制的 NameServer 优缺点？</a></li>
-<li><a href="#2111-%E5%85%B6%E5%AE%83">2.1.11 其它</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#3-%E5%8F%82%E8%80%83">3 参考</a></li>
-</ul>
-<!-- TOC -->
-
-<h1 id="1-单机版消息中心"><a href="#1-单机版消息中心" class="headerlink" title="1 单机版消息中心"></a>1 单机版消息中心</h1><p>一个消息中心，最基本的需要支持多生产者、多消费者，例如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Scratch</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 实际中会有 nameserver 服务来找到 broker 具体位置以及 broker 主从信息</span></span><br><span class="line">        Broker broker = <span class="keyword">new</span> Broker();</span><br><span class="line">        Producer producer1 = <span class="keyword">new</span> Producer();</span><br><span class="line">        producer1.connectBroker(broker);</span><br><span class="line">        Producer producer2 = <span class="keyword">new</span> Producer();</span><br><span class="line">        producer2.connectBroker(broker);</span><br><span class="line"></span><br><span class="line">        Consumer consumer1 = <span class="keyword">new</span> Consumer();</span><br><span class="line">        consumer1.connectBroker(broker);</span><br><span class="line">        Consumer consumer2 = <span class="keyword">new</span> Consumer();</span><br><span class="line">        consumer2.connectBroker(broker);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">2</span>; i++) &#123;</span><br><span class="line">            producer1.asyncSendMsg(<span class="string">"producer1 send msg"</span> + i);</span><br><span class="line">            producer2.asyncSendMsg(<span class="string">"producer2 send msg"</span> + i);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"broker has msg:"</span> + broker.getAllMagByDisk());</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1</span>; i++) &#123;</span><br><span class="line">            System.out.println(<span class="string">"consumer1 consume msg："</span> + consumer1.syncPullMsg());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">            System.out.println(<span class="string">"consumer2 consume msg："</span> + consumer2.syncPullMsg());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Producer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Broker broker;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">connectBroker</span><span class="params">(Broker broker)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.broker = broker;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">asyncSendMsg</span><span class="params">(String msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (broker == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"please connect broker first"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            broker.sendMsg(msg);</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Broker broker;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">connectBroker</span><span class="params">(Broker broker)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.broker = broker;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">syncPullMsg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> broker.getMsg();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Broker</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 对应 RocketMQ 中 MessageQueue，默认情况下 1 个 Topic 包含 4 个 MessageQueue</span></span><br><span class="line">    <span class="keyword">private</span> LinkedBlockingQueue&lt;String&gt; messageQueue = <span class="keyword">new</span> LinkedBlockingQueue(Integer.MAX_VALUE);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 实际发送消息到 broker 服务器使用 Netty 发送</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendMsg</span><span class="params">(String msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            messageQueue.put(msg);</span><br><span class="line">            <span class="comment">// 实际会同步或异步落盘，异步落盘使用的定时任务定时扫描落盘</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMsg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> messageQueue.take();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getAllMagByDisk</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder(<span class="string">"\n"</span>);</span><br><span class="line">        messageQueue.iterator().forEachRemaining((msg) -&gt; &#123;</span><br><span class="line">            sb.append(msg + <span class="string">"\n"</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">return</span> sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>问题：  </p>
-<ol>
-<li>没有实现真正执行消息存储落盘</li>
-<li>没有实现 NameServer 去作为注册中心，定位服务</li>
-<li>使用 LinkedBlockingQueue 作为消息队列，注意，参数是无限大，在真正 RocketMQ 也是如此是无限大，理论上不会出现对进来的数据进行抛弃，但是会有内存泄漏问题（阿里巴巴开发手册也因为这个问题，建议我们使用自制线程池）  </li>
-<li>没有使用多个队列（即多个 LinkedBlockingQueue），RocketMQ 的顺序消息是通过生产者和消费者同时使用同一个 MessageQueue 来实现，但是如果我们只有一个 MessageQueue，那我们天然就支持顺序消息</li>
-<li>没有使用 MappedByteBuffer 来实现文件映射从而使消息数据落盘非常的快（实际 RocketMQ 使用的是 FileChannel+DirectBuffer）</li>
-</ol>
-<h1 id="2-分布式消息中心"><a href="#2-分布式消息中心" class="headerlink" title="2 分布式消息中心"></a>2 分布式消息中心</h1><h2 id="2-1-问题与解决"><a href="#2-1-问题与解决" class="headerlink" title="2.1 问题与解决"></a>2.1 问题与解决</h2><h3 id="2-1-1-消息丢失的问题"><a href="#2-1-1-消息丢失的问题" class="headerlink" title="2.1.1 消息丢失的问题"></a>2.1.1 消息丢失的问题</h3><ol>
-<li>当你系统需要保证百分百消息不丢失，你可以使用生产者每发送一个消息，Broker 同步返回一个消息发送成功的反馈消息</li>
-<li>即每发送一个消息，同步落盘后才返回生产者消息发送成功，这样只要生产者得到了消息发送生成的返回，事后除了硬盘损坏，都可以保证不会消息丢失</li>
-<li>但是这同时引入了一个问题，同步落盘怎么才能快？</li>
-</ol>
-<h3 id="2-1-2-同步落盘怎么才能快"><a href="#2-1-2-同步落盘怎么才能快" class="headerlink" title="2.1.2 同步落盘怎么才能快"></a>2.1.2 同步落盘怎么才能快</h3><ol>
-<li>使用 FileChannel + DirectBuffer 池，使用堆外内存，加快内存拷贝  </li>
-<li>使用数据和索引分离，当消息需要写入时，使用 commitlog 文件顺序写，当需要定位某个消息时，查询index 文件来定位，从而减少文件IO随机读写的性能损耗</li>
-</ol>
-<h3 id="2-1-3-消息堆积的问题"><a href="#2-1-3-消息堆积的问题" class="headerlink" title="2.1.3 消息堆积的问题"></a>2.1.3 消息堆积的问题</h3><ol>
-<li>后台定时任务每隔72小时，删除旧的没有使用过的消息信息  </li>
-<li>根据不同的业务实现不同的丢弃任务，具体参考线程池的 AbortPolicy，例如FIFO/LRU等（RocketMQ没有此策略）  </li>
-<li>消息定时转移，或者对某些重要的 TAG 型（支付型）消息真正落库</li>
-</ol>
-<h3 id="2-1-4-定时消息的实现"><a href="#2-1-4-定时消息的实现" class="headerlink" title="2.1.4 定时消息的实现"></a>2.1.4 定时消息的实现</h3><ol>
-<li>实际 RocketMQ 没有实现任意精度的定时消息，它只支持某些特定的时间精度的定时消息</li>
-<li>实现定时消息的原理是：创建特定时间精度的 MessageQueue，例如生产者需要定时1s之后被消费者消费，你只需要将此消息发送到特定的 Topic，例如：MessageQueue-1 表示这个 MessageQueue 里面的消息都会延迟一秒被消费，然后 Broker 会在 1s 后发送到消费者消费此消息，使用 newSingleThreadScheduledExecutor 实现</li>
-</ol>
-<h3 id="2-1-5-顺序消息的实现"><a href="#2-1-5-顺序消息的实现" class="headerlink" title="2.1.5 顺序消息的实现"></a>2.1.5 顺序消息的实现</h3><ol>
-<li>与定时消息同原理，生产者生产消息时指定特定的 MessageQueue ，消费者消费消息时，消费特定的 MessageQueue，其实单机版的消息中心在一个 MessageQueue 就天然支持了顺序消息</li>
-<li>注意：同一个 MessageQueue 保证里面的消息是顺序消费的前提是：消费者是串行的消费该 MessageQueue，因为就算 MessageQueue 是顺序的，但是当并行消费时，还是会有顺序问题，但是串行消费也同时引入了两个问题：<blockquote>
-<ol>
-<li>引入锁来实现串行</li>
-<li>前一个消费阻塞时后面都会被阻塞</li>
-</ol>
-</blockquote>
-</li>
-</ol>
-<h3 id="2-1-6-分布式消息的实现"><a href="#2-1-6-分布式消息的实现" class="headerlink" title="2.1.6 分布式消息的实现"></a>2.1.6 分布式消息的实现</h3><ol>
-<li>需要前置知识：2PC  </li>
-<li>RocketMQ4.3 起支持，原理为2PC，即两阶段提交，prepared-&gt;commit/rollback</li>
-<li>生产者发送事务消息，假设该事务消息 Topic 为 Topic1-Trans，Broker 得到后首先更改该消息的 Topic 为 Topic1-Prepared，该 Topic1-Prepared 对消费者不可见。然后定时回调生产者的本地事务A执行状态，根据本地事务A执行状态，来是否将该消息修改为 Topic1-Commit 或 Topic1-Rollback，消费者就可以正常找到该事务消息或者不执行等</li>
-</ol>
-<blockquote>
-<p>注意，就算是事务消息最后回滚了也不会物理删除，只会逻辑删除该消息</p>
-</blockquote>
-<h3 id="2-1-7-消息的-push-实现"><a href="#2-1-7-消息的-push-实现" class="headerlink" title="2.1.7 消息的 push 实现"></a>2.1.7 消息的 push 实现</h3><ol>
-<li>注意，RocketMQ 已经说了自己会有低延迟问题，其中就包括这个消息的 push 延迟问题</li>
-<li>因为这并不是真正的将消息主动的推送到消费者，而是 Broker 定时任务每5s将消息推送到消费者</li>
-</ol>
-<h3 id="2-1-8-消息重复发送的避免"><a href="#2-1-8-消息重复发送的避免" class="headerlink" title="2.1.8 消息重复发送的避免"></a>2.1.8 消息重复发送的避免</h3><ol>
-<li>RocketMQ 会出现消息重复发送的问题，因为在网络延迟的情况下，这种问题不可避免的发生，如果非要实现消息不可重复发送，那基本太难，因为网络环境无法预知，还会使程序复杂度加大，因此默认允许消息重复发送</li>
-<li>RocketMQ 让使用者在消费者端去解决该问题，即需要消费者端在消费消息时支持幂等性的去消费消息</li>
-<li>最简单的解决方案是每条消费记录有个消费状态字段，根据这个消费状态字段来是否消费或者使用一个集中式的表，来存储所有消息的消费状态，从而避免重复消费</li>
-<li>具体实现可以查询关于消息幂等消费的解决方案</li>
-</ol>
-<h3 id="2-1-9-广播消费与集群消费"><a href="#2-1-9-广播消费与集群消费" class="headerlink" title="2.1.9 广播消费与集群消费"></a>2.1.9 广播消费与集群消费</h3><ol>
-<li>消息消费区别：广播消费，订阅该 Topic 的消息者们都会消费<strong>每个</strong>消息。集群消费，订阅该 Topic 的消息者们只会有一个去消费<strong>某个</strong>消息</li>
-<li>消息落盘区别：具体表现在消息消费进度的保存上。广播消费，由于每个消费者都独立的去消费每个消息，因此每个消费者各自保存自己的消息消费进度。而集群消费下，订阅了某个 Topic，而旗下又有多个 MessageQueue，每个消费者都可能会去消费不同的 MessageQueue，因此总体的消费进度保存在 Broker 上集中的管理</li>
-</ol>
-<h3 id="2-1-10-RocketMQ-不使用-ZooKeeper-作为注册中心的原因，以及自制的-NameServer-优缺点？"><a href="#2-1-10-RocketMQ-不使用-ZooKeeper-作为注册中心的原因，以及自制的-NameServer-优缺点？" class="headerlink" title="2.1.10 RocketMQ 不使用 ZooKeeper 作为注册中心的原因，以及自制的 NameServer 优缺点？"></a>2.1.10 RocketMQ 不使用 ZooKeeper 作为注册中心的原因，以及自制的 NameServer 优缺点？</h3><ol>
-<li>ZooKeeper 作为支持顺序一致性的中间件，在某些情况下，它为了满足一致性，会丢失一定时间内的可用性，RocketMQ 需要注册中心只是为了发现组件地址，在某些情况下，RocketMQ 的注册中心可以出现数据不一致性，这同时也是 NameServer 的缺点，因为 NameServer 集群间互不通信，它们之间的注册信息可能会不一致</li>
-<li>另外，当有新的服务器加入时，NameServer 并不会立马通知到 Produer，而是由 Produer 定时去请求 NameServer 获取最新的 Broker/Consumer 信息（这种情况是通过 Producer 发送消息时，负载均衡解决）</li>
-</ol>
-<h3 id="2-1-11-其它"><a href="#2-1-11-其它" class="headerlink" title="2.1.11 其它"></a>2.1.11 其它</h3><p><img src="https://leran2deeplearnjavawebtech.oss-cn-beijing.aliyuncs.com/somephoto/RocketMQ%E6%B5%81%E7%A8%8B.png" alt></p>
-<p>加分项咯 </p>
-<ol>
-<li>包括组件通信间使用 Netty 的自定义协议</li>
-<li>消息重试负载均衡策略（具体参考 Dubbo 负载均衡策略）</li>
-<li>消息过滤器（Producer 发送消息到 Broker，Broker 存储消息信息，Consumer 消费时请求 Broker 端从磁盘文件查询消息文件时,在 Broker 端就使用过滤服务器进行过滤）  </li>
-<li>Broker 同步双写和异步双写中 Master 和 Slave 的交互</li>
-<li>Broker 在 4.5.0 版本更新中引入了基于 Raft 协议的多副本选举，之前这是商业版才有的特性 <a href="http://rocketmq.apache.org/release_notes/release-notes-4.5.0/" target="_blank" rel="noopener">ISSUE-1046</a></li>
-</ol>
-<h1 id="3-参考"><a href="#3-参考" class="headerlink" title="3 参考"></a>3 参考</h1><ol>
-<li>《RocketMQ技术内幕》：<a href="https://blog.csdn.net/prestigeding/article/details/85233529" target="_blank" rel="noopener">https://blog.csdn.net/prestigeding/article/details/85233529</a></li>
-<li>关于 RocketMQ 对 MappedByteBuffer 的一点优化：<a href="https://lishoubo.github.io/2017/09/27/MappedByteBuffer%E7%9A%84%E4%B8%80%E7%82%B9%E4%BC%98%E5%8C%96/" target="_blank" rel="noopener">https://lishoubo.github.io/2017/09/27/MappedByteBuffer%E7%9A%84%E4%B8%80%E7%82%B9%E4%BC%98%E5%8C%96/</a></li>
-<li>阿里中间件团队博客-十分钟入门RocketMQ：<a href="http://jm.taobao.org/2017/01/12/rocketmq-quick-start-in-10-minutes/" target="_blank" rel="noopener">http://jm.taobao.org/2017/01/12/rocketmq-quick-start-in-10-minutes/</a></li>
-<li>分布式事务的种类以及 RocketMQ 支持的分布式消息：<a href="https://www.infoq.cn/article/2018/08/rocketmq-4.3-release" target="_blank" rel="noopener">https://www.infoq.cn/article/2018/08/rocketmq-4.3-release</a></li>
-<li>滴滴出行基于RocketMQ构建企业级消息队列服务的实践：<a href="https://yq.aliyun.com/articles/664608" target="_blank" rel="noopener">https://yq.aliyun.com/articles/664608</a></li>
-<li>基于《RocketMQ技术内幕》源码注释：<a href="https://github.com/LiWenGu/awesome-rocketmq" target="_blank" rel="noopener">https://github.com/LiWenGu/awesome-rocketmq</a></li>
-</ol>
 
           
         
@@ -3226,6 +2975,297 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/data-communication/message-queue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="syf">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="苏有福的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/14/docs/system-design/data-communication/message-queue/" class="post-title-link" itemprop="url">Untitled</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-14 22:47:16" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">2019-07-14</time>
+            </span>
+          
+
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <!-- MarkdownTOC -->
+
+<ul>
+<li><a href="#消息队列其实很简单">消息队列其实很简单</a><ul>
+<li><a href="#一-什么是消息队列">一 什么是消息队列</a></li>
+<li><a href="#二-为什么要用消息队列">二 为什么要用消息队列</a><ul>
+<li><a href="#1-通过异步处理提高系统性能削峰减少响应所需时间">(1) 通过异步处理提高系统性能（削峰、减少响应所需时间）</a></li>
+<li><a href="#2-降低系统耦合性">(2) 降低系统耦合性</a></li>
+</ul>
+</li>
+<li><a href="#三-使用消息队列带来的一些问题">三 使用消息队列带来的一些问题</a></li>
+<li><a href="#四-jms-vs-amqp">四 JMS VS AMQP</a><ul>
+<li><a href="#41-jms">4.1 JMS</a><ul>
+<li><a href="#411-jms-简介">4.1.1 JMS 简介</a></li>
+<li><a href="#412-jms两种消息模型">4.1.2 JMS两种消息模型</a></li>
+<li><a href="#413-jms-五种不同的消息正文格式">4.1.3 JMS 五种不同的消息正文格式</a></li>
+</ul>
+</li>
+<li><a href="#42-amqp">4.2 AMQP</a></li>
+<li><a href="#43-jms-vs-amqp">4.3 JMS vs AMQP</a></li>
+</ul>
+</li>
+<li><a href="#五-常见的消息队列对比">五 常见的消息队列对比</a></li>
+</ul>
+</li>
+</ul>
+<!-- /MarkdownTOC -->
+
+
+<h1 id="消息队列其实很简单"><a href="#消息队列其实很简单" class="headerlink" title="消息队列其实很简单"></a>消息队列其实很简单</h1><p>　　“RabbitMQ？”“Kafka？”“RocketMQ？”…在日常学习与开发过程中，我们常常听到消息队列这个关键词。我也在我的多篇文章中提到了这个概念。可能你是熟练使用消息队列的老手，又或者你是不懂消息队列的新手，不论你了不了解消息队列，本文都将带你搞懂消息队列的一些基本理论。如果你是老手，你可能从本文学到你之前不曾注意的一些关于消息队列的重要概念，如果你是新手，相信本文将是你打开消息队列大门的一板砖。</p>
+<h2 id="一-什么是消息队列"><a href="#一-什么是消息队列" class="headerlink" title="一 什么是消息队列"></a>一 什么是消息队列</h2><p>　　我们可以把消息队列比作是一个存放消息的容器，当我们需要使用消息的时候可以取出消息供自己使用。消息队列是分布式系统中重要的组件，使用消息队列主要是为了通过异步处理提高系统性能和削峰、降低系统耦合性。目前使用较多的消息队列有ActiveMQ，RabbitMQ，Kafka，RocketMQ，我们后面会一一对比这些消息队列。</p>
+<p>　　另外，我们知道队列 Queue 是一种先进先出的数据结构，所以消费消息时也是按照顺序来消费的。比如生产者发送消息1,2,3…对于消费者就会按照1,2,3…的顺序来消费。但是偶尔也会出现消息被消费的顺序不对的情况，比如某个消息消费失败又或者一个 queue 多个consumer 也会导致消息被消费的顺序不对，我们一定要保证消息被消费的顺序正确。</p>
+<p>　　除了上面说的消息消费顺序的问题，使用消息队列，我们还要考虑如何保证消息不被重复消费？如何保证消息的可靠性传输（如何处理消息丢失的问题）？……等等问题。所以说使用消息队列也不是十全十美的，使用它也会让系统可用性降低、复杂度提高，另外需要我们保障一致性等问题。</p>
+<h2 id="二-为什么要用消息队列"><a href="#二-为什么要用消息队列" class="headerlink" title="二 为什么要用消息队列"></a>二 为什么要用消息队列</h2><p>　　我觉得使用消息队列主要有两点好处：1.通过异步处理提高系统性能（削峰、减少响应所需时间）;2.降低系统耦合性。如果在面试的时候你被面试官问到这个问题的话，一般情况是你在你的简历上涉及到消息队列这方面的内容，这个时候推荐你结合你自己的项目来回答。</p>
+<p>　　《大型网站技术架构》第四章和第七章均有提到消息队列对应用性能及扩展性的提升。</p>
+<h3 id="1-通过异步处理提高系统性能（削峰、减少响应所需时间）"><a href="#1-通过异步处理提高系统性能（削峰、减少响应所需时间）" class="headerlink" title="(1) 通过异步处理提高系统性能（削峰、减少响应所需时间）"></a>(1) 通过异步处理提高系统性能（削峰、减少响应所需时间）</h3><p><img src="https://user-gold-cdn.xitu.io/2018/4/21/162e63a8e34ba534?w=910&h=350&f=jpeg&s=29123" alt="通过异步处理提高系统性能"><br>　　如上图，<strong>在不使用消息队列服务器的时候，用户的请求数据直接写入数据库，在高并发的情况下数据库压力剧增，使得响应速度变慢。但是在使用消息队列之后，用户的请求数据发送给消息队列之后立即 返回，再由消息队列的消费者进程从消息队列中获取数据，异步写入数据库。由于消息队列服务器处理速度快于数据库（消息队列也比数据库有更好的伸缩性），因此响应速度得到大幅改善。</strong></p>
+<p>　　通过以上分析我们可以得出<strong>消息队列具有很好的削峰作用的功能</strong>——即<strong>通过异步处理，将短时间高并发产生的事务消息存储在消息队列中，从而削平高峰期的并发事务。</strong> 举例：在电子商务一些秒杀、促销活动中，合理使用消息队列可以有效抵御促销活动刚开始大量订单涌入对系统的冲击。如下图所示：<br><img src="https://user-gold-cdn.xitu.io/2018/4/21/162e64583dd3ed01?w=780&h=384&f=jpeg&s=13550" alt="合理使用消息队列可以有效抵御促销活动刚开始大量订单涌入对系统的冲击"></p>
+<p>　　因为<strong>用户请求数据写入消息队列之后就立即返回给用户了，但是请求数据在后续的业务校验、写数据库等操作中可能失败</strong>。因此使用消息队列进行异步处理之后，需要<strong>适当修改业务流程进行配合</strong>，比如<strong>用户在提交订单之后，订单数据写入消息队列，不能立即返回用户订单提交成功，需要在消息队列的订单消费者进程真正处理完该订单之后，甚至出库后，再通过电子邮件或短信通知用户订单成功</strong>，以免交易纠纷。这就类似我们平时手机订火车票和电影票。</p>
+<h3 id="2-降低系统耦合性"><a href="#2-降低系统耦合性" class="headerlink" title="(2) 降低系统耦合性"></a>(2) 降低系统耦合性</h3><p>　　我们知道如果模块之间不存在直接调用，那么新增模块或者修改模块就对其他模块影响较小，这样系统的可扩展性无疑更好一些。</p>
+<p>　　我们最常见的<strong>事件驱动架构</strong>类似生产者消费者模式，在大型网站中通常用利用消息队列实现事件驱动结构。如下图所示：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/4/21/162e6665fa394b3b?w=790&h=290&f=jpeg&s=14946" alt="利用消息队列实现事件驱动结构"></p>
+<p>　　<strong>消息队列使利用发布-订阅模式工作，消息发送者（生产者）发布消息，一个或多个消息接受者（消费者）订阅消息。</strong> 从上图可以看到<strong>消息发送者（生产者）和消息接受者（消费者）之间没有直接耦合</strong>，消息发送者将消息发送至分布式消息队列即结束对消息的处理，消息接受者从分布式消息队列获取该消息后进行后续处理，并不需要知道该消息从何而来。<strong>对新增业务，只要对该类消息感兴趣，即可订阅该消息，对原有系统和业务没有任何影响，从而实现网站业务的可扩展性设计</strong>。</p>
+<p>　　消息接受者对消息进行过滤、处理、包装后，构造成一个新的消息类型，将消息继续发送出去，等待其他消息接受者订阅该消息。因此基于事件（消息对象）驱动的业务架构可以是一系列流程。</p>
+<p>　　<strong>另外为了避免消息队列服务器宕机造成消息丢失，会将成功发送到消息队列的消息存储在消息生产者服务器上，等消息真正被消费者服务器处理后才删除消息。在消息队列服务器宕机后，生产者服务器会选择分布式消息队列服务器集群中的其他服务器发布消息。</strong>   </p>
+<p><strong>备注：</strong> 不要认为消息队列只能利用发布-订阅模式工作，只不过在解耦这个特定业务环境下是使用发布-订阅模式的。<strong>除了发布-订阅模式，还有点对点订阅模式（一个消息只有一个消费者），我们比较常用的是发布-订阅模式。</strong> 另外，这两种消息模型是 JMS 提供的，AMQP 协议还提供了 5 种消息模型。</p>
+<h2 id="三-使用消息队列带来的一些问题"><a href="#三-使用消息队列带来的一些问题" class="headerlink" title="三 使用消息队列带来的一些问题"></a>三 使用消息队列带来的一些问题</h2><ul>
+<li><strong>系统可用性降低：</strong> 系统可用性在某种程度上降低，为什么这样说呢？在加入MQ之前，你不用考虑消息丢失或者说MQ挂掉等等的情况，但是，引入MQ之后你就需要去考虑了！</li>
+<li><strong>系统复杂性提高：</strong> 加入MQ之后，你需要保证消息没有被重复消费、处理消息丢失的情况、保证消息传递的顺序性等等问题！</li>
+<li><strong>一致性问题：</strong> 我上面讲了消息队列可以实现异步，消息队列带来的异步确实可以提高系统响应速度。但是，万一消息的真正消费者并没有正确消费消息怎么办？这样就会导致数据不一致的情况了!</li>
+</ul>
+<h2 id="四-JMS-VS-AMQP"><a href="#四-JMS-VS-AMQP" class="headerlink" title="四 JMS VS AMQP"></a>四 JMS VS AMQP</h2><h3 id="4-1-JMS"><a href="#4-1-JMS" class="headerlink" title="4.1 JMS"></a>4.1 JMS</h3><h4 id="4-1-1-JMS-简介"><a href="#4-1-1-JMS-简介" class="headerlink" title="4.1.1 JMS 简介"></a>4.1.1 JMS 简介</h4><p>　　JMS（JAVA Message Service,java消息服务）是java的消息服务，JMS的客户端之间可以通过JMS服务进行异步的消息传输。<strong>JMS（JAVA Message Service，Java消息服务）API是一个消息服务的标准或者说是规范</strong>，允许应用程序组件基于JavaEE平台创建、发送、接收和读取消息。它使分布式通信耦合度更低，消息服务更加可靠以及异步性。</p>
+<p><strong>ActiveMQ 就是基于 JMS 规范实现的。</strong></p>
+<h4 id="4-1-2-JMS两种消息模型"><a href="#4-1-2-JMS两种消息模型" class="headerlink" title="4.1.2 JMS两种消息模型"></a>4.1.2 JMS两种消息模型</h4><p>①点到点（P2P）模型</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/4/21/162e7185572ca37d?w=575&h=135&f=gif&s=8530" alt="点到点（P2P）模型">
+　　</p>
+<p>使用<strong>队列（Queue）</strong>作为消息通信载体；满足<strong>生产者与消费者模式</strong>，一条消息只能被一个消费者使用，未被消费的消息在队列中保留直到被消费或超时。比如：我们生产者发送100条消息的话，两个消费者来消费一般情况下两个消费者会按照消息发送的顺序各自消费一半（也就是你一个我一个的消费。）</p>
+<p>② 发布/订阅（Pub/Sub）模型</p>
+<p>  <img src="https://user-gold-cdn.xitu.io/2018/4/21/162e7187c268eaa5?w=402&h=164&f=gif&s=15492" alt="发布/订阅（Pub/Sub）模型">
+　　</p>
+<p>发布订阅模型（Pub/Sub） 使用<strong>主题（Topic）</strong>作为消息通信载体，类似于<strong>广播模式</strong>；发布者发布一条消息，该消息通过主题传递给所有的订阅者，<strong>在一条消息广播之后才订阅的用户则是收不到该条消息的</strong>。</p>
+<h4 id="4-1-3-JMS-五种不同的消息正文格式"><a href="#4-1-3-JMS-五种不同的消息正文格式" class="headerlink" title="4.1.3 JMS 五种不同的消息正文格式"></a>4.1.3 JMS 五种不同的消息正文格式</h4><p>　　JMS定义了五种不同的消息正文格式，以及调用的消息类型，允许你发送并接收以一些不同形式的数据，提供现有消息格式的一些级别的兼容性。</p>
+<ul>
+<li>StreamMessage – Java原始值的数据流</li>
+<li>MapMessage–一套名称-值对</li>
+<li>TextMessage–一个字符串对象</li>
+<li>ObjectMessage–一个序列化的 Java对象</li>
+<li>BytesMessage–一个字节的数据流</li>
+</ul>
+<h3 id="4-2-AMQP"><a href="#4-2-AMQP" class="headerlink" title="4.2 AMQP"></a>4.2 AMQP</h3><p>　　​ AMQP，即Advanced Message Queuing Protocol，一个提供统一消息服务的应用层标准 <strong>高级消息队列协议</strong>（二进制应用层协议），是应用层协议的一个开放标准,为面向消息的中间件设计，兼容 JMS。基于此协议的客户端与消息中间件可传递消息，并不受客户端/中间件同产品，不同的开发语言等条件的限制。</p>
+<p><strong>RabbitMQ 就是基于 AMQP 协议实现的。</strong></p>
+<h3 id="4-3-JMS-vs-AMQP"><a href="#4-3-JMS-vs-AMQP" class="headerlink" title="4.3 JMS vs AMQP"></a>4.3 JMS vs AMQP</h3><table>
+<thead>
+<tr>
+<th align="left">对比方向</th>
+<th align="right">JMS</th>
+<th align="center">AMQP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">定义</td>
+<td align="right">Java API</td>
+<td align="center">协议</td>
+</tr>
+<tr>
+<td align="left">跨语言</td>
+<td align="right">否</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td align="left">跨平台</td>
+<td align="right">否</td>
+<td align="center">是</td>
+</tr>
+<tr>
+<td align="left">支持消息类型</td>
+<td align="right">提供两种消息模型：①Peer-2-Peer;②Pub/sub</td>
+<td align="center">提供了五种消息模型：①direct exchange；②fanout exchange；③topic change；④headers exchange；⑤system exchange。本质来讲，后四种和JMS的pub/sub模型没有太大差别，仅是在路由机制上做了更详细的划分；</td>
+</tr>
+<tr>
+<td align="left">支持消息类型</td>
+<td align="right">支持多种消息类型 ，我们在上面提到过</td>
+<td align="center">byte[]（二进制）</td>
+</tr>
+</tbody></table>
+<p><strong>总结：</strong></p>
+<ul>
+<li>AMQP 为消息定义了线路层（wire-level protocol）的协议，而JMS所定义的是API规范。在 Java 体系中，多个client均可以通过JMS进行交互，不需要应用修改代码，但是其对跨平台的支持较差。而AMQP天然具有跨平台、跨语言特性。</li>
+<li>JMS 支持TextMessage、MapMessage 等复杂的消息类型；而 AMQP 仅支持 byte[] 消息类型（复杂的类型可序列化后发送）。</li>
+<li>由于Exchange 提供的路由算法，AMQP可以提供多样化的路由方式来传递消息到消息队列，而 JMS 仅支持 队列 和 主题/订阅 方式两种。 </li>
+</ul>
+<h2 id="五-常见的消息队列对比"><a href="#五-常见的消息队列对比" class="headerlink" title="五 常见的消息队列对比"></a>五 常见的消息队列对比</h2><table>
+<thead>
+<tr>
+<th>对比方向</th>
+<th>概要</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>吞吐量</td>
+<td>万级的 ActiveMQ 和 RabbitMQ 的吞吐量（ActiveMQ 的性能最差）要比 十万级甚至是百万级的 RocketMQ 和 Kafka 低一个数量级。</td>
+</tr>
+<tr>
+<td>可用性</td>
+<td>都可以实现高可用。ActiveMQ 和 RabbitMQ 都是基于主从架构实现高可用性。RocketMQ 基于分布式架构。 kafka 也是分布式的，一个数据多个副本，少数机器宕机，不会丢失数据，不会导致不可用</td>
+</tr>
+<tr>
+<td>时效性</td>
+<td>RabbitMQ 基于erlang开发，所以并发能力很强，性能极其好，延时很低，达到微秒级。其他三个都是 ms 级。</td>
+</tr>
+<tr>
+<td>功能支持</td>
+<td>除了 Kafka，其他三个功能都较为完备。 Kafka 功能较为简单，主要支持简单的MQ功能，在大数据领域的实时计算以及日志采集被大规模使用，是事实上的标准</td>
+</tr>
+<tr>
+<td>消息丢失</td>
+<td>ActiveMQ 和 RabbitMQ 丢失的可能性非常低， RocketMQ 和 Kafka 理论上不会丢失。</td>
+</tr>
+</tbody></table>
+<p><strong>总结：</strong></p>
+<ul>
+<li>ActiveMQ 的社区算是比较成熟，但是较目前来说，ActiveMQ 的性能比较差，而且版本迭代很慢，不推荐使用。</li>
+<li>RabbitMQ 在吞吐量方面虽然稍逊于 Kafka 和 RocketMQ ，但是由于它基于 erlang 开发，所以并发能力很强，性能极其好，延时很低，达到微秒级。但是也因为 RabbitMQ 基于 erlang 开发，所以国内很少有公司有实力做erlang源码级别的研究和定制。如果业务场景对并发量要求不是太高（十万级、百万级），那这四种消息队列中，RabbitMQ 一定是你的首选。如果是大数据领域的实时计算、日志采集等场景，用 Kafka 是业内标准的，绝对没问题，社区活跃度很高，绝对不会黄，何况几乎是全世界这个领域的事实性规范。</li>
+<li>RocketMQ 阿里出品，Java 系开源项目，源代码我们可以直接阅读，然后可以定制自己公司的MQ，并且 RocketMQ 有阿里巴巴的实际业务场景的实战考验。RocketMQ 社区活跃度相对较为一般，不过也还可以，文档相对来说简单一些，然后接口这块不是按照标准 JMS 规范走的有些系统要迁移需要修改大量代码。还有就是阿里出台的技术，你得做好这个技术万一被抛弃，社区黄掉的风险，那如果你们公司有技术实力我觉得用RocketMQ 挺好的</li>
+<li>kafka 的特点其实很明显，就是仅仅提供较少的核心功能，但是提供超高的吞吐量，ms 级的延迟，极高的可用性以及可靠性，而且分布式可以任意扩展。同时 kafka 最好是支撑较少的 topic 数量即可，保证其超高吞吐量。kafka 唯一的一点劣势是有可能消息重复消费，那么对数据准确性会造成极其轻微的影响，在大数据领域中以及日志采集中，这点轻微影响可以忽略这个特性天然适合大数据实时计算以及日志收集。</li>
+</ul>
+<p>参考：《Java工程师面试突击第1季-中华石杉老师》</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -3272,7 +3312,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">102</span>
+                    <span class="site-state-item-count">103</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
