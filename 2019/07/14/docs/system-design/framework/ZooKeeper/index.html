@@ -1,58 +1,312 @@
-
 <!DOCTYPE html>
-<html>
-<head><meta name="generator" content="Hexo 3.9.0">
-    <meta charset="UTF-8">
-    <title>苏有福的博客</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="keywords" content>
-    <meta name="description" content="
-前言相信大家对 ZooKeeper 应该不算陌生。但是你真的了解 ZooKeeper 是个什么东西吗？如果别人/面试官让你给他讲讲  ZooKeeper 是个什么东西，你能回答到什么地步呢？
-我本人曾经使用过 ZooKeeper 作为 Dubbo 的注册中心，另外在搭建 solr 集群的时候，我使用到了  ZooKeeper 作为 solr 集群的管理工具。前几天，总结项目经验的时候，我突然问自己 ZooKeeper 到底是个什么东西？想了半天，脑海中只是简单的能浮现出几句话：“①Zookeeper 可以被用作注册中心。 ②Zookeeper 是 Hadoop 生态系统的一员；③构建 Zookeeper 集群的时候，使...">
-    
-        <link rel="icon" href="/favicon.ico">
-    
-    
-        
-            <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-        
-            <link rel="stylesheet" href="/css/stage.css">
-        
-            <link rel="stylesheet" href="/css/avatar-bg.css">
-        
-    
-</head>
-</html>
-<body>
-<header id="header">
-    <div class="menu">
-        <i class="fa fa-bars"></i>
-    </div>
-    <div class="header-main">
-        <h1><a href="/">苏有福的博客</a></h1>
-    </div>
-    <div id="nav">
-        <div class="nav-img" id="nav-img"></div>
-        <div class="sentences">
-            How goes the world with you?
-        </div>
-    </div>
-</header>
 
-<div id="content-outer">
-    <div id="content-inner">
-        <div class="clearfix">
-    <article id="post">
-        <h1></h1>
-        <div class="create">
-            <span>Created</span>
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言相信大家对 ZooKeeper 应该不算陌生。但是你真的了解 ZooKeeper 是个什么东西吗？如果别人/面试官让你给他讲讲  ZooKeeper 是个什么东西，你能回答到什么地步呢？ 我本人曾经使用过 ZooKeeper 作为 Dubbo 的注册中心，另外在搭建 solr 集群的时候，我使用到了  ZooKeeper 作为 solr 集群的管理工具。前几天，总结项目经验的时候，我突然问自">
+<meta property="og:type" content="article">
+<meta property="og:title" content="苏有福的博客">
+<meta property="og:url" content="http://yoursite.com/2019/07/14/docs/system-design/framework/ZooKeeper/index.html">
+<meta property="og:site_name" content="苏有福的博客">
+<meta property="og:description" content="前言相信大家对 ZooKeeper 应该不算陌生。但是你真的了解 ZooKeeper 是个什么东西吗？如果别人/面试官让你给他讲讲  ZooKeeper 是个什么东西，你能回答到什么地步呢？ 我本人曾经使用过 ZooKeeper 作为 Dubbo 的注册中心，另外在搭建 solr 集群的时候，我使用到了  ZooKeeper 作为 solr 集群的管理工具。前几天，总结项目经验的时候，我突然问自">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/56385654.jpg">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/35571782.jpg">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/27473480.jpg">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/94251757.jpg">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/68900686.jpg">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/89602762.jpg">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-13/91622395.jpg">
+<meta property="og:updated_time" content="2019-07-14T14:47:16.564Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="苏有福的博客">
+<meta name="twitter:description" content="前言相信大家对 ZooKeeper 应该不算陌生。但是你真的了解 ZooKeeper 是个什么东西吗？如果别人/面试官让你给他讲讲  ZooKeeper 是个什么东西，你能回答到什么地步呢？ 我本人曾经使用过 ZooKeeper 作为 Dubbo 的注册中心，另外在搭建 solr 集群的时候，我使用到了  ZooKeeper 作为 solr 集群的管理工具。前几天，总结项目经验的时候，我突然问自">
+<meta name="twitter:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/56385654.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/14/docs/system-design/framework/ZooKeeper/">
+
+
+
+
+
+  <title> | 苏有福的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">苏有福的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
             
-                <time datetime="2019-07-14T14:47:16.564Z">
-                    2019-07-14
-                </time>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
             
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/framework/ZooKeeper/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="syf">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="苏有福的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">
+                2019-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
         </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
         <p><img src="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-10/56385654.jpg" alt></p>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>相信大家对 ZooKeeper 应该不算陌生。但是你真的了解 ZooKeeper 是个什么东西吗？如果别人/面试官让你给他讲讲  ZooKeeper 是个什么东西，你能回答到什么地步呢？</p>
 <p>我本人曾经使用过 ZooKeeper 作为 Dubbo 的注册中心，另外在搭建 solr 集群的时候，我使用到了  ZooKeeper 作为 solr 集群的管理工具。前几天，总结项目经验的时候，我突然问自己 ZooKeeper 到底是个什么东西？想了半天，脑海中只是简单的能浮现出几句话：“①Zookeeper 可以被用作注册中心。 ②Zookeeper 是 Hadoop 生态系统的一员；③构建 Zookeeper 集群的时候，使用的服务器最好是奇数台。” 可见，我对于 Zookeeper 的理解仅仅是停留在了表面。</p>
@@ -142,57 +396,359 @@
 <li><a href="https://zhuanlan.zhihu.com/p/30024403" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/30024403</a></li>
 </ul>
 
-        <div>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/07/14/docs/system-design/framework/spring/Spring-Design-Patterns/" rel="next" title>
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/14/docs/system-design/framework/spring/SpringBean/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
         </div>
-        <div class="bottom-line"></div>
-        
-    <nav id="article-nav">
-        
-            <a href="/2019/07/14/docs/system-design/framework/spring/Spring-Design-Patterns/" id="article-nav-newer" class="article-nav-link-wrap">
-        <span class="article-nav-title">
-            
-                no title
-            
-        </span>
-                <strong class="article-nav-caption">&gt;</strong>
-            </a>
-        
-        
-            <a href="/2019/07/14/docs/system-design/data-communication/rabbitmq/" id="article-nav-older" class="article-nav-link-wrap">
-                <strong class="article-nav-caption">&lt;</strong>
-                <span class="article-nav-title">
-                    
-                    no title
-                
-            </a>
-        
-    </nav>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
 
 
-        
-    </article>
-    <div id="toc">
-        
-            <h2>Table of Contents</h2>
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一-什么是-ZooKeeper"><span class="toc-number">2.</span> <span class="toc-text">一 什么是 ZooKeeper</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ZooKeeper-的由来"><span class="toc-number">2.1.</span> <span class="toc-text">ZooKeeper 的由来</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-ZooKeeper-概览"><span class="toc-number">2.2.</span> <span class="toc-text">1.1 ZooKeeper 概览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-结合个人使用情况的讲一下-ZooKeeper"><span class="toc-number">2.3.</span> <span class="toc-text">1.2 结合个人使用情况的讲一下 ZooKeeper</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二-关于-ZooKeeper-的一些重要概念"><span class="toc-number">3.</span> <span class="toc-text">二 关于 ZooKeeper  的一些重要概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-重要概念总结"><span class="toc-number">3.1.</span> <span class="toc-text">2.1 重要概念总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-会话（Session）"><span class="toc-number">3.2.</span> <span class="toc-text">2.2 会话（Session）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Znode"><span class="toc-number">3.3.</span> <span class="toc-text">2.3 Znode</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-版本"><span class="toc-number">3.4.</span> <span class="toc-text">2.4 版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-Watcher"><span class="toc-number">3.5.</span> <span class="toc-text">2.5 Watcher</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-ACL"><span class="toc-number">3.6.</span> <span class="toc-text">2.6 ACL</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三-ZooKeeper-特点"><span class="toc-number">4.</span> <span class="toc-text">三 ZooKeeper 特点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四-ZooKeeper-设计目标"><span class="toc-number">5.</span> <span class="toc-text">四 ZooKeeper 设计目标</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-简单的数据模型"><span class="toc-number">5.1.</span> <span class="toc-text">4.1 简单的数据模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-可构建集群"><span class="toc-number">5.2.</span> <span class="toc-text">4.2 可构建集群</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-顺序访问"><span class="toc-number">5.3.</span> <span class="toc-text">4.3 顺序访问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-高性能"><span class="toc-number">5.4.</span> <span class="toc-text">4.4 高性能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五-ZooKeeper-集群角色介绍"><span class="toc-number">6.</span> <span class="toc-text">五 ZooKeeper 集群角色介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六-ZooKeeper-amp-ZAB-协议-amp-Paxos算法"><span class="toc-number">7.</span> <span class="toc-text">六 ZooKeeper &amp;ZAB 协议&amp;Paxos算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-ZAB-协议-amp-Paxos算法"><span class="toc-number">7.1.</span> <span class="toc-text">6.1 ZAB 协议&amp;Paxos算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-ZAB-协议介绍"><span class="toc-number">7.2.</span> <span class="toc-text">6.2 ZAB 协议介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-ZAB-协议两种基本的模式：崩溃恢复和消息广播"><span class="toc-number">7.3.</span> <span class="toc-text">6.3 ZAB 协议两种基本的模式：崩溃恢复和消息广播</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六-总结"><span class="toc-number">8.</span> <span class="toc-text">六 总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">9.</span> <span class="toc-text">参考</span></a></li></ol>
-        
+
+    <div class="post-spread">
+      
     </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">syf</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">105</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一-什么是-ZooKeeper"><span class="nav-number">2.</span> <span class="nav-text">一 什么是 ZooKeeper</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ZooKeeper-的由来"><span class="nav-number">2.1.</span> <span class="nav-text">ZooKeeper 的由来</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-ZooKeeper-概览"><span class="nav-number">2.2.</span> <span class="nav-text">1.1 ZooKeeper 概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-结合个人使用情况的讲一下-ZooKeeper"><span class="nav-number">2.3.</span> <span class="nav-text">1.2 结合个人使用情况的讲一下 ZooKeeper</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-关于-ZooKeeper-的一些重要概念"><span class="nav-number">3.</span> <span class="nav-text">二 关于 ZooKeeper  的一些重要概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-重要概念总结"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 重要概念总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-会话（Session）"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 会话（Session）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Znode"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 Znode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-版本"><span class="nav-number">3.4.</span> <span class="nav-text">2.4 版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-Watcher"><span class="nav-number">3.5.</span> <span class="nav-text">2.5 Watcher</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-ACL"><span class="nav-number">3.6.</span> <span class="nav-text">2.6 ACL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-ZooKeeper-特点"><span class="nav-number">4.</span> <span class="nav-text">三 ZooKeeper 特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-ZooKeeper-设计目标"><span class="nav-number">5.</span> <span class="nav-text">四 ZooKeeper 设计目标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-简单的数据模型"><span class="nav-number">5.1.</span> <span class="nav-text">4.1 简单的数据模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-可构建集群"><span class="nav-number">5.2.</span> <span class="nav-text">4.2 可构建集群</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-顺序访问"><span class="nav-number">5.3.</span> <span class="nav-text">4.3 顺序访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-高性能"><span class="nav-number">5.4.</span> <span class="nav-text">4.4 高性能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五-ZooKeeper-集群角色介绍"><span class="nav-number">6.</span> <span class="nav-text">五 ZooKeeper 集群角色介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六-ZooKeeper-amp-ZAB-协议-amp-Paxos算法"><span class="nav-number">7.</span> <span class="nav-text">六 ZooKeeper &amp;ZAB 协议&amp;Paxos算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-ZAB-协议-amp-Paxos算法"><span class="nav-number">7.1.</span> <span class="nav-text">6.1 ZAB 协议&amp;Paxos算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-ZAB-协议介绍"><span class="nav-number">7.2.</span> <span class="nav-text">6.2 ZAB 协议介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-ZAB-协议两种基本的模式：崩溃恢复和消息广播"><span class="nav-number">7.3.</span> <span class="nav-text">6.3 ZAB 协议两种基本的模式：崩溃恢复和消息广播</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六-总结"><span class="nav-number">8.</span> <span class="nav-text">六 总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">9.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">syf</span>
+
+  
 </div>
 
-    </div>
-</div>
-<footer id="footer">
-    <div id="copyright">&copy; syf  2019</div>
-    <div id="theme">
-        Powered by <a href="http://hexo.io">Hexo</a>. Theme by <a href="https://github.com/markyong/hexo-theme-stage">Stage</a>
-    </div>
-</footer>
-<script src="/lib/js/waterrippleeffect.min.js"></script>
-<script src="/js/header-bg.main.js"></script>
 
-    <script src="/lib/js/smooth-scroll.min.js"></script>
-    <script src="/js/toc.main.js"></script>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
 
 </body>
 </html>

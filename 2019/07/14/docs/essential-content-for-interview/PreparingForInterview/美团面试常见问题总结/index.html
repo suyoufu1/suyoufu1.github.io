@@ -1,73 +1,323 @@
-
 <!DOCTYPE html>
-<html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
 <head><meta name="generator" content="Hexo 3.9.0">
-    <meta charset="UTF-8">
-    <title>苏有福的博客</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="keywords" content>
-    <meta name="description" content="
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
 
 
-一 基础篇
-1. System.out.println(3|9)输出什么?
-2. 说一下转发(Forward)和重定向(Redirect)的区别
-3. 在浏览器中输入url地址到显示主页的过程,整个过程会使用哪些协议
-4. TCP 三次握手和四次挥手
-为什么要三次握手
-为什么要传回 SYN
-传了 SYN,为啥还要传 ACK
-为什么要四次挥手
 
 
-5. IP地址与MAC地址的区别
-6. HTTP请求,响应报文格式
-7. 为什么要使用索引?索引这么多优点,为什么不对表中的每一个列创建一个索引呢?索引是如何提高查询速度的?说一下使用索引的注意事项?Mysql索引主要使用的两种数据结构?什么是覆盖索引?
-8. 进程与线程的...">
-    
-        <link rel="icon" href="/favicon.ico">
-    
-    
-        
-            <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-        
-            <link rel="stylesheet" href="/css/stage.css">
-        
-            <link rel="stylesheet" href="/css/avatar-bg.css">
-        
-    
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一 基础篇 1. System.out.println(3|9)输出什么? 2. 说一下转发(Forward)和重定向(Redirect)的区别 3. 在浏览器中输入url地址到显示主页的过程,整个过程会使用哪些协议 4. TCP 三次握手和四次挥手 为什么要三次握手 为什么要传回 SYN 传了 SYN,为啥还要传 ACK 为什么要四次挥手   5. IP地址与MAC地址的区别 6. HTT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="苏有福的博客">
+<meta property="og:url" content="http://yoursite.com/2019/07/14/docs/essential-content-for-interview/PreparingForInterview/美团面试常见问题总结/index.html">
+<meta property="og:site_name" content="苏有福的博客">
+<meta property="og:description" content="一 基础篇 1. System.out.println(3|9)输出什么? 2. 说一下转发(Forward)和重定向(Redirect)的区别 3. 在浏览器中输入url地址到显示主页的过程,整个过程会使用哪些协议 4. TCP 三次握手和四次挥手 为什么要三次握手 为什么要传回 SYN 传了 SYN,为啥还要传 ACK 为什么要四次挥手   5. IP地址与MAC地址的区别 6. HTT">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/4/19/162db5e985aabdbe?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/5/8/1633e127396541f1?w=864&h=439&f=png&s=226095">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/5/8/1633e14233d95972?w=542&h=427&f=jpeg&s=15088">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/5/8/1633e1676e2ac0a3?w=500&h=340&f=jpeg&s=13406">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/10/166fd45773d5dd2e?w=563&h=299&f=webp&s=27930">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/10/166fd45787394192?w=1015&h=466&f=webp&s=35352">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/4/21/162e63a8e34ba534?w=910&h=350&f=jpeg&s=29123">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/4/21/162e64583dd3ed01?w=780&h=384&f=jpeg&s=13550">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/4/21/162e6665fa394b3b?w=790&h=290&f=jpeg&s=14946">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/3/20/16240dbcc303d872?w=348&h=427&f=png&s=10991">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/14/16711ac29c351da9?w=720&h=545&f=jpeg&s=23933">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/14/16711ac29c138cba?w=851&h=614&f=jpeg&s=34458">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/3/2/161e717d734f3b23?w=896&h=363&f=jpeg&s=205536">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-8-22/50656681.jpg">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-8-22/33120488.jpg">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-8-22/97739220.jpg">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-11-15/60925795.jpg">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-11-15/62563930.jpg">
+<meta property="og:updated_time" content="2019-07-14T14:47:16.496Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="苏有福的博客">
+<meta name="twitter:description" content="一 基础篇 1. System.out.println(3|9)输出什么? 2. 说一下转发(Forward)和重定向(Redirect)的区别 3. 在浏览器中输入url地址到显示主页的过程,整个过程会使用哪些协议 4. TCP 三次握手和四次挥手 为什么要三次握手 为什么要传回 SYN 传了 SYN,为啥还要传 ACK 为什么要四次挥手   5. IP地址与MAC地址的区别 6. HTT">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/4/19/162db5e985aabdbe?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/14/docs/essential-content-for-interview/PreparingForInterview/美团面试常见问题总结/">
+
+
+
+
+
+  <title> | 苏有福的博客</title>
+  
+
+
+
+
+
+
+
+
 </head>
-</html>
-<body>
-<header id="header">
-    <div class="menu">
-        <i class="fa fa-bars"></i>
-    </div>
-    <div class="header-main">
-        <h1><a href="/">苏有福的博客</a></h1>
-    </div>
-    <div id="nav">
-        <div class="nav-img" id="nav-img"></div>
-        <div class="sentences">
-            How goes the world with you?
-        </div>
-    </div>
-</header>
 
-<div id="content-outer">
-    <div id="content-inner">
-        <div class="clearfix">
-    <article id="post">
-        <h1></h1>
-        <div class="create">
-            <span>Created</span>
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">苏有福的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
             
-                <time datetime="2019-07-14T14:47:16.496Z">
-                    2019-07-14
-                </time>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
             
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/essential-content-for-interview/PreparingForInterview/美团面试常见问题总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="syf">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="苏有福的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">
+                2019-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
         </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
         <!-- MarkdownTOC -->
 
 <ul>
@@ -670,57 +920,359 @@
 <li>error.log 错误日志：定位问题</li>
 </ul>
 
-        <div>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/07/14/docs/essential-content-for-interview/面试必备之乐观锁与悲观锁/" rel="next" title>
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/14/docs/essential-content-for-interview/简历模板/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
         </div>
-        <div class="bottom-line"></div>
-        
-    <nav id="article-nav">
-        
-            <a href="/2019/07/14/docs/essential-content-for-interview/简历模板/" id="article-nav-newer" class="article-nav-link-wrap">
-        <span class="article-nav-title">
-            
-                no title
-            
-        </span>
-                <strong class="article-nav-caption">&gt;</strong>
-            </a>
-        
-        
-            <a href="/2019/07/14/docs/essential-content-for-interview/手把手教你用Markdown写一份高质量的简历/" id="article-nav-older" class="article-nav-link-wrap">
-                <strong class="article-nav-caption">&lt;</strong>
-                <span class="article-nav-title">
-                    
-                    no title
-                
-            </a>
-        
-    </nav>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
 
 
-        
-    </article>
-    <div id="toc">
-        
-            <h2>Table of Contents</h2>
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一-基础篇"><span class="toc-number">1.</span> <span class="toc-text">一 基础篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-System-out-println-3-9-输出什么"><span class="toc-number">1.1.</span> <span class="toc-text">1. System.out.println(3|9)输出什么?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-说一下转发-Forward-和重定向-Redirect-的区别"><span class="toc-number">1.2.</span> <span class="toc-text">2. 说一下转发(Forward)和重定向(Redirect)的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-在浏览器中输入url地址到显示主页的过程-整个过程会使用哪些协议"><span class="toc-number">1.3.</span> <span class="toc-text">3. 在浏览器中输入url地址到显示主页的过程,整个过程会使用哪些协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-TCP-三次握手和四次挥手"><span class="toc-number">1.4.</span> <span class="toc-text">4. TCP 三次握手和四次挥手</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么要三次握手"><span class="toc-number">1.4.0.1.</span> <span class="toc-text">为什么要三次握手</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么要传回-SYN"><span class="toc-number">1.4.0.2.</span> <span class="toc-text">为什么要传回 SYN</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#传了-SYN-为啥还要传-ACK"><span class="toc-number">1.4.0.3.</span> <span class="toc-text">传了 SYN,为啥还要传 ACK</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#为什么要四次挥手"><span class="toc-number">1.4.0.4.</span> <span class="toc-text">为什么要四次挥手</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-IP地址与MAC地址的区别"><span class="toc-number">1.5.</span> <span class="toc-text">5. IP地址与MAC地址的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-HTTP请求-响应报文格式"><span class="toc-number">1.6.</span> <span class="toc-text">6. HTTP请求,响应报文格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-为什么要使用索引-索引这么多优点-为什么不对表中的每一个列创建一个索引呢-索引是如何提高查询速度的-说一下使用索引的注意事项-Mysql索引主要使用的两种数据结构-什么是覆盖索引"><span class="toc-number">1.7.</span> <span class="toc-text">7. 为什么要使用索引?索引这么多优点,为什么不对表中的每一个列创建一个索引呢?索引是如何提高查询速度的?说一下使用索引的注意事项?Mysql索引主要使用的两种数据结构?什么是覆盖索引?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-进程与线程的区别是什么-进程间的几种通信方式说一下-线程间的几种通信方式知道不"><span class="toc-number">1.8.</span> <span class="toc-text">8. 进程与线程的区别是什么?进程间的几种通信方式说一下?线程间的几种通信方式知道不?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-为什么要用单例模式-手写几种线程安全的单例模式"><span class="toc-number">1.9.</span> <span class="toc-text">9. 为什么要用单例模式?手写几种线程安全的单例模式?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-简单介绍一下bean-知道Spring的bean的作用域与生命周期吗"><span class="toc-number">1.10.</span> <span class="toc-text">10. 简单介绍一下bean;知道Spring的bean的作用域与生命周期吗?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-Spring-中的事务传播行为了解吗-TransactionDefinition-接口中哪五个表示隔离级别的常量"><span class="toc-number">1.11.</span> <span class="toc-text">11. Spring 中的事务传播行为了解吗?TransactionDefinition 接口中哪五个表示隔离级别的常量?</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#事务传播行为"><span class="toc-number">1.11.0.1.</span> <span class="toc-text">事务传播行为</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#隔离级别"><span class="toc-number">1.11.0.2.</span> <span class="toc-text">隔离级别</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-SpringMVC-原理了解吗"><span class="toc-number">1.12.</span> <span class="toc-text">12. SpringMVC 原理了解吗?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-Spring-AOP-IOC-实现原理"><span class="toc-number">1.13.</span> <span class="toc-text">13. Spring AOP IOC 实现原理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#二-进阶篇"><span class="toc-number">2.</span> <span class="toc-text">二 进阶篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-消息队列MQ的套路"><span class="toc-number">2.1.</span> <span class="toc-text">1 消息队列MQ的套路</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-介绍一下消息队列MQ的应用场景-使用消息队列的好处"><span class="toc-number">2.1.1.</span> <span class="toc-text">1.1 介绍一下消息队列MQ的应用场景/使用消息队列的好处</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-通过异步处理提高系统性能"><span class="toc-number">2.1.1.1.</span> <span class="toc-text">1)通过异步处理提高系统性能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-降低系统耦合性"><span class="toc-number">2.1.1.2.</span> <span class="toc-text">2)降低系统耦合性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-那么使用消息队列会带来什么问题-考虑过这些问题吗"><span class="toc-number">2.1.2.</span> <span class="toc-text">1.2 那么使用消息队列会带来什么问题?考虑过这些问题吗?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-介绍一下你知道哪几种消息队列-该如何选择呢"><span class="toc-number">2.1.3.</span> <span class="toc-text">1.3 介绍一下你知道哪几种消息队列,该如何选择呢?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-关于消息队列其他一些常见的问题展望"><span class="toc-number">2.1.4.</span> <span class="toc-text">1.4 关于消息队列其他一些常见的问题展望</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-谈谈-InnoDB-和-MyIsam-两者的区别"><span class="toc-number">2.2.</span> <span class="toc-text">2 谈谈 InnoDB 和 MyIsam 两者的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-两者的对比"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.1 两者的对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-关于两者的总结"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2 关于两者的总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-聊聊-Java-中的集合吧"><span class="toc-number">2.3.</span> <span class="toc-text">3 聊聊 Java 中的集合吧!</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Arraylist-与-LinkedList-有什么不同-注意加上从数据结构分析的内容"><span class="toc-number">2.3.1.</span> <span class="toc-text">3.1 Arraylist 与 LinkedList 有什么不同?(注意加上从数据结构分析的内容)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-HashMap的底层实现"><span class="toc-number">2.3.2.</span> <span class="toc-text">3.2 HashMap的底层实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-JDK1-8之前"><span class="toc-number">2.3.2.1.</span> <span class="toc-text">1)JDK1.8之前</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-JDK1-8之后"><span class="toc-number">2.3.2.2.</span> <span class="toc-text">2)JDK1.8之后</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-既然谈到了红黑树-你给我手绘一个出来吧-然后简单讲一下自己对于红黑树的理解"><span class="toc-number">2.3.3.</span> <span class="toc-text">3.3 既然谈到了红黑树,你给我手绘一个出来吧,然后简单讲一下自己对于红黑树的理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-红黑树这么优秀-为何不直接使用红黑树得了"><span class="toc-number">2.3.4.</span> <span class="toc-text">3.4 红黑树这么优秀,为何不直接使用红黑树得了?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-HashMap-和-Hashtable-的区别-HashSet-和-HashMap-区别"><span class="toc-number">2.3.5.</span> <span class="toc-text">3.5 HashMap 和 Hashtable 的区别/HashSet 和 HashMap 区别</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#三-终结篇"><span class="toc-number">3.</span> <span class="toc-text">三 终结篇</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Object类有哪些方法"><span class="toc-number">3.1.</span> <span class="toc-text">1. Object类有哪些方法?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-Object类的常见方法总结"><span class="toc-number">3.1.1.</span> <span class="toc-text">1.1 Object类的常见方法总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-hashCode与equals"><span class="toc-number">3.1.2.</span> <span class="toc-text">1.2 hashCode与equals</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-hashCode-介绍"><span class="toc-number">3.1.2.1.</span> <span class="toc-text">1.2.1 hashCode()介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-为什么要有hashCode"><span class="toc-number">3.1.2.2.</span> <span class="toc-text">1.2.2 为什么要有hashCode</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-hashCode-与equals-的相关规定"><span class="toc-number">3.1.2.3.</span> <span class="toc-text">1.2.3 hashCode()与equals()的相关规定</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-4-为什么两个对象有相同的hashcode值-它们也不一定是相等的"><span class="toc-number">3.1.2.4.</span> <span class="toc-text">1.2.4 为什么两个对象有相同的hashcode值,它们也不一定是相等的?</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-与equals"><span class="toc-number">3.1.3.</span> <span class="toc-text">1.3  ==与equals</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-ConcurrentHashMap-相关问题"><span class="toc-number">3.2.</span> <span class="toc-text">2 ConcurrentHashMap 相关问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-ConcurrentHashMap-和-Hashtable-的区别"><span class="toc-number">3.2.1.</span> <span class="toc-text">2.1 ConcurrentHashMap 和 Hashtable 的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-ConcurrentHashMap线程安全的具体实现方式-底层具体实现"><span class="toc-number">3.2.2.</span> <span class="toc-text">2.2 ConcurrentHashMap线程安全的具体实现方式/底层具体实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JDK1-7-上面有示意图"><span class="toc-number">3.2.2.1.</span> <span class="toc-text">JDK1.7(上面有示意图)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JDK1-8-上面有示意图"><span class="toc-number">3.2.2.2.</span> <span class="toc-text">JDK1.8(上面有示意图)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-谈谈-synchronized-和-ReentrantLock-的区别"><span class="toc-number">3.3.</span> <span class="toc-text">3 谈谈 synchronized 和 ReentrantLock 的区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-线程池了解吗"><span class="toc-number">3.4.</span> <span class="toc-text">4 线程池了解吗?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-为什么要用线程池"><span class="toc-number">3.4.1.</span> <span class="toc-text">4.1 为什么要用线程池?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-Java-提供了哪几种线程池-他们各自的使用场景是什么"><span class="toc-number">3.4.2.</span> <span class="toc-text">4.2 Java 提供了哪几种线程池?他们各自的使用场景是什么?</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Java-主要提供了下面4种线程池"><span class="toc-number">3.4.2.1.</span> <span class="toc-text">Java 主要提供了下面4种线程池</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#各种线程池的适用场景介绍"><span class="toc-number">3.4.2.2.</span> <span class="toc-text">各种线程池的适用场景介绍</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-创建的线程池的方式"><span class="toc-number">3.4.3.</span> <span class="toc-text">4.3 创建的线程池的方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Nginx"><span class="toc-number">3.5.</span> <span class="toc-text">5 Nginx</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-简单介绍一下Nginx"><span class="toc-number">3.5.1.</span> <span class="toc-text">5.1 简单介绍一下Nginx</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#反向代理"><span class="toc-number">3.5.1.1.</span> <span class="toc-text">反向代理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#负载均衡"><span class="toc-number">3.5.1.2.</span> <span class="toc-text">负载均衡</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#动静分离"><span class="toc-number">3.5.1.3.</span> <span class="toc-text">动静分离</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-为什么要用-Nginx"><span class="toc-number">3.5.2.</span> <span class="toc-text">5.2 为什么要用 Nginx?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-Nginx-的四个主要组成部分了解吗"><span class="toc-number">3.5.3.</span> <span class="toc-text">5.3 Nginx 的四个主要组成部分了解吗?</span></a></li></ol></li></ol></li></ol>
-        
+
+    <div class="post-spread">
+      
     </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">syf</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">105</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-基础篇"><span class="nav-number">1.</span> <span class="nav-text">一 基础篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-System-out-println-3-9-输出什么"><span class="nav-number">1.1.</span> <span class="nav-text">1. System.out.println(3|9)输出什么?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-说一下转发-Forward-和重定向-Redirect-的区别"><span class="nav-number">1.2.</span> <span class="nav-text">2. 说一下转发(Forward)和重定向(Redirect)的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-在浏览器中输入url地址到显示主页的过程-整个过程会使用哪些协议"><span class="nav-number">1.3.</span> <span class="nav-text">3. 在浏览器中输入url地址到显示主页的过程,整个过程会使用哪些协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-TCP-三次握手和四次挥手"><span class="nav-number">1.4.</span> <span class="nav-text">4. TCP 三次握手和四次挥手</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么要三次握手"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">为什么要三次握手</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么要传回-SYN"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">为什么要传回 SYN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#传了-SYN-为啥还要传-ACK"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">传了 SYN,为啥还要传 ACK</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么要四次挥手"><span class="nav-number">1.4.0.4.</span> <span class="nav-text">为什么要四次挥手</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-IP地址与MAC地址的区别"><span class="nav-number">1.5.</span> <span class="nav-text">5. IP地址与MAC地址的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-HTTP请求-响应报文格式"><span class="nav-number">1.6.</span> <span class="nav-text">6. HTTP请求,响应报文格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-为什么要使用索引-索引这么多优点-为什么不对表中的每一个列创建一个索引呢-索引是如何提高查询速度的-说一下使用索引的注意事项-Mysql索引主要使用的两种数据结构-什么是覆盖索引"><span class="nav-number">1.7.</span> <span class="nav-text">7. 为什么要使用索引?索引这么多优点,为什么不对表中的每一个列创建一个索引呢?索引是如何提高查询速度的?说一下使用索引的注意事项?Mysql索引主要使用的两种数据结构?什么是覆盖索引?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-进程与线程的区别是什么-进程间的几种通信方式说一下-线程间的几种通信方式知道不"><span class="nav-number">1.8.</span> <span class="nav-text">8. 进程与线程的区别是什么?进程间的几种通信方式说一下?线程间的几种通信方式知道不?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-为什么要用单例模式-手写几种线程安全的单例模式"><span class="nav-number">1.9.</span> <span class="nav-text">9. 为什么要用单例模式?手写几种线程安全的单例模式?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-简单介绍一下bean-知道Spring的bean的作用域与生命周期吗"><span class="nav-number">1.10.</span> <span class="nav-text">10. 简单介绍一下bean;知道Spring的bean的作用域与生命周期吗?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#11-Spring-中的事务传播行为了解吗-TransactionDefinition-接口中哪五个表示隔离级别的常量"><span class="nav-number">1.11.</span> <span class="nav-text">11. Spring 中的事务传播行为了解吗?TransactionDefinition 接口中哪五个表示隔离级别的常量?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#事务传播行为"><span class="nav-number">1.11.0.1.</span> <span class="nav-text">事务传播行为</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#隔离级别"><span class="nav-number">1.11.0.2.</span> <span class="nav-text">隔离级别</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#12-SpringMVC-原理了解吗"><span class="nav-number">1.12.</span> <span class="nav-text">12. SpringMVC 原理了解吗?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#13-Spring-AOP-IOC-实现原理"><span class="nav-number">1.13.</span> <span class="nav-text">13. Spring AOP IOC 实现原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二-进阶篇"><span class="nav-number">2.</span> <span class="nav-text">二 进阶篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-消息队列MQ的套路"><span class="nav-number">2.1.</span> <span class="nav-text">1 消息队列MQ的套路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-介绍一下消息队列MQ的应用场景-使用消息队列的好处"><span class="nav-number">2.1.1.</span> <span class="nav-text">1.1 介绍一下消息队列MQ的应用场景/使用消息队列的好处</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-通过异步处理提高系统性能"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">1)通过异步处理提高系统性能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-降低系统耦合性"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">2)降低系统耦合性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-那么使用消息队列会带来什么问题-考虑过这些问题吗"><span class="nav-number">2.1.2.</span> <span class="nav-text">1.2 那么使用消息队列会带来什么问题?考虑过这些问题吗?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-介绍一下你知道哪几种消息队列-该如何选择呢"><span class="nav-number">2.1.3.</span> <span class="nav-text">1.3 介绍一下你知道哪几种消息队列,该如何选择呢?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-关于消息队列其他一些常见的问题展望"><span class="nav-number">2.1.4.</span> <span class="nav-text">1.4 关于消息队列其他一些常见的问题展望</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-谈谈-InnoDB-和-MyIsam-两者的区别"><span class="nav-number">2.2.</span> <span class="nav-text">2 谈谈 InnoDB 和 MyIsam 两者的区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-两者的对比"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.1 两者的对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-关于两者的总结"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2 关于两者的总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-聊聊-Java-中的集合吧"><span class="nav-number">2.3.</span> <span class="nav-text">3 聊聊 Java 中的集合吧!</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Arraylist-与-LinkedList-有什么不同-注意加上从数据结构分析的内容"><span class="nav-number">2.3.1.</span> <span class="nav-text">3.1 Arraylist 与 LinkedList 有什么不同?(注意加上从数据结构分析的内容)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-HashMap的底层实现"><span class="nav-number">2.3.2.</span> <span class="nav-text">3.2 HashMap的底层实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-JDK1-8之前"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">1)JDK1.8之前</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-JDK1-8之后"><span class="nav-number">2.3.2.2.</span> <span class="nav-text">2)JDK1.8之后</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-既然谈到了红黑树-你给我手绘一个出来吧-然后简单讲一下自己对于红黑树的理解"><span class="nav-number">2.3.3.</span> <span class="nav-text">3.3 既然谈到了红黑树,你给我手绘一个出来吧,然后简单讲一下自己对于红黑树的理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-红黑树这么优秀-为何不直接使用红黑树得了"><span class="nav-number">2.3.4.</span> <span class="nav-text">3.4 红黑树这么优秀,为何不直接使用红黑树得了?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-HashMap-和-Hashtable-的区别-HashSet-和-HashMap-区别"><span class="nav-number">2.3.5.</span> <span class="nav-text">3.5 HashMap 和 Hashtable 的区别/HashSet 和 HashMap 区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三-终结篇"><span class="nav-number">3.</span> <span class="nav-text">三 终结篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Object类有哪些方法"><span class="nav-number">3.1.</span> <span class="nav-text">1. Object类有哪些方法?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Object类的常见方法总结"><span class="nav-number">3.1.1.</span> <span class="nav-text">1.1 Object类的常见方法总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-hashCode与equals"><span class="nav-number">3.1.2.</span> <span class="nav-text">1.2 hashCode与equals</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-1-hashCode-介绍"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">1.2.1 hashCode()介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-2-为什么要有hashCode"><span class="nav-number">3.1.2.2.</span> <span class="nav-text">1.2.2 为什么要有hashCode</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-3-hashCode-与equals-的相关规定"><span class="nav-number">3.1.2.3.</span> <span class="nav-text">1.2.3 hashCode()与equals()的相关规定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-4-为什么两个对象有相同的hashcode值-它们也不一定是相等的"><span class="nav-number">3.1.2.4.</span> <span class="nav-text">1.2.4 为什么两个对象有相同的hashcode值,它们也不一定是相等的?</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-与equals"><span class="nav-number">3.1.3.</span> <span class="nav-text">1.3  ==与equals</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-ConcurrentHashMap-相关问题"><span class="nav-number">3.2.</span> <span class="nav-text">2 ConcurrentHashMap 相关问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-ConcurrentHashMap-和-Hashtable-的区别"><span class="nav-number">3.2.1.</span> <span class="nav-text">2.1 ConcurrentHashMap 和 Hashtable 的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-ConcurrentHashMap线程安全的具体实现方式-底层具体实现"><span class="nav-number">3.2.2.</span> <span class="nav-text">2.2 ConcurrentHashMap线程安全的具体实现方式/底层具体实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JDK1-7-上面有示意图"><span class="nav-number">3.2.2.1.</span> <span class="nav-text">JDK1.7(上面有示意图)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JDK1-8-上面有示意图"><span class="nav-number">3.2.2.2.</span> <span class="nav-text">JDK1.8(上面有示意图)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-谈谈-synchronized-和-ReentrantLock-的区别"><span class="nav-number">3.3.</span> <span class="nav-text">3 谈谈 synchronized 和 ReentrantLock 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-线程池了解吗"><span class="nav-number">3.4.</span> <span class="nav-text">4 线程池了解吗?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-为什么要用线程池"><span class="nav-number">3.4.1.</span> <span class="nav-text">4.1 为什么要用线程池?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Java-提供了哪几种线程池-他们各自的使用场景是什么"><span class="nav-number">3.4.2.</span> <span class="nav-text">4.2 Java 提供了哪几种线程池?他们各自的使用场景是什么?</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Java-主要提供了下面4种线程池"><span class="nav-number">3.4.2.1.</span> <span class="nav-text">Java 主要提供了下面4种线程池</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#各种线程池的适用场景介绍"><span class="nav-number">3.4.2.2.</span> <span class="nav-text">各种线程池的适用场景介绍</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-创建的线程池的方式"><span class="nav-number">3.4.3.</span> <span class="nav-text">4.3 创建的线程池的方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Nginx"><span class="nav-number">3.5.</span> <span class="nav-text">5 Nginx</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-简单介绍一下Nginx"><span class="nav-number">3.5.1.</span> <span class="nav-text">5.1 简单介绍一下Nginx</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#反向代理"><span class="nav-number">3.5.1.1.</span> <span class="nav-text">反向代理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#负载均衡"><span class="nav-number">3.5.1.2.</span> <span class="nav-text">负载均衡</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#动静分离"><span class="nav-number">3.5.1.3.</span> <span class="nav-text">动静分离</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-为什么要用-Nginx"><span class="nav-number">3.5.2.</span> <span class="nav-text">5.2 为什么要用 Nginx?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-Nginx-的四个主要组成部分了解吗"><span class="nav-number">3.5.3.</span> <span class="nav-text">5.3 Nginx 的四个主要组成部分了解吗?</span></a></li></ol></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">syf</span>
+
+  
 </div>
 
-    </div>
-</div>
-<footer id="footer">
-    <div id="copyright">&copy; syf  2019</div>
-    <div id="theme">
-        Powered by <a href="http://hexo.io">Hexo</a>. Theme by <a href="https://github.com/markyong/hexo-theme-stage">Stage</a>
-    </div>
-</footer>
-<script src="/lib/js/waterrippleeffect.min.js"></script>
-<script src="/js/header-bg.main.js"></script>
 
-    <script src="/lib/js/smooth-scroll.min.js"></script>
-    <script src="/js/toc.main.js"></script>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
 
 </body>
 </html>

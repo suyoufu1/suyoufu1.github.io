@@ -1,70 +1,312 @@
-
 <!DOCTYPE html>
-<html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
 <head><meta name="generator" content="Hexo 3.9.0">
-    <meta charset="UTF-8">
-    <title>苏有福的博客</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="keywords" content>
-    <meta name="description" content="本文是作者根据官方文档以及自己平时的使用情况，对 Dubbo 所做的一个总结。如果不懂 Dubbo 的使用的话，可以参考我的这篇文章《超详细，新手都能看懂 ！使用SpringBoot+Dubbo 搭建一个简单的分布式服务》
-Dubbo 官网：http://dubbo.apache.org/zh-cn/index.html
-Dubbo 中文文档： http://dubbo.apache.org/zh-cn/index.html
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
 
 
 
-一 重要的概念
-1.1 什么是 Dubbo?
-1.2 什么是 RPC?RPC原理是什么?
-1.3 为什么要用 Dubbo?
-1.4 什么是分布式?
-1.5 为什么要分布式?
 
 
-二 Dubbo...">
-    
-        <link rel="icon" href="/favicon.ico">
-    
-    
-        
-            <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-        
-            <link rel="stylesheet" href="/css/stage.css">
-        
-            <link rel="stylesheet" href="/css/avatar-bg.css">
-        
-    
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文是作者根据官方文档以及自己平时的使用情况，对 Dubbo 所做的一个总结。如果不懂 Dubbo 的使用的话，可以参考我的这篇文章《超详细，新手都能看懂 ！使用SpringBoot+Dubbo 搭建一个简单的分布式服务》 Dubbo 官网：http://dubbo.apache.org/zh-cn/index.html Dubbo 中文文档： http://dubbo.apache.org/zh">
+<meta property="og:type" content="article">
+<meta property="og:title" content="苏有福的博客">
+<meta property="og:url" content="http://yoursite.com/2019/07/14/docs/system-design/data-communication/dubbo/index.html">
+<meta property="og:site_name" content="苏有福的博客">
+<meta property="og:description" content="本文是作者根据官方文档以及自己平时的使用情况，对 Dubbo 所做的一个总结。如果不懂 Dubbo 的使用的话，可以参考我的这篇文章《超详细，新手都能看懂 ！使用SpringBoot+Dubbo 搭建一个简单的分布式服务》 Dubbo 官网：http://dubbo.apache.org/zh-cn/index.html Dubbo 中文文档： http://dubbo.apache.org/zh">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-6/37345851.jpg">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-6/32527396.jpg">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-26/43050183.jpg">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-26/46816446.jpg">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-9-26/64702923.jpg">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-7/77722327.jpg">
+<meta property="og:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-7/97933247.jpg">
+<meta property="og:updated_time" content="2019-07-14T14:47:16.552Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="苏有福的博客">
+<meta name="twitter:description" content="本文是作者根据官方文档以及自己平时的使用情况，对 Dubbo 所做的一个总结。如果不懂 Dubbo 的使用的话，可以参考我的这篇文章《超详细，新手都能看懂 ！使用SpringBoot+Dubbo 搭建一个简单的分布式服务》 Dubbo 官网：http://dubbo.apache.org/zh-cn/index.html Dubbo 中文文档： http://dubbo.apache.org/zh">
+<meta name="twitter:image" content="http://my-blog-to-use.oss-cn-beijing.aliyuncs.com/18-12-6/37345851.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/14/docs/system-design/data-communication/dubbo/">
+
+
+
+
+
+  <title> | 苏有福的博客</title>
+  
+
+
+
+
+
+
+
+
 </head>
-</html>
-<body>
-<header id="header">
-    <div class="menu">
-        <i class="fa fa-bars"></i>
-    </div>
-    <div class="header-main">
-        <h1><a href="/">苏有福的博客</a></h1>
-    </div>
-    <div id="nav">
-        <div class="nav-img" id="nav-img"></div>
-        <div class="sentences">
-            云里写诗，泥里生活，岁月里洒脱。
-        </div>
-    </div>
-</header>
 
-<div id="content-outer">
-    <div id="content-inner">
-        <div class="clearfix">
-    <article id="post">
-        <h1></h1>
-        <div class="create">
-            <span>Created</span>
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">苏有福的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
             
-                <time datetime="2019-07-14T14:47:16.552Z">
-                    2019-07-14
-                </time>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
             
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/system-design/data-communication/dubbo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="syf">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="苏有福的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">
+                2019-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
         </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
         <p>本文是作者根据官方文档以及自己平时的使用情况，对 Dubbo 所做的一个总结。如果不懂 Dubbo 的使用的话，可以参考我的这篇文章<a href="https://mp.weixin.qq.com/s?__biz=MzU4NDQ4MzU5OA==&mid=2247484706&idx=1&sn=d413fc17023482f67ca17cb6756b9ff8&chksm=fd985343caefda555969568fdf4734536e0a1745f9de337d434a7dbd04e893bd2d75f3641aab&token=1902169190&lang=zh_CN#rd" target="_blank" rel="noopener">《超详细，新手都能看懂 ！使用SpringBoot+Dubbo 搭建一个简单的分布式服务》</a></p>
 <p>Dubbo 官网：<a href="http://dubbo.apache.org/zh-cn/index.html" target="_blank" rel="noopener">http://dubbo.apache.org/zh-cn/index.html</a></p>
 <p>Dubbo 中文文档： <a href="http://dubbo.apache.org/zh-cn/index.html" target="_blank" rel="noopener">http://dubbo.apache.org/zh-cn/index.html</a></p>
@@ -249,57 +491,359 @@ Dubbo 中文文档： http://dubbo.apache.org/zh-cn/index.html
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Reference</span>(url = <span class="string">"127.0.0.1:20880"</span>)   </span><br><span class="line">HelloService helloService;</span><br></pre></td></tr></table></figure>
 
 
-        <div>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/07/14/docs/system-design/data-communication/RocketMQ-Questions/" rel="next" title>
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/14/docs/operating-system/Shell/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
         </div>
-        <div class="bottom-line"></div>
-        
-    <nav id="article-nav">
-        
-            <a href="/2019/07/14/docs/operating-system/Shell/" id="article-nav-newer" class="article-nav-link-wrap">
-        <span class="article-nav-title">
-            
-                no title
-            
-        </span>
-                <strong class="article-nav-caption">&gt;</strong>
-            </a>
-        
-        
-            <a href="/2019/07/14/docs/system-design/data-communication/message-queue/" id="article-nav-older" class="article-nav-link-wrap">
-                <strong class="article-nav-caption">&lt;</strong>
-                <span class="article-nav-title">
-                    
-                    no title
-                
-            </a>
-        
-    </nav>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
 
 
-        
-    </article>
-    <div id="toc">
-        
-            <h2>Table of Contents</h2>
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一-重要的概念"><span class="toc-number">1.</span> <span class="toc-text">一 重要的概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-什么是-Dubbo"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 什么是 Dubbo?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-什么是-RPC-RPC原理是什么"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 什么是 RPC?RPC原理是什么?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-为什么要用-Dubbo"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 为什么要用 Dubbo?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-什么是分布式"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 什么是分布式?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-为什么要分布式"><span class="toc-number">1.5.</span> <span class="toc-text">1.5 为什么要分布式?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二-Dubbo-的架构"><span class="toc-number">2.</span> <span class="toc-text">二 Dubbo 的架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Dubbo-的架构图解"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 Dubbo 的架构图解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Dubbo-工作原理"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 Dubbo 工作原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三-Dubbo-的负载均衡策略"><span class="toc-number">3.</span> <span class="toc-text">三 Dubbo 的负载均衡策略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-先来解释一下什么是负载均衡"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 先来解释一下什么是负载均衡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-再来看看-Dubbo-提供的负载均衡策略"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 再来看看 Dubbo 提供的负载均衡策略</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-Random-LoadBalance-默认，基于权重的随机负载均衡机制"><span class="toc-number">3.2.1.</span> <span class="toc-text">3.2.1  Random LoadBalance(默认，基于权重的随机负载均衡机制)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-2-RoundRobin-LoadBalance-不推荐，基于权重的轮询负载均衡机制"><span class="toc-number">3.2.2.</span> <span class="toc-text">3.2.2  RoundRobin LoadBalance(不推荐，基于权重的轮询负载均衡机制)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-3-LeastActive-LoadBalance"><span class="toc-number">3.2.3.</span> <span class="toc-text">3.2.3 LeastActive LoadBalance</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-4-ConsistentHash-LoadBalance"><span class="toc-number">3.2.4.</span> <span class="toc-text">3.2.4  ConsistentHash LoadBalance</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-配置方式"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 配置方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四-zookeeper宕机与dubbo直连的情况"><span class="toc-number">4.</span> <span class="toc-text">四 zookeeper宕机与dubbo直连的情况</span></a></li></ol>
-        
+
+    <div class="post-spread">
+      
     </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">syf</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">105</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-重要的概念"><span class="nav-number">1.</span> <span class="nav-text">一 重要的概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-什么是-Dubbo"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 什么是 Dubbo?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-什么是-RPC-RPC原理是什么"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 什么是 RPC?RPC原理是什么?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-为什么要用-Dubbo"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 为什么要用 Dubbo?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-什么是分布式"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 什么是分布式?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-为什么要分布式"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 为什么要分布式?</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-Dubbo-的架构"><span class="nav-number">2.</span> <span class="nav-text">二 Dubbo 的架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-Dubbo-的架构图解"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Dubbo 的架构图解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Dubbo-工作原理"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 Dubbo 工作原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-Dubbo-的负载均衡策略"><span class="nav-number">3.</span> <span class="nav-text">三 Dubbo 的负载均衡策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-先来解释一下什么是负载均衡"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 先来解释一下什么是负载均衡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-再来看看-Dubbo-提供的负载均衡策略"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 再来看看 Dubbo 提供的负载均衡策略</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-Random-LoadBalance-默认，基于权重的随机负载均衡机制"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1  Random LoadBalance(默认，基于权重的随机负载均衡机制)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-RoundRobin-LoadBalance-不推荐，基于权重的轮询负载均衡机制"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2  RoundRobin LoadBalance(不推荐，基于权重的轮询负载均衡机制)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-3-LeastActive-LoadBalance"><span class="nav-number">3.2.3.</span> <span class="nav-text">3.2.3 LeastActive LoadBalance</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-4-ConsistentHash-LoadBalance"><span class="nav-number">3.2.4.</span> <span class="nav-text">3.2.4  ConsistentHash LoadBalance</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-配置方式"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 配置方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四-zookeeper宕机与dubbo直连的情况"><span class="nav-number">4.</span> <span class="nav-text">四 zookeeper宕机与dubbo直连的情况</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">syf</span>
+
+  
 </div>
 
-    </div>
-</div>
-<footer id="footer">
-    <div id="copyright">&copy; syf  2019</div>
-    <div id="theme">
-        Powered by <a href="http://hexo.io">Hexo</a>. Theme by <a href="https://github.com/markyong/hexo-theme-stage">Stage</a>
-    </div>
-</footer>
-<script src="/lib/js/waterrippleeffect.min.js"></script>
-<script src="/js/header-bg.main.js"></script>
 
-    <script src="/lib/js/smooth-scroll.min.js"></script>
-    <script src="/js/toc.main.js"></script>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
 
 </body>
 </html>

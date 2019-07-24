@@ -1,62 +1,304 @@
-
 <!DOCTYPE html>
-<html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
 <head><meta name="generator" content="Hexo 3.9.0">
-    <meta charset="UTF-8">
-    <title>苏有福的博客</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="keywords" content>
-    <meta name="description" content="　　　　　　　　　　　　　改进的类型推断1.什么是类型推断类型推断就像它的字面意思一样，编译器根据你显示声明的已知的信息 推断出你没有显示声明的类型，这就是类型推断。看过《Java编程思想 第四版》的朋友可能还记得里面讲解泛型一章的时候，里面很多例子是下面这样的:
-1Map&amp;lt;String, Object&amp;gt; map = new Map&amp;lt;String, Object&amp;gt;();
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
 
-而我们平常写的都是这样的:
-1Map&amp;lt;String, Object&amp;gt; map = new Map&amp;lt;&amp;gt;();
 
-这就是类型推断，《Java编程思想 第四版》这本书出书的时候最新的JDK只有1.6(JDK7推...">
-    
-        <link rel="icon" href="/favicon.ico">
-    
-    
-        
-            <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-        
-            <link rel="stylesheet" href="/css/stage.css">
-        
-            <link rel="stylesheet" href="/css/avatar-bg.css">
-        
-    
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="改进的类型推断1.什么是类型推断类型推断就像它的字面意思一样，编译器根据你显示声明的已知的信息 推断出你没有显示声明的类型，这就是类型推断。看过《Java编程思想 第四版》的朋友可能还记得里面讲解泛型一章的时候，里面很多例子是下面这样的: 1Map&amp;lt;String, Object&amp;gt; map = new Map&amp;lt;String, Object&amp;gt;();">
+<meta property="og:type" content="article">
+<meta property="og:title" content="苏有福的博客">
+<meta property="og:url" content="http://yoursite.com/2019/07/14/docs/java/What's New in JDK8/改进的类型推断/index.html">
+<meta property="og:site_name" content="苏有福的博客">
+<meta property="og:description" content="改进的类型推断1.什么是类型推断类型推断就像它的字面意思一样，编译器根据你显示声明的已知的信息 推断出你没有显示声明的类型，这就是类型推断。看过《Java编程思想 第四版》的朋友可能还记得里面讲解泛型一章的时候，里面很多例子是下面这样的: 1Map&amp;lt;String, Object&amp;gt; map = new Map&amp;lt;String, Object&amp;gt;();">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-14T14:47:16.520Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="苏有福的博客">
+<meta name="twitter:description" content="改进的类型推断1.什么是类型推断类型推断就像它的字面意思一样，编译器根据你显示声明的已知的信息 推断出你没有显示声明的类型，这就是类型推断。看过《Java编程思想 第四版》的朋友可能还记得里面讲解泛型一章的时候，里面很多例子是下面这样的: 1Map&amp;lt;String, Object&amp;gt; map = new Map&amp;lt;String, Object&amp;gt;();">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/14/docs/java/What's New in JDK8/改进的类型推断/">
+
+
+
+
+
+  <title> | 苏有福的博客</title>
+  
+
+
+
+
+
+
+
+
 </head>
-</html>
-<body>
-<header id="header">
-    <div class="menu">
-        <i class="fa fa-bars"></i>
-    </div>
-    <div class="header-main">
-        <h1><a href="/">苏有福的博客</a></h1>
-    </div>
-    <div id="nav">
-        <div class="nav-img" id="nav-img"></div>
-        <div class="sentences">
-            云里写诗，泥里生活，岁月里洒脱。
-        </div>
-    </div>
-</header>
 
-<div id="content-outer">
-    <div id="content-inner">
-        <div class="clearfix">
-    <article id="post">
-        <h1></h1>
-        <div class="create">
-            <span>Created</span>
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">苏有福的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
             
-                <time datetime="2019-07-14T14:47:16.520Z">
-                    2019-07-14
-                </time>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
             
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/java/What's New in JDK8/改进的类型推断/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="syf">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="苏有福的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">
+                2019-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
         </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
         <h2 id="改进的类型推断"><a href="#改进的类型推断" class="headerlink" title="　　　　　　　　　　　　　改进的类型推断"></a>　　　　　　　　　　　　　改进的类型推断</h2><h3 id="1-什么是类型推断"><a href="#1-什么是类型推断" class="headerlink" title="1.什么是类型推断"></a>1.什么是类型推断</h3><p>类型推断就像它的字面意思一样，编译器根据<b><i>你显示声明的已知的信息</i></b> 推断出你没有显示声明的类型，这就是类型推断。<br>看过《Java编程思想 第四版》的朋友可能还记得里面讲解泛型一章的时候，里面很多例子是下面这样的:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;String, Object&gt; map = <span class="keyword">new</span> Map&lt;String, Object&gt;();</span><br></pre></td></tr></table></figure>
 
@@ -69,57 +311,359 @@
 <p>但是上面的代码在JDK8里可以通过，也就说，JDK8里，类型推断不仅可以用于赋值语句，而且可以根据代码中上下文里的信息推断出更多的信息，因此我们需要些的代码<br>会更少。加强的类型推断还有一个就是用于Lambda表达式了。<br><br><br>大家其实不必细究类型推断，在日常使用中IDE会自动判断，当IDE自己无法推断出足够的信息时，就需要我们额外做一下工作，比如在&lt;&gt;里添加更多的类型信息，<br>相信随着Java的进化，这些便利的功能会越来越强大。</p>
 <!-- --------------------------------------------------- 改进的类型推断结束------------------------------------------------- -->
 
-        <div>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/07/14/docs/java/What's New in JDK8/通过反射获得方法的参数信息/" rel="next" title>
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/14/docs/java/What's New in JDK8/Stream/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
         </div>
-        <div class="bottom-line"></div>
-        
-    <nav id="article-nav">
-        
-            <a href="/2019/07/14/docs/java/What's New in JDK8/Stream/" id="article-nav-newer" class="article-nav-link-wrap">
-        <span class="article-nav-title">
-            
-                no title
-            
-        </span>
-                <strong class="article-nav-caption">&gt;</strong>
-            </a>
-        
-        
-            <a href="/2019/07/14/docs/java/What's New in JDK8/通过反射获得方法的参数信息/" id="article-nav-older" class="article-nav-link-wrap">
-                <strong class="article-nav-caption">&lt;</strong>
-                <span class="article-nav-title">
-                    
-                    no title
-                
-            </a>
-        
-    </nav>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
 
 
-        
-    </article>
-    <div id="toc">
-        
-            <h2>Table of Contents</h2>
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#改进的类型推断"><span class="toc-number">1.</span> <span class="toc-text">　　　　　　　　　　　　　改进的类型推断</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-什么是类型推断"><span class="toc-number">1.1.</span> <span class="toc-text">1.什么是类型推断</span></a></li></ol></li></ol>
-        
+
+    <div class="post-spread">
+      
     </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">syf</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">105</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#改进的类型推断"><span class="nav-number">1.</span> <span class="nav-text">　　　　　　　　　　　　　改进的类型推断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-什么是类型推断"><span class="nav-number">1.1.</span> <span class="nav-text">1.什么是类型推断</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">syf</span>
+
+  
 </div>
 
-    </div>
-</div>
-<footer id="footer">
-    <div id="copyright">&copy; syf  2019</div>
-    <div id="theme">
-        Powered by <a href="http://hexo.io">Hexo</a>. Theme by <a href="https://github.com/markyong/hexo-theme-stage">Stage</a>
-    </div>
-</footer>
-<script src="/lib/js/waterrippleeffect.min.js"></script>
-<script src="/js/header-bg.main.js"></script>
 
-    <script src="/lib/js/smooth-scroll.min.js"></script>
-    <script src="/js/toc.main.js"></script>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
 
 </body>
 </html>

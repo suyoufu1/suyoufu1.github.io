@@ -1,75 +1,306 @@
-
 <!DOCTYPE html>
-<html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
 <head><meta name="generator" content="Hexo 3.9.0">
-    <meta charset="UTF-8">
-    <title>苏有福的博客</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="keywords" content>
-    <meta name="description" content="
-
-
-简介
-内部结构分析
-LinkedList源码分析
-构造方法
-添加（add）方法
-根据位置取数据的方法
-根据对象得到索引的方法
-检查链表是否包含某对象的方法：
-删除（remove/pop）方法
-
-
-LinkedList类常用方法测试：
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
 
 
 
-简介LinkedList是一个实现了List接口和Deque接口的双端链表。LinkedList底层的链表结构使它支持高效的插入和删除操作，另外它实现了Deque接口，使得LinkedList类也具有队列的特性;LinkedList不是线程安全的，如果想使LinkedList变成线程安全的，可以调用静态类Collections类中的synchronizedList方法： 
-1Li...">
-    
-        <link rel="icon" href="/favicon.ico">
-    
-    
-        
-            <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-        
-            <link rel="stylesheet" href="/css/stage.css">
-        
-            <link rel="stylesheet" href="/css/avatar-bg.css">
-        
-    
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介 内部结构分析 LinkedList源码分析 构造方法 添加（add）方法 根据位置取数据的方法 根据对象得到索引的方法 检查链表是否包含某对象的方法： 删除（remove/pop）方法   LinkedList类常用方法测试：    简介LinkedList是一个实现了List接口和Deque接口的双端链表。LinkedList底层的链表结构使它支持高效的插入和删除操作，另外它实现了D">
+<meta property="og:type" content="article">
+<meta property="og:title" content="苏有福的博客">
+<meta property="og:url" content="http://yoursite.com/2019/07/14/docs/java/collection/LinkedList/index.html">
+<meta property="og:site_name" content="苏有福的博客">
+<meta property="og:description" content="简介 内部结构分析 LinkedList源码分析 构造方法 添加（add）方法 根据位置取数据的方法 根据对象得到索引的方法 检查链表是否包含某对象的方法： 删除（remove/pop）方法   LinkedList类常用方法测试：    简介LinkedList是一个实现了List接口和Deque接口的双端链表。LinkedList底层的链表结构使它支持高效的插入和删除操作，另外它实现了D">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/3/19/1623e363fe0450b0?w=600&h=481&f=jpeg&s=18502">
+<meta property="og:updated_time" content="2019-07-14T14:47:16.536Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="苏有福的博客">
+<meta name="twitter:description" content="简介 内部结构分析 LinkedList源码分析 构造方法 添加（add）方法 根据位置取数据的方法 根据对象得到索引的方法 检查链表是否包含某对象的方法： 删除（remove/pop）方法   LinkedList类常用方法测试：    简介LinkedList是一个实现了List接口和Deque接口的双端链表。LinkedList底层的链表结构使它支持高效的插入和删除操作，另外它实现了D">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/3/19/1623e363fe0450b0?w=600&h=481&f=jpeg&s=18502">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/14/docs/java/collection/LinkedList/">
+
+
+
+
+
+  <title> | 苏有福的博客</title>
+  
+
+
+
+
+
+
+
+
 </head>
-</html>
-<body>
-<header id="header">
-    <div class="menu">
-        <i class="fa fa-bars"></i>
-    </div>
-    <div class="header-main">
-        <h1><a href="/">苏有福的博客</a></h1>
-    </div>
-    <div id="nav">
-        <div class="nav-img" id="nav-img"></div>
-        <div class="sentences">
-            时光荏苒，旦夕之间，略有遗憾，似白驹过隙，蹉跎自悟。
-        </div>
-    </div>
-</header>
 
-<div id="content-outer">
-    <div id="content-inner">
-        <div class="clearfix">
-    <article id="post">
-        <h1></h1>
-        <div class="create">
-            <span>Created</span>
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">苏有福的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
             
-                <time datetime="2019-07-14T14:47:16.536Z">
-                    2019-07-14
-                </time>
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
             
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/14/docs/java/collection/LinkedList/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="syf">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="苏有福的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-14T22:47:16+08:00">
+                2019-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
         </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
         <!-- MarkdownTOC -->
 
 <ul>
@@ -171,57 +402,359 @@ LinkedList类常用方法测试：
 <h2 id="LinkedList类常用方法测试"><a href="#LinkedList类常用方法测试" class="headerlink" title="LinkedList类常用方法测试"></a><font face="楷体" id="4">LinkedList类常用方法测试</font></h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> list;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Iterator;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LinkedListDemo</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] srgs)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//创建存放int类型的linkedList</span></span><br><span class="line">        LinkedList&lt;Integer&gt; linkedList = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="comment">/************************** linkedList的基本操作 ************************/</span></span><br><span class="line">        linkedList.addFirst(<span class="number">0</span>); <span class="comment">// 添加元素到列表开头</span></span><br><span class="line">        linkedList.add(<span class="number">1</span>); <span class="comment">// 在列表结尾添加元素</span></span><br><span class="line">        linkedList.add(<span class="number">2</span>, <span class="number">2</span>); <span class="comment">// 在指定位置添加元素</span></span><br><span class="line">        linkedList.addLast(<span class="number">3</span>); <span class="comment">// 添加元素到列表结尾</span></span><br><span class="line">        </span><br><span class="line">        System.out.println(<span class="string">"LinkedList（直接输出的）: "</span> + linkedList);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">"getFirst()获得第一个元素: "</span> + linkedList.getFirst()); <span class="comment">// 返回此列表的第一个元素</span></span><br><span class="line">        System.out.println(<span class="string">"getLast()获得第最后一个元素: "</span> + linkedList.getLast()); <span class="comment">// 返回此列表的最后一个元素</span></span><br><span class="line">        System.out.println(<span class="string">"removeFirst()删除第一个元素并返回: "</span> + linkedList.removeFirst()); <span class="comment">// 移除并返回此列表的第一个元素</span></span><br><span class="line">        System.out.println(<span class="string">"removeLast()删除最后一个元素并返回: "</span> + linkedList.removeLast()); <span class="comment">// 移除并返回此列表的最后一个元素</span></span><br><span class="line">        System.out.println(<span class="string">"After remove:"</span> + linkedList);</span><br><span class="line">        System.out.println(<span class="string">"contains()方法判断列表是否包含1这个元素:"</span> + linkedList.contains(<span class="number">1</span>)); <span class="comment">// 判断此列表包含指定元素，如果是，则返回true</span></span><br><span class="line">        System.out.println(<span class="string">"该linkedList的大小 : "</span> + linkedList.size()); <span class="comment">// 返回此列表的元素个数</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">/************************** 位置访问操作 ************************/</span></span><br><span class="line">        System.out.println(<span class="string">"-----------------------------------------"</span>);</span><br><span class="line">        linkedList.set(<span class="number">1</span>, <span class="number">3</span>); <span class="comment">// 将此列表中指定位置的元素替换为指定的元素</span></span><br><span class="line">        System.out.println(<span class="string">"After set(1, 3):"</span> + linkedList);</span><br><span class="line">        System.out.println(<span class="string">"get(1)获得指定位置（这里为1）的元素: "</span> + linkedList.get(<span class="number">1</span>)); <span class="comment">// 返回此列表中指定位置处的元素</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">/************************** Search操作 ************************/</span></span><br><span class="line">        System.out.println(<span class="string">"-----------------------------------------"</span>);</span><br><span class="line">        linkedList.add(<span class="number">3</span>);</span><br><span class="line">        System.out.println(<span class="string">"indexOf(3): "</span> + linkedList.indexOf(<span class="number">3</span>)); <span class="comment">// 返回此列表中首次出现的指定元素的索引</span></span><br><span class="line">        System.out.println(<span class="string">"lastIndexOf(3): "</span> + linkedList.lastIndexOf(<span class="number">3</span>));<span class="comment">// 返回此列表中最后出现的指定元素的索引</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">/************************** Queue操作 ************************/</span></span><br><span class="line">        System.out.println(<span class="string">"-----------------------------------------"</span>);</span><br><span class="line">        System.out.println(<span class="string">"peek(): "</span> + linkedList.peek()); <span class="comment">// 获取但不移除此列表的头</span></span><br><span class="line">        System.out.println(<span class="string">"element(): "</span> + linkedList.element()); <span class="comment">// 获取但不移除此列表的头</span></span><br><span class="line">        linkedList.poll(); <span class="comment">// 获取并移除此列表的头</span></span><br><span class="line">        System.out.println(<span class="string">"After poll():"</span> + linkedList);</span><br><span class="line">        linkedList.remove();</span><br><span class="line">        System.out.println(<span class="string">"After remove():"</span> + linkedList); <span class="comment">// 获取并移除此列表的头</span></span><br><span class="line">        linkedList.offer(<span class="number">4</span>);</span><br><span class="line">        System.out.println(<span class="string">"After offer(4):"</span> + linkedList); <span class="comment">// 将指定元素添加到此列表的末尾</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">/************************** Deque操作 ************************/</span></span><br><span class="line">        System.out.println(<span class="string">"-----------------------------------------"</span>);</span><br><span class="line">        linkedList.offerFirst(<span class="number">2</span>); <span class="comment">// 在此列表的开头插入指定的元素</span></span><br><span class="line">        System.out.println(<span class="string">"After offerFirst(2):"</span> + linkedList);</span><br><span class="line">        linkedList.offerLast(<span class="number">5</span>); <span class="comment">// 在此列表末尾插入指定的元素</span></span><br><span class="line">        System.out.println(<span class="string">"After offerLast(5):"</span> + linkedList);</span><br><span class="line">        System.out.println(<span class="string">"peekFirst(): "</span> + linkedList.peekFirst()); <span class="comment">// 获取但不移除此列表的第一个元素</span></span><br><span class="line">        System.out.println(<span class="string">"peekLast(): "</span> + linkedList.peekLast()); <span class="comment">// 获取但不移除此列表的第一个元素</span></span><br><span class="line">        linkedList.pollFirst(); <span class="comment">// 获取并移除此列表的第一个元素</span></span><br><span class="line">        System.out.println(<span class="string">"After pollFirst():"</span> + linkedList);</span><br><span class="line">        linkedList.pollLast(); <span class="comment">// 获取并移除此列表的最后一个元素</span></span><br><span class="line">        System.out.println(<span class="string">"After pollLast():"</span> + linkedList);</span><br><span class="line">        linkedList.push(<span class="number">2</span>); <span class="comment">// 将元素推入此列表所表示的堆栈（插入到列表的头）</span></span><br><span class="line">        System.out.println(<span class="string">"After push(2):"</span> + linkedList);</span><br><span class="line">        linkedList.pop(); <span class="comment">// 从此列表所表示的堆栈处弹出一个元素（获取并移除列表第一个元素）</span></span><br><span class="line">        System.out.println(<span class="string">"After pop():"</span> + linkedList);</span><br><span class="line">        linkedList.add(<span class="number">3</span>);</span><br><span class="line">        linkedList.removeFirstOccurrence(<span class="number">3</span>); <span class="comment">// 从此列表中移除第一次出现的指定元素（从头部到尾部遍历列表）</span></span><br><span class="line">        System.out.println(<span class="string">"After removeFirstOccurrence(3):"</span> + linkedList);</span><br><span class="line">        linkedList.removeLastOccurrence(<span class="number">3</span>); <span class="comment">// 从此列表中移除最后一次出现的指定元素（从尾部到头部遍历列表）</span></span><br><span class="line">        System.out.println(<span class="string">"After removeFirstOccurrence(3):"</span> + linkedList);</span><br><span class="line"></span><br><span class="line">        <span class="comment">/************************** 遍历操作 ************************/</span></span><br><span class="line">        System.out.println(<span class="string">"-----------------------------------------"</span>);</span><br><span class="line">        linkedList.clear();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100000</span>; i++) &#123;</span><br><span class="line">            linkedList.add(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 迭代器遍历</span></span><br><span class="line">        <span class="keyword">long</span> start = System.currentTimeMillis();</span><br><span class="line">        Iterator&lt;Integer&gt; iterator = linkedList.iterator();</span><br><span class="line">        <span class="keyword">while</span> (iterator.hasNext()) &#123;</span><br><span class="line">            iterator.next();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">long</span> end = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">"Iterator："</span> + (end - start) + <span class="string">" ms"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 顺序遍历(随机遍历)</span></span><br><span class="line">        start = System.currentTimeMillis();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; linkedList.size(); i++) &#123;</span><br><span class="line">            linkedList.get(i);</span><br><span class="line">        &#125;</span><br><span class="line">        end = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">"for："</span> + (end - start) + <span class="string">" ms"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 另一种for循环遍历</span></span><br><span class="line">        start = System.currentTimeMillis();</span><br><span class="line">        <span class="keyword">for</span> (Integer i : linkedList)</span><br><span class="line">            ;</span><br><span class="line">        end = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">"for2："</span> + (end - start) + <span class="string">" ms"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 通过pollFirst()或pollLast()来遍历LinkedList</span></span><br><span class="line">        LinkedList&lt;Integer&gt; temp1 = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        temp1.addAll(linkedList);</span><br><span class="line">        start = System.currentTimeMillis();</span><br><span class="line">        <span class="keyword">while</span> (temp1.size() != <span class="number">0</span>) &#123;</span><br><span class="line">            temp1.pollFirst();</span><br><span class="line">        &#125;</span><br><span class="line">        end = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">"pollFirst()或pollLast()："</span> + (end - start) + <span class="string">" ms"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 通过removeFirst()或removeLast()来遍历LinkedList</span></span><br><span class="line">        LinkedList&lt;Integer&gt; temp2 = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        temp2.addAll(linkedList);</span><br><span class="line">        start = System.currentTimeMillis();</span><br><span class="line">        <span class="keyword">while</span> (temp2.size() != <span class="number">0</span>) &#123;</span><br><span class="line">            temp2.removeFirst();</span><br><span class="line">        &#125;</span><br><span class="line">        end = System.currentTimeMillis();</span><br><span class="line">        System.out.println(<span class="string">"removeFirst()或removeLast()："</span> + (end - start) + <span class="string">" ms"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
-        <div>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/07/14/docs/java/collection/Java集合框架常见面试题/" rel="next" title>
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/14/docs/java/collection/HashMap/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
         </div>
-        <div class="bottom-line"></div>
-        
-    <nav id="article-nav">
-        
-            <a href="/2019/07/14/docs/java/collection/HashMap/" id="article-nav-newer" class="article-nav-link-wrap">
-        <span class="article-nav-title">
-            
-                no title
-            
-        </span>
-                <strong class="article-nav-caption">&gt;</strong>
-            </a>
-        
-        
-            <a href="/2019/07/14/docs/java/collection/Java集合框架常见面试题/" id="article-nav-older" class="article-nav-link-wrap">
-                <strong class="article-nav-caption">&lt;</strong>
-                <span class="article-nav-title">
-                    
-                    no title
-                
-            </a>
-        
-    </nav>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
 
 
-        
-    </article>
-    <div id="toc">
-        
-            <h2>Table of Contents</h2>
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#内部结构分析"><span class="toc-number">2.</span> <span class="toc-text">内部结构分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LinkedList源码分析"><span class="toc-number">3.</span> <span class="toc-text">LinkedList源码分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#构造方法"><span class="toc-number">3.1.</span> <span class="toc-text">构造方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#add方法"><span class="toc-number">3.2.</span> <span class="toc-text">add方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#根据位置取数据的方法"><span class="toc-number">3.3.</span> <span class="toc-text">根据位置取数据的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#根据对象得到索引的方法"><span class="toc-number">3.4.</span> <span class="toc-text">根据对象得到索引的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#检查链表是否包含某对象的方法："><span class="toc-number">3.5.</span> <span class="toc-text">检查链表是否包含某对象的方法：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除方法"><span class="toc-number">3.6.</span> <span class="toc-text">删除方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LinkedList类常用方法测试"><span class="toc-number">4.</span> <span class="toc-text">LinkedList类常用方法测试</span></a></li></ol>
-        
+
+    <div class="post-spread">
+      
     </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">syf</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">105</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内部结构分析"><span class="nav-number">2.</span> <span class="nav-text">内部结构分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LinkedList源码分析"><span class="nav-number">3.</span> <span class="nav-text">LinkedList源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构造方法"><span class="nav-number">3.1.</span> <span class="nav-text">构造方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#add方法"><span class="nav-number">3.2.</span> <span class="nav-text">add方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#根据位置取数据的方法"><span class="nav-number">3.3.</span> <span class="nav-text">根据位置取数据的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#根据对象得到索引的方法"><span class="nav-number">3.4.</span> <span class="nav-text">根据对象得到索引的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检查链表是否包含某对象的方法："><span class="nav-number">3.5.</span> <span class="nav-text">检查链表是否包含某对象的方法：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除方法"><span class="nav-number">3.6.</span> <span class="nav-text">删除方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LinkedList类常用方法测试"><span class="nav-number">4.</span> <span class="nav-text">LinkedList类常用方法测试</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">syf</span>
+
+  
 </div>
 
-    </div>
-</div>
-<footer id="footer">
-    <div id="copyright">&copy; syf  2019</div>
-    <div id="theme">
-        Powered by <a href="http://hexo.io">Hexo</a>. Theme by <a href="https://github.com/markyong/hexo-theme-stage">Stage</a>
-    </div>
-</footer>
-<script src="/lib/js/waterrippleeffect.min.js"></script>
-<script src="/js/header-bg.main.js"></script>
 
-    <script src="/lib/js/smooth-scroll.min.js"></script>
-    <script src="/js/toc.main.js"></script>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
 
 </body>
 </html>
